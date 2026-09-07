@@ -1,0 +1,21 @@
+{
+  "masterSheetUrl": "https://script.google.com/macros/s/AKfycbzlmdEAbGuY32TTrLQmHNdFi013IlexPA70kQuat8FFGjU1JsIJV5zViE5z_5cn17NA/exec",
+  "status": "connected",
+  "autoSyncInterval": 15,
+  "autoSyncEnabled": true,
+  "lastSync": "2026-08-16T20:03:38.763Z",
+  "lastPingLatencyMs": 1796,
+  "detectedSheets": [],
+  "schemaStatus": {
+    "users": false,
+    "logs": false,
+    "orders": false,
+    "settings": false
+  },
+  "syncStats": {
+    "usersCount": 4,
+    "ordersCount": 504,
+    "logsCount": 3,
+    "storesCount": 1
+  }
+}

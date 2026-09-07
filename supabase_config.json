@@ -1,0 +1,18 @@
+{
+  "url": "https://ywycwjkkjmlxrwohkgas.supabase.co",
+  "anonKey": "sb_publishable_VPBJecU1GFkNX8WU5c188w__oTAWPhw",
+  "serviceKey": "",
+  "dbUrl": "postgresql://postgres:%26fTAe-.a68*PFA*@db.ywycwjkkjmlxrwohkgas.supabase.co:5432/postgres",
+  "status": "connected",
+  "autoSyncToSupabase": true,
+  "lastTested": "2026-09-03T00:05:53.113Z",
+  "tablesFound": [
+    "audit_logs",
+    "courier_configs",
+    "orders",
+    "platform_messages",
+    "products",
+    "shipping_templates",
+    "users"
+  ]
+}

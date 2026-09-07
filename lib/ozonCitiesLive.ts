@@ -1,0 +1,10451 @@
+import { CourierCity } from "../types";
+
+export const OZON_LIVE_CITIES: CourierCity[] = [
+    {
+        "id": 2073,
+        "name": "aazayeb-chefchaouen",
+        "code": "aazayeb",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "aazayeb",
+            "chefchaouen"
+        ]
+    },
+    {
+        "id": 2258,
+        "name": "Abteh-tantan",
+        "code": "abteh",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "abteh",
+            "tantan"
+        ]
+    },
+    {
+        "id": 1610,
+        "name": "Afourar - Beni-Mellal",
+        "code": "Afourar",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "afourar",
+            "beni",
+            "mellal"
+        ]
+    },
+    {
+        "id": 2028,
+        "name": "AFRA-nador",
+        "code": "afra",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "afra",
+            "nador"
+        ]
+    },
+    {
+        "id": 37,
+        "name": "Agadir",
+        "code": "AGA",
+        "courier": "ozon_express",
+        "deliveredPrice": 35,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "aga"
+        ]
+    },
+    {
+        "id": 1844,
+        "name": "Agafay",
+        "code": "Agafay",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "agafay"
+        ]
+    },
+    {
+        "id": 2130,
+        "name": "agdz",
+        "code": "agd",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "agd"
+        ]
+    },
+    {
+        "id": 1818,
+        "name": "Aghbal-BERKAN",
+        "code": "Agh",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "agh",
+            "aghbal",
+            "berkan"
+        ]
+    },
+    {
+        "id": 1852,
+        "name": "Aghbala-Beni Mellal",
+        "code": "Agba",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "agba",
+            "aghbala",
+            "beni mellal"
+        ]
+    },
+    {
+        "id": 1787,
+        "name": "Aghbalou Nserdan",
+        "code": "Agb",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "agb"
+        ]
+    },
+    {
+        "id": 1539,
+        "name": "Aglou",
+        "code": "Agl",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "agl"
+        ]
+    },
+    {
+        "id": 1964,
+        "name": "Agouim-Ouarzazate",
+        "code": "Agoi",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "agoi",
+            "agouim",
+            "ouarzazate"
+        ]
+    },
+    {
+        "id": 1574,
+        "name": "Agouray - Meknes",
+        "code": "Agou",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "agou",
+            "agouray",
+            "meknes"
+        ]
+    },
+    {
+        "id": 2225,
+        "name": "Agourram (Ait Amira)-agadir",
+        "code": "agouram",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "agouram",
+            "agourram (ait amira)",
+            "agadir"
+        ]
+    },
+    {
+        "id": 1729,
+        "name": "Aguelmous",
+        "code": "Ags",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ags"
+        ]
+    },
+    {
+        "id": 2155,
+        "name": "Aguidir-imintanout",
+        "code": "guidr",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "guidr",
+            "aguidir",
+            "imintanout"
+        ]
+    },
+    {
+        "id": 1605,
+        "name": "agzirt Beni-Mellal",
+        "code": "agzir",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "agzir",
+            "agzirt beni",
+            "mellal"
+        ]
+    },
+    {
+        "id": 2099,
+        "name": "Ahdil-chichaoua",
+        "code": "ahdil",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ahdil",
+            "chichaoua"
+        ]
+    },
+    {
+        "id": 1761,
+        "name": "AHFIR",
+        "code": "AHFR",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ahfr"
+        ]
+    },
+    {
+        "id": 2339,
+        "name": "Ahl Marbae - Fquih Ben Salah",
+        "code": "MRABAE",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "mrabae",
+            "ahl marbae",
+            "fquih ben salah"
+        ]
+    },
+    {
+        "id": 2326,
+        "name": "Ahl souss",
+        "code": "SOUSS",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "souss"
+        ]
+    },
+    {
+        "id": 2052,
+        "name": "Ahmar laglalcha-taroudant",
+        "code": "lglcha",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "lglcha",
+            "ahmar laglalcha",
+            "taroudant"
+        ]
+    },
+    {
+        "id": 1938,
+        "name": "ain aicha - taounate",
+        "code": "aicha",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "aicha",
+            "ain aicha",
+            "taounate"
+        ]
+    },
+    {
+        "id": 2016,
+        "name": "Ain Allah-fes",
+        "code": "allh",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "allh",
+            "ain allah",
+            "fes"
+        ]
+    },
+    {
+        "id": 2000,
+        "name": "Ain Aouda-TEMARA",
+        "code": "AND",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "and",
+            "ain aouda",
+            "temara"
+        ]
+    },
+    {
+        "id": 1995,
+        "name": "AIN ATTIQ-TEMARA",
+        "code": "ATTQ",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "attq",
+            "ain attiq",
+            "temara"
+        ]
+    },
+    {
+        "id": 2255,
+        "name": "Ain Baita-Ouazzane",
+        "code": "Baita",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "baita",
+            "ain baita",
+            "ouazzane"
+        ]
+    },
+    {
+        "id": 2115,
+        "name": "Ain Beida-chichaoua",
+        "code": "Beida",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "beida",
+            "ain beida",
+            "chichaoua"
+        ]
+    },
+    {
+        "id": 1807,
+        "name": "Ain Bita-sefrou",
+        "code": "Bita",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "bita",
+            "ain bita",
+            "sefrou"
+        ]
+    },
+    {
+        "id": 1570,
+        "name": "Ain Bni Mathar",
+        "code": "Mathar",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "mathar"
+        ]
+    },
+    {
+        "id": 1461,
+        "name": "Ain Cheggag",
+        "code": "Cheg",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "cheg"
+        ]
+    },
+    {
+        "id": 1680,
+        "name": "Ain Chkef",
+        "code": "Chkf",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "chkf"
+        ]
+    },
+    {
+        "id": 2285,
+        "name": "Ain Choka-ksar sghir",
+        "code": "Choka",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "choka",
+            "ain choka",
+            "ksar sghir"
+        ]
+    },
+    {
+        "id": 1655,
+        "name": "Ain Dfali-Ouazzane",
+        "code": "Dfa",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "dfa",
+            "ain dfali",
+            "ouazzane"
+        ]
+    },
+    {
+        "id": 1573,
+        "name": "Ain Dorij",
+        "code": "Dorij",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "dorij"
+        ]
+    },
+    {
+        "id": 1586,
+        "name": "Ain el Mediour",
+        "code": "Mediour",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "mediour"
+        ]
+    },
+    {
+        "id": 2127,
+        "name": "Aïn Erreggada",
+        "code": "Erreg",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "erreg"
+        ]
+    },
+    {
+        "id": 2251,
+        "name": "Ain Gfali -Ouazzane",
+        "code": "Gfali",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "gfali",
+            "ain gfali",
+            "ouazzane"
+        ]
+    },
+    {
+        "id": 235,
+        "name": "Ain Harouda",
+        "code": "AHR",
+        "courier": "ozon_express",
+        "deliveredPrice": 30,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ahr"
+        ]
+    },
+    {
+        "id": 2316,
+        "name": "Ain jamaa-errahma",
+        "code": "jmarr",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "jmarr",
+            "ain jamaa",
+            "errahma"
+        ]
+    },
+    {
+        "id": 1660,
+        "name": "Ain Jemaa-meknes",
+        "code": "Jem",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "jem",
+            "ain jemaa",
+            "meknes"
+        ]
+    },
+    {
+        "id": 1662,
+        "name": "Ain jiri-meknes",
+        "code": "jiri",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "jiri",
+            "ain jiri",
+            "meknes"
+        ]
+    },
+    {
+        "id": 364,
+        "name": "ain leuh",
+        "code": "anl",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "anl"
+        ]
+    },
+    {
+        "id": 1939,
+        "name": "ain mediouna - taounate",
+        "code": "mdn",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "mdn",
+            "ain mediouna",
+            "taounate"
+        ]
+    },
+    {
+        "id": 1749,
+        "name": "Ain Sbit-Khemisset",
+        "code": "ansbt",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 1,
+        "aliases": [
+            "ansbt",
+            "ain sbit",
+            "khemisset"
+        ]
+    },
+    {
+        "id": 1583,
+        "name": "Ain Seddaq",
+        "code": "Seddaq",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "seddaq"
+        ]
+    },
+    {
+        "id": 1619,
+        "name": "Ain Tekki",
+        "code": "Tekki",
+        "courier": "ozon_express",
+        "deliveredPrice": 35,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tekki"
+        ]
+    },
+    {
+        "id": 1689,
+        "name": "Ain Zarka",
+        "code": "Zarka",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "zarka"
+        ]
+    },
+    {
+        "id": 1882,
+        "name": "aine aghbal-meknes",
+        "code": "agbl",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "agbl",
+            "aine aghbal",
+            "meknes"
+        ]
+    },
+    {
+        "id": 2214,
+        "name": "AIT AALA-tinghir",
+        "code": "aala",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "aala",
+            "ait aala",
+            "tinghir"
+        ]
+    },
+    {
+        "id": 2222,
+        "name": "ait abdoun-boumalen dades",
+        "code": "abdn",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "abdn",
+            "ait abdoun",
+            "boumalen dades"
+        ]
+    },
+    {
+        "id": 1883,
+        "name": "ait ai3zam-meknes",
+        "code": "ait",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ait",
+            "ait ai3zam",
+            "meknes"
+        ]
+    },
+    {
+        "id": 1595,
+        "name": "Ait Aissa Oubrahim",
+        "code": "Aissa",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "aissa"
+        ]
+    },
+    {
+        "id": 2238,
+        "name": "Ait Ali Ougmas (Route Ifrane)-Azrou",
+        "code": "ougms",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ougms",
+            "ait ali ougmas (route ifrane)",
+            "azrou"
+        ]
+    },
+    {
+        "id": 2236,
+        "name": "Ait Amer ou Ali (Route Sidi Addi)-Azrou",
+        "code": "amerr",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "amerr",
+            "ait amer ou ali (route sidi addi)",
+            "azrou"
+        ]
+    },
+    {
+        "id": 1075,
+        "name": "AIT AMIRA-AGADIR",
+        "code": "aita",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "aita",
+            "ait amira",
+            "agadir"
+        ]
+    },
+    {
+        "id": 1859,
+        "name": "Ait Baha",
+        "code": "Baha",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "baha"
+        ]
+    },
+    {
+        "id": 1814,
+        "name": "Ait Ben Haddou-Ouarzazate",
+        "code": "Haddou",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "haddou",
+            "ait ben haddou",
+            "ouarzazate"
+        ]
+    },
+    {
+        "id": 2209,
+        "name": "Ait Boujan-tinghir",
+        "code": "bjn",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "bjn",
+            "ait boujan",
+            "tinghir"
+        ]
+    },
+    {
+        "id": 2211,
+        "name": "Ait Daouen-tinghir",
+        "code": "daoun",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "daoun",
+            "ait daouen",
+            "tinghir"
+        ]
+    },
+    {
+        "id": 2210,
+        "name": "Ait El Kadi-tinghir",
+        "code": "KDI",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "kdi",
+            "ait el kadi",
+            "tinghir"
+        ]
+    },
+    {
+        "id": 1863,
+        "name": "Aït Hadifa-Al Hoceima",
+        "code": "Hafa",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "hafa",
+            "aït hadifa",
+            "al hoceima"
+        ]
+    },
+    {
+        "id": 1585,
+        "name": "Ait Iaaza",
+        "code": "laza",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "laza"
+        ]
+    },
+    {
+        "id": 1596,
+        "name": "ait ihya omoussa-kelaa magouna",
+        "code": "ihya",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ihya",
+            "ait ihya omoussa",
+            "kelaa magouna"
+        ]
+    },
+    {
+        "id": 1837,
+        "name": "Ait ishaq",
+        "code": "ishq",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ishq"
+        ]
+    },
+    {
+        "id": 1780,
+        "name": "Ait Kamra-Hoceima",
+        "code": "Kamra",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "kamra",
+            "ait kamra",
+            "hoceima"
+        ]
+    },
+    {
+        "id": 49,
+        "name": "Ait Melloul",
+        "code": "AIL",
+        "courier": "ozon_express",
+        "deliveredPrice": 35,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ail"
+        ]
+    },
+    {
+        "id": 2208,
+        "name": "Ait Oujana-tinghir",
+        "code": "ojn",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ojn",
+            "ait oujana",
+            "tinghir"
+        ]
+    },
+    {
+        "id": 1634,
+        "name": "Ait ourir-MARRAKECH",
+        "code": "AiTAO",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "aitao",
+            "ait ourir",
+            "marrakech"
+        ]
+    },
+    {
+        "id": 2268,
+        "name": "AIT TALEB-sefrou",
+        "code": "tlbb",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tlbb",
+            "ait taleb",
+            "sefrou"
+        ]
+    },
+    {
+        "id": 2235,
+        "name": "Ait Yahya ou Alla (Route Sidi Addi)-Azrou",
+        "code": "yhy",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "yhy",
+            "ait yahya ou alla (route sidi addi)",
+            "azrou"
+        ]
+    },
+    {
+        "id": 1966,
+        "name": "Ait Zineb-Ouarzazate",
+        "code": "Zineb",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "zineb",
+            "ait zineb",
+            "ouarzazate"
+        ]
+    },
+    {
+        "id": 1562,
+        "name": "Ajdir-HOUCIMA",
+        "code": "Ajd",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ajd",
+            "ajdir",
+            "houcima"
+        ]
+    },
+    {
+        "id": 1922,
+        "name": "Ajdir-taza",
+        "code": "ajdr",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ajdr",
+            "ajdir",
+            "taza"
+        ]
+    },
+    {
+        "id": 2345,
+        "name": "akchour",
+        "code": "akchor",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "akchor"
+        ]
+    },
+    {
+        "id": 1825,
+        "name": "Akhfennir",
+        "code": "Feir",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "feir"
+        ]
+    },
+    {
+        "id": 1699,
+        "name": "Akka-tata",
+        "code": "aka",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "aka",
+            "akka",
+            "tata"
+        ]
+    },
+    {
+        "id": 1821,
+        "name": "Aklim",
+        "code": "Akl",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "akl"
+        ]
+    },
+    {
+        "id": 1878,
+        "name": "Aknoul-taza",
+        "code": "aknl",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "aknl",
+            "aknoul",
+            "taza"
+        ]
+    },
+    {
+        "id": 2077,
+        "name": "akrach-RABAT",
+        "code": "akrach",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "akrach",
+            "rabat"
+        ]
+    },
+    {
+        "id": 2283,
+        "name": "Al Ghadban-jadida",
+        "code": "ghdbn",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ghdbn",
+            "al ghadban",
+            "jadida"
+        ]
+    },
+    {
+        "id": 2218,
+        "name": "Al Had (Hay Nahda)-kelaa mgouna",
+        "code": "ALHAD",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "alhad",
+            "al had (hay nahda)",
+            "kelaa mgouna"
+        ]
+    },
+    {
+        "id": 55,
+        "name": "Al Hoceima",
+        "code": "ALC",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "alc"
+        ]
+    },
+    {
+        "id": 2330,
+        "name": "Al Khalifa",
+        "code": "khlf",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "khlf"
+        ]
+    },
+    {
+        "id": 2216,
+        "name": "Al Maayach-kelaa mgouna",
+        "code": "maaych",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "maaych",
+            "al maayach",
+            "kelaa mgouna"
+        ]
+    },
+    {
+        "id": 2311,
+        "name": "Almaz-lissasfa",
+        "code": "ALMAZ",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "almaz",
+            "lissasfa"
+        ]
+    },
+    {
+        "id": 1546,
+        "name": "Alnif",
+        "code": "Aln",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "aln"
+        ]
+    },
+    {
+        "id": 1813,
+        "name": "Amerzgane-Ouarzazate",
+        "code": "Amgan",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "amgan",
+            "amerzgane",
+            "ouarzazate"
+        ]
+    },
+    {
+        "id": 2144,
+        "name": "Ameskroud-agadir",
+        "code": "amskrd",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "amskrd",
+            "ameskroud",
+            "agadir"
+        ]
+    },
+    {
+        "id": 1765,
+        "name": "Amizmiz",
+        "code": "Azmi",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "azmi"
+        ]
+    },
+    {
+        "id": 2346,
+        "name": "AMSSA-TETOUAN",
+        "code": "AMSSA",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "amssa",
+            "tetouan"
+        ]
+    },
+    {
+        "id": 2319,
+        "name": "Ansari-dar bouaza",
+        "code": "ANSR",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ansr",
+            "ansari",
+            "dar bouaza"
+        ]
+    },
+    {
+        "id": 963,
+        "name": "ANZA",
+        "code": "ANZA",
+        "courier": "ozon_express",
+        "deliveredPrice": 40,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "anza"
+        ]
+    },
+    {
+        "id": 2085,
+        "name": "ANZI-TIZNIT",
+        "code": "ANZI",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "anzi",
+            "tiznit"
+        ]
+    },
+    {
+        "id": 1593,
+        "name": "Aoufous",
+        "code": "Aouf",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "aouf"
+        ]
+    },
+    {
+        "id": 1770,
+        "name": "Aoulouz",
+        "code": "Aolz",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "aolz"
+        ]
+    },
+    {
+        "id": 1549,
+        "name": "Aourir-Agadir",
+        "code": "Aou",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "aou",
+            "aourir",
+            "agadir"
+        ]
+    },
+    {
+        "id": 2146,
+        "name": "aousserd-DAKHLA",
+        "code": "AOUSS",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "aouss",
+            "aousserd",
+            "dakhla"
+        ]
+    },
+    {
+        "id": 1803,
+        "name": "Arba Aounate-أربعاء العونات",
+        "code": "Arba",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "arba",
+            "arba aounate",
+            "أربعاء العونات"
+        ]
+    },
+    {
+        "id": 1909,
+        "name": "ARBAOUA",
+        "code": "ARB",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "arb"
+        ]
+    },
+    {
+        "id": 1622,
+        "name": "Arjat-Mohammedia",
+        "code": "Arjat",
+        "courier": "ozon_express",
+        "deliveredPrice": 35,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "arjat",
+            "mohammedia"
+        ]
+    },
+    {
+        "id": 2282,
+        "name": "Asfalou-ouarzazate",
+        "code": "asflou",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "asflou",
+            "asfalou",
+            "ouarzazate"
+        ]
+    },
+    {
+        "id": 2110,
+        "name": "Asif lmal-chichaoua",
+        "code": "Asif",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "asif",
+            "asif lmal",
+            "chichaoua"
+        ]
+    },
+    {
+        "id": 1898,
+        "name": "ASILAH VILLE",
+        "code": "asl",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "asl"
+        ]
+    },
+    {
+        "id": 2023,
+        "name": "Asni-marrakech",
+        "code": "asni",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "asni",
+            "marrakech"
+        ]
+    },
+    {
+        "id": 1827,
+        "name": "Assa-VILLE",
+        "code": "VAssa",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "vassa",
+            "assa",
+            "ville"
+        ]
+    },
+    {
+        "id": 2087,
+        "name": "Assahrij-KELAA DES SRAGHNA",
+        "code": "Assahrij",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "assahrij",
+            "kelaa des sraghna"
+        ]
+    },
+    {
+        "id": 2113,
+        "name": "Asseratou-chichaoua",
+        "code": "Asseratou",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "asseratou",
+            "chichaoua"
+        ]
+    },
+    {
+        "id": 1755,
+        "name": "Attaouia",
+        "code": "Attui",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "attui"
+        ]
+    },
+    {
+        "id": 2266,
+        "name": "Ayoun Smar-sefrou",
+        "code": "smr",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "smr",
+            "ayoun smar",
+            "sefrou"
+        ]
+    },
+    {
+        "id": 523,
+        "name": "AZEMMOUR",
+        "code": "AZM",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "azm"
+        ]
+    },
+    {
+        "id": 1948,
+        "name": "AZILAL VILLE",
+        "code": "AZZZ",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "azzz"
+        ]
+    },
+    {
+        "id": 1587,
+        "name": "Azla",
+        "code": "Azla",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "azla"
+        ]
+    },
+    {
+        "id": 2227,
+        "name": "Azou (Ikhrban)",
+        "code": "azro",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "azro"
+        ]
+    },
+    {
+        "id": 1847,
+        "name": "AZRO-AIT MELLOUL AGADIR",
+        "code": "AZR",
+        "courier": "ozon_express",
+        "deliveredPrice": 40,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "azr",
+            "azro",
+            "ait melloul agadir"
+        ]
+    },
+    {
+        "id": 327,
+        "name": "AZROU-VILLE",
+        "code": "AZ",
+        "courier": "ozon_express",
+        "deliveredPrice": 40,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "az",
+            "azrou",
+            "ville"
+        ]
+    },
+    {
+        "id": 2265,
+        "name": "Azzaba-sefrou",
+        "code": "azzaba",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "azzaba",
+            "sefrou"
+        ]
+    },
+    {
+        "id": 879,
+        "name": "Bab Berred",
+        "code": "BABARD",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "babard"
+        ]
+    },
+    {
+        "id": 2259,
+        "name": "Bab Goghma Ouazzane-",
+        "code": "Goghma",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "goghma",
+            "bab goghma ouazzane"
+        ]
+    },
+    {
+        "id": 1709,
+        "name": "Bab Taza",
+        "code": "Batz",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "batz"
+        ]
+    },
+    {
+        "id": 2303,
+        "name": "bab tioula-sidi kacem",
+        "code": "bab tioula",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "bab tioula",
+            "sidi kacem"
+        ]
+    },
+    {
+        "id": 1862,
+        "name": "Bani Hadifa-Al Hoceima",
+        "code": "Hadifa",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "hadifa",
+            "bani hadifa",
+            "al hoceima"
+        ]
+    },
+    {
+        "id": 1589,
+        "name": "Bdouza",
+        "code": "Bdouz",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "bdouz"
+        ]
+    },
+    {
+        "id": 2342,
+        "name": "Bejaad",
+        "code": "Bjaa",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "bjaa"
+        ]
+    },
+    {
+        "id": 1636,
+        "name": "Belaagid",
+        "code": "Bela",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "bela"
+        ]
+    },
+    {
+        "id": 1342,
+        "name": "Belfaa",
+        "code": "Belf",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "belf"
+        ]
+    },
+    {
+        "id": 1752,
+        "name": "BELKSIRI",
+        "code": "BKRI",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "bkri"
+        ]
+    },
+    {
+        "id": 1625,
+        "name": "Ben ahmed-Berrchid",
+        "code": "Bnh",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "bnh",
+            "ben ahmed",
+            "berrchid"
+        ]
+    },
+    {
+        "id": 601,
+        "name": "Ben Guerir",
+        "code": "bng",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "bng"
+        ]
+    },
+    {
+        "id": 2015,
+        "name": "Ben karich-tetouan",
+        "code": "krch",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "krch",
+            "ben karich",
+            "tetouan"
+        ]
+    },
+    {
+        "id": 1977,
+        "name": "BEN TAYEB- DRIOUCH",
+        "code": "TAY",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tay",
+            "ben tayeb",
+            "driouch"
+        ]
+    },
+    {
+        "id": 2279,
+        "name": "Ben Yaakoub-tata",
+        "code": "Yaakoub",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "yaakoub",
+            "ben yaakoub",
+            "tata"
+        ]
+    },
+    {
+        "id": 2120,
+        "name": "beni elouida-azilal",
+        "code": "elouidd",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "elouidd",
+            "beni elouida",
+            "azilal"
+        ]
+    },
+    {
+        "id": 907,
+        "name": "Beni Ensar",
+        "code": "BNINSR",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "bninsr"
+        ]
+    },
+    {
+        "id": 73,
+        "name": "Beni Mellal",
+        "code": "BML",
+        "courier": "ozon_express",
+        "deliveredPrice": 40,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "bml"
+        ]
+    },
+    {
+        "id": 1935,
+        "name": "beni oulid - taounate",
+        "code": "bnild",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "bnild",
+            "beni oulid",
+            "taounate"
+        ]
+    },
+    {
+        "id": 1617,
+        "name": "Beni-Hassan-Chefchaouen",
+        "code": "Hassa",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "hassa",
+            "beni",
+            "hassan",
+            "chefchaouen"
+        ]
+    },
+    {
+        "id": 511,
+        "name": "Benslimane",
+        "code": "BSLM",
+        "courier": "ozon_express",
+        "deliveredPrice": 35,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "bslm"
+        ]
+    },
+    {
+        "id": 2299,
+        "name": "Ber Taleb-sidi kacem",
+        "code": "Ber Taleb",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ber taleb",
+            "sidi kacem"
+        ]
+    },
+    {
+        "id": 1710,
+        "name": "Berkane",
+        "code": "Bkn",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "bkn"
+        ]
+    },
+    {
+        "id": 1558,
+        "name": "BERRECHID VILLE",
+        "code": "BERR",
+        "courier": "ozon_express",
+        "deliveredPrice": 35,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "berr"
+        ]
+    },
+    {
+        "id": 1916,
+        "name": "Bhalil-sefrou",
+        "code": "bhl",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "bhl",
+            "bhalil",
+            "sefrou"
+        ]
+    },
+    {
+        "id": 1068,
+        "name": "Biougra",
+        "code": "BG",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "bg"
+        ]
+    },
+    {
+        "id": 2232,
+        "name": "Biougra:(Lkhrba)-agadir",
+        "code": "Biougra",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "biougra",
+            "biougra:(lkhrba)",
+            "agadir"
+        ]
+    },
+    {
+        "id": 2240,
+        "name": "Biougra(  Tin Hamou)-agadir",
+        "code": "Hamou",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "hamou",
+            "biougra(  tin hamou)",
+            "agadir"
+        ]
+    },
+    {
+        "id": 2237,
+        "name": "Biougra( Lghriss)-agadir",
+        "code": "Lghriss",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "lghriss",
+            "biougra( lghriss)",
+            "agadir"
+        ]
+    },
+    {
+        "id": 2234,
+        "name": "Biougra(Ait Sayh)-agadir",
+        "code": "Sayh",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "sayh",
+            "biougra(ait sayh)",
+            "agadir"
+        ]
+    },
+    {
+        "id": 2148,
+        "name": "bir gandouz dakhla",
+        "code": "GNDZ",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "gndz"
+        ]
+    },
+    {
+        "id": 1412,
+        "name": "Bir Jdid",
+        "code": "Bir",
+        "courier": "ozon_express",
+        "deliveredPrice": 35,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "bir"
+        ]
+    },
+    {
+        "id": 1870,
+        "name": "Bir Kouat",
+        "code": "Kouat",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "kouat"
+        ]
+    },
+    {
+        "id": 1971,
+        "name": "Bir Tam Tam",
+        "code": "TAMTAM",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tamtam"
+        ]
+    },
+    {
+        "id": 2246,
+        "name": "Birkwat-safi",
+        "code": "birkwat",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "birkwat",
+            "safi"
+        ]
+    },
+    {
+        "id": 1946,
+        "name": "Bni Ahmed - chefchaouen",
+        "code": "bnih",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "bnih",
+            "bni ahmed",
+            "chefchaouen"
+        ]
+    },
+    {
+        "id": 1611,
+        "name": "Bni Ayat - Beni-Mellal",
+        "code": "Ayat",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ayat",
+            "bni ayat",
+            "beni",
+            "mellal"
+        ]
+    },
+    {
+        "id": 1489,
+        "name": "Bni Bouayach",
+        "code": "Boua",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "boua"
+        ]
+    },
+    {
+        "id": 1861,
+        "name": "Bni Boufrah-Al Hoceima",
+        "code": "Bofra",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "bofra",
+            "bni boufrah",
+            "al hoceima"
+        ]
+    },
+    {
+        "id": 1820,
+        "name": "Bni Chiker",
+        "code": "Chiker",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "chiker"
+        ]
+    },
+    {
+        "id": 2072,
+        "name": "Bni Darkoul-chefchaouen",
+        "code": "bnidrkl",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "bnidrkl",
+            "bni darkoul",
+            "chefchaouen"
+        ]
+    },
+    {
+        "id": 1794,
+        "name": "Bni Drar",
+        "code": "drd",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "drd"
+        ]
+    },
+    {
+        "id": 2239,
+        "name": "Bni Mezoui-khouribgua",
+        "code": "bnmz",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "bnmz",
+            "bni mezoui",
+            "khouribgua"
+        ]
+    },
+    {
+        "id": 1620,
+        "name": "Bni Yakhlef",
+        "code": "Yakhl",
+        "courier": "ozon_express",
+        "deliveredPrice": 35,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "yakhl"
+        ]
+    },
+    {
+        "id": 1685,
+        "name": "bouanane-tetoun",
+        "code": "bane",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "bane",
+            "bouanane",
+            "tetoun"
+        ]
+    },
+    {
+        "id": 2117,
+        "name": "bouanga-chichaoua",
+        "code": "bnga",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "bnga",
+            "bouanga",
+            "chichaoua"
+        ]
+    },
+    {
+        "id": 1842,
+        "name": "BOUARFA",
+        "code": "ARF",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "arf"
+        ]
+    },
+    {
+        "id": 1575,
+        "name": "Bouderbala-MEKNES",
+        "code": "Boude",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "boude",
+            "bouderbala",
+            "meknes"
+        ]
+    },
+    {
+        "id": 1785,
+        "name": "Boudnib",
+        "code": "Bodn",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "bodn"
+        ]
+    },
+    {
+        "id": 773,
+        "name": "BOUFKRANE",
+        "code": "BOFK",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 20,
+        "aliases": [
+            "bofk"
+        ]
+    },
+    {
+        "id": 1934,
+        "name": "bouhouda - taounate",
+        "code": "bhd",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "bhd",
+            "bouhouda",
+            "taounate"
+        ]
+    },
+    {
+        "id": 1828,
+        "name": "Bouizakarne-VILLE",
+        "code": "Bozk",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "bozk",
+            "bouizakarne",
+            "ville"
+        ]
+    },
+    {
+        "id": 91,
+        "name": "Boujdour",
+        "code": "BJDR",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "bjdr"
+        ]
+    },
+    {
+        "id": 984,
+        "name": "Boujniba",
+        "code": "bjni",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "bjni"
+        ]
+    },
+    {
+        "id": 1779,
+        "name": "boukidan",
+        "code": "bouk",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "bouk"
+        ]
+    },
+    {
+        "id": 1988,
+        "name": "BOUKNADEL",
+        "code": "BKNDL",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "bkndl"
+        ]
+    },
+    {
+        "id": 1690,
+        "name": "Boulanouare",
+        "code": "Bol",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "bol"
+        ]
+    },
+    {
+        "id": 2131,
+        "name": "Boulemane-azrou",
+        "code": "boulman",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "boulman",
+            "boulemane",
+            "azrou"
+        ]
+    },
+    {
+        "id": 1531,
+        "name": "Boumaln dads - tinghir",
+        "code": "Dades",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "dades",
+            "boumaln dads",
+            "tinghir"
+        ]
+    },
+    {
+        "id": 1138,
+        "name": "Boumia",
+        "code": "BouM",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "boum"
+        ]
+    },
+    {
+        "id": 1542,
+        "name": "Bounaamane-TIZNIT",
+        "code": "Boa",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "boa",
+            "bounaamane",
+            "tiznit"
+        ]
+    },
+    {
+        "id": 1739,
+        "name": "Bounouar-khouribga",
+        "code": "Bor",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "bor",
+            "bounouar",
+            "khouribga"
+        ]
+    },
+    {
+        "id": 2193,
+        "name": "Bournazel-casablanca",
+        "code": "brnzl",
+        "courier": "ozon_express",
+        "deliveredPrice": 20,
+        "returnedPrice": 0,
+        "refusedPrice": 0,
+        "aliases": [
+            "brnzl",
+            "bournazel",
+            "casablanca"
+        ]
+    },
+    {
+        "id": 421,
+        "name": "BOUSKOURA",
+        "code": "BSK",
+        "courier": "ozon_express",
+        "deliveredPrice": 30,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "bsk"
+        ]
+    },
+    {
+        "id": 1884,
+        "name": "Boussmssad-meknes",
+        "code": "bsmd",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "bsmd",
+            "boussmssad",
+            "meknes"
+        ]
+    },
+    {
+        "id": 472,
+        "name": "BOUZNIKA",
+        "code": "BZ",
+        "courier": "ozon_express",
+        "deliveredPrice": 40,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "bz"
+        ]
+    },
+    {
+        "id": 2335,
+        "name": "Bradia - Fquih Ben Salah",
+        "code": "bradi",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "bradi",
+            "bradia",
+            "fquih ben salah"
+        ]
+    },
+    {
+        "id": 2242,
+        "name": "Brakt Lamine-safi",
+        "code": "brktln",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "brktln",
+            "brakt lamine",
+            "safi"
+        ]
+    },
+    {
+        "id": 2241,
+        "name": "Brakt Radi-safi",
+        "code": "brakt",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "brakt",
+            "brakt radi",
+            "safi"
+        ]
+    },
+    {
+        "id": 1902,
+        "name": "Brych-ASILAH",
+        "code": "BRY",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "bry",
+            "brych",
+            "asilah"
+        ]
+    },
+    {
+        "id": 271,
+        "name": "Cabo Negro",
+        "code": "CNG",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "cng"
+        ]
+    },
+    {
+        "id": 2322,
+        "name": "Casabis-mediouna",
+        "code": "CASABIS",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "casabis",
+            "mediouna"
+        ]
+    },
+    {
+        "id": 2178,
+        "name": "Casablanca – 2 Mars",
+        "code": "2mars",
+        "courier": "ozon_express",
+        "deliveredPrice": 20,
+        "returnedPrice": 0,
+        "refusedPrice": 0,
+        "aliases": [
+            "2mars"
+        ]
+    },
+    {
+        "id": 2188,
+        "name": "Casablanca – Ain Borja",
+        "code": "brja",
+        "courier": "ozon_express",
+        "deliveredPrice": 20,
+        "returnedPrice": 0,
+        "refusedPrice": 0,
+        "aliases": [
+            "brja"
+        ]
+    },
+    {
+        "id": 2180,
+        "name": "Casablanca – Ain Chock",
+        "code": "achok",
+        "courier": "ozon_express",
+        "deliveredPrice": 20,
+        "returnedPrice": 0,
+        "refusedPrice": 0,
+        "aliases": [
+            "achok"
+        ]
+    },
+    {
+        "id": 2173,
+        "name": "Casablanca – Ain Diab",
+        "code": "adiab",
+        "courier": "ozon_express",
+        "deliveredPrice": 20,
+        "returnedPrice": 0,
+        "refusedPrice": 0,
+        "aliases": [
+            "adiab"
+        ]
+    },
+    {
+        "id": 2184,
+        "name": "Casablanca – Ain Sebaa",
+        "code": "sbaa",
+        "courier": "ozon_express",
+        "deliveredPrice": 20,
+        "returnedPrice": 0,
+        "refusedPrice": 0,
+        "aliases": [
+            "sbaa"
+        ]
+    },
+    {
+        "id": 2185,
+        "name": "Casablanca – Anassi",
+        "code": "anss",
+        "courier": "ozon_express",
+        "deliveredPrice": 20,
+        "returnedPrice": 0,
+        "refusedPrice": 0,
+        "aliases": [
+            "anss"
+        ]
+    },
+    {
+        "id": 2190,
+        "name": "Casablanca – Anfa",
+        "code": "anfa",
+        "courier": "ozon_express",
+        "deliveredPrice": 20,
+        "returnedPrice": 0,
+        "refusedPrice": 0,
+        "aliases": [
+            "anfa"
+        ]
+    },
+    {
+        "id": 2170,
+        "name": "Casablanca – Beauséjour",
+        "code": "bsejr",
+        "courier": "ozon_express",
+        "deliveredPrice": 20,
+        "returnedPrice": 0,
+        "refusedPrice": 0,
+        "aliases": [
+            "bsejr"
+        ]
+    },
+    {
+        "id": 2183,
+        "name": "Casablanca – Bernoussi",
+        "code": "brns",
+        "courier": "ozon_express",
+        "deliveredPrice": 20,
+        "returnedPrice": 0,
+        "refusedPrice": 0,
+        "aliases": [
+            "brns"
+        ]
+    },
+    {
+        "id": 2172,
+        "name": "Casablanca – Bourgogne",
+        "code": "rgon",
+        "courier": "ozon_express",
+        "deliveredPrice": 20,
+        "returnedPrice": 0,
+        "refusedPrice": 0,
+        "aliases": [
+            "rgon"
+        ]
+    },
+    {
+        "id": 2181,
+        "name": "Casablanca – Californie",
+        "code": "calif",
+        "courier": "ozon_express",
+        "deliveredPrice": 20,
+        "returnedPrice": 0,
+        "refusedPrice": 0,
+        "aliases": [
+            "calif"
+        ]
+    },
+    {
+        "id": 2174,
+        "name": "Casablanca – Centre Ville",
+        "code": "ctrville",
+        "courier": "ozon_express",
+        "deliveredPrice": 20,
+        "returnedPrice": 0,
+        "refusedPrice": 0,
+        "aliases": [
+            "ctrville"
+        ]
+    },
+    {
+        "id": 2175,
+        "name": "Casablanca – Derb Omar",
+        "code": "domar",
+        "courier": "ozon_express",
+        "deliveredPrice": 20,
+        "returnedPrice": 0,
+        "refusedPrice": 0,
+        "aliases": [
+            "domar"
+        ]
+    },
+    {
+        "id": 2176,
+        "name": "Casablanca – Derb Sultan",
+        "code": "dseltan",
+        "courier": "ozon_express",
+        "deliveredPrice": 20,
+        "returnedPrice": 0,
+        "refusedPrice": 0,
+        "aliases": [
+            "dseltan"
+        ]
+    },
+    {
+        "id": 2182,
+        "name": "Casablanca – Hay Hassani",
+        "code": "hssnI",
+        "courier": "ozon_express",
+        "deliveredPrice": 20,
+        "returnedPrice": 0,
+        "refusedPrice": 0,
+        "aliases": [
+            "hssni"
+        ]
+    },
+    {
+        "id": 2187,
+        "name": "Casablanca – Hay Mohammadi",
+        "code": "mhmd",
+        "courier": "ozon_express",
+        "deliveredPrice": 20,
+        "returnedPrice": 0,
+        "refusedPrice": 0,
+        "aliases": [
+            "mhmd"
+        ]
+    },
+    {
+        "id": 2166,
+        "name": "Casablanca – Lissasfa",
+        "code": "lssf",
+        "courier": "ozon_express",
+        "deliveredPrice": 20,
+        "returnedPrice": 0,
+        "refusedPrice": 0,
+        "aliases": [
+            "lssf"
+        ]
+    },
+    {
+        "id": 2179,
+        "name": "Casablanca – Maarif",
+        "code": "maarif",
+        "courier": "ozon_express",
+        "deliveredPrice": 20,
+        "returnedPrice": 0,
+        "refusedPrice": 0,
+        "aliases": [
+            "maarif"
+        ]
+    },
+    {
+        "id": 2167,
+        "name": "Casablanca – Moulay Rachid",
+        "code": "mrachid",
+        "courier": "ozon_express",
+        "deliveredPrice": 20,
+        "returnedPrice": 0,
+        "refusedPrice": 0,
+        "aliases": [
+            "mrachid"
+        ]
+    },
+    {
+        "id": 2171,
+        "name": "Casablanca – Ouasis",
+        "code": "ouasis",
+        "courier": "ozon_express",
+        "deliveredPrice": 20,
+        "returnedPrice": 0,
+        "refusedPrice": 0,
+        "aliases": [
+            "ouasis"
+        ]
+    },
+    {
+        "id": 2177,
+        "name": "Casablanca – Oulfa",
+        "code": "olf",
+        "courier": "ozon_express",
+        "deliveredPrice": 20,
+        "returnedPrice": 0,
+        "refusedPrice": 0,
+        "aliases": [
+            "olf"
+        ]
+    },
+    {
+        "id": 2189,
+        "name": "Casablanca – Roches Noires",
+        "code": "rchnr",
+        "courier": "ozon_express",
+        "deliveredPrice": 20,
+        "returnedPrice": 0,
+        "refusedPrice": 0,
+        "aliases": [
+            "rchnr"
+        ]
+    },
+    {
+        "id": 2169,
+        "name": "Casablanca – Sbata",
+        "code": "sbata",
+        "courier": "ozon_express",
+        "deliveredPrice": 20,
+        "returnedPrice": 0,
+        "refusedPrice": 0,
+        "aliases": [
+            "sbata"
+        ]
+    },
+    {
+        "id": 2165,
+        "name": "Casablanca – Sidi Maarouf",
+        "code": "mrof",
+        "courier": "ozon_express",
+        "deliveredPrice": 20,
+        "returnedPrice": 0,
+        "refusedPrice": 0,
+        "aliases": [
+            "mrof"
+        ]
+    },
+    {
+        "id": 2186,
+        "name": "Casablanca – Sidi Moumen",
+        "code": "MMN",
+        "courier": "ozon_express",
+        "deliveredPrice": 20,
+        "returnedPrice": 0,
+        "refusedPrice": 0,
+        "aliases": [
+            "mmn"
+        ]
+    },
+    {
+        "id": 2168,
+        "name": "Casablanca – Sidi Othmane",
+        "code": "sotmn",
+        "courier": "ozon_express",
+        "deliveredPrice": 20,
+        "returnedPrice": 0,
+        "refusedPrice": 0,
+        "aliases": [
+            "sotmn"
+        ]
+    },
+    {
+        "id": 2323,
+        "name": "Casadia-daroua",
+        "code": "casadia",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "casadia",
+            "daroua"
+        ]
+    },
+    {
+        "id": 2156,
+        "name": "centre 44 - marrakech",
+        "code": "cntr",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "cntr",
+            "centre 44",
+            "marrakech"
+        ]
+    },
+    {
+        "id": 2340,
+        "name": "Chagar - Béni Mellal",
+        "code": "CHAGAR",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "chagar",
+            "béni mellal"
+        ]
+    },
+    {
+        "id": 1804,
+        "name": "Chaibate-el jadida",
+        "code": "Chai",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "chai",
+            "chaibate",
+            "el jadida"
+        ]
+    },
+    {
+        "id": 2264,
+        "name": "Chbika-tantan",
+        "code": "chbka",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "chbka",
+            "chbika",
+            "tantan"
+        ]
+    },
+    {
+        "id": 583,
+        "name": "Chefchaouen",
+        "code": "chf",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "chf"
+        ]
+    },
+    {
+        "id": 1145,
+        "name": "CHELLALAT",
+        "code": "CHELLAL",
+        "courier": "ozon_express",
+        "deliveredPrice": 35,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "chellal"
+        ]
+    },
+    {
+        "id": 1648,
+        "name": "Chichaoua-VILLE",
+        "code": "wch",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "wch",
+            "chichaoua",
+            "ville"
+        ]
+    },
+    {
+        "id": 2318,
+        "name": "Chlihat-dar bouaza",
+        "code": "CHLH",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "chlh",
+            "chlihat",
+            "dar bouaza"
+        ]
+    },
+    {
+        "id": 2290,
+        "name": "Chnafa-sidi yahya",
+        "code": "Chnafa",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "chnafa",
+            "sidi yahya"
+        ]
+    },
+    {
+        "id": 1641,
+        "name": "Chouiter",
+        "code": "Chotr",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "chotr"
+        ]
+    },
+    {
+        "id": 1616,
+        "name": "CHRAFAT-Chefchaouen",
+        "code": "CHRA",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "chra",
+            "chrafat",
+            "chefchaouen"
+        ]
+    },
+    {
+        "id": 103,
+        "name": "Dakhla",
+        "code": "DAK",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "dak"
+        ]
+    },
+    {
+        "id": 1959,
+        "name": "Daliya_ksar sghir",
+        "code": "dly",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "dly"
+        ]
+    },
+    {
+        "id": 415,
+        "name": "DAR BOUAZZA",
+        "code": "DR",
+        "courier": "ozon_express",
+        "deliveredPrice": 35,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "dr"
+        ]
+    },
+    {
+        "id": 1854,
+        "name": "Dar el Amri-Sidi Sliman",
+        "code": "Amri",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "amri",
+            "dar el amri",
+            "sidi sliman"
+        ]
+    },
+    {
+        "id": 2010,
+        "name": "DAR EL GADARI",
+        "code": "DRGDR",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "drgdr"
+        ]
+    },
+    {
+        "id": 2226,
+        "name": "Dar El Jadida-souk larbaa",
+        "code": "jddi",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "jddi",
+            "dar el jadida",
+            "souk larbaa"
+        ]
+    },
+    {
+        "id": 1978,
+        "name": "DAR EL KABDANI-DRIOUCH",
+        "code": "DRK",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "drk",
+            "dar el kabdani",
+            "driouch"
+        ]
+    },
+    {
+        "id": 1602,
+        "name": "Dar Ould Zidouh",
+        "code": "Zidouh",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "zidouh"
+        ]
+    },
+    {
+        "id": 2306,
+        "name": "Dar16-errahma",
+        "code": "DAR16",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "dar16",
+            "errahma"
+        ]
+    },
+    {
+        "id": 493,
+        "name": "DAROUA",
+        "code": "DRW",
+        "courier": "ozon_express",
+        "deliveredPrice": 35,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "drw"
+        ]
+    },
+    {
+        "id": 2292,
+        "name": "dayat aicha -sidi yahya",
+        "code": "daya",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "daya",
+            "dayat aicha",
+            "sidi yahya"
+        ]
+    },
+    {
+        "id": 1715,
+        "name": "dcheira",
+        "code": "dch",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "dch"
+        ]
+    },
+    {
+        "id": 2121,
+        "name": "DEBDOU",
+        "code": "DBDO",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "dbdo"
+        ]
+    },
+    {
+        "id": 1756,
+        "name": "Demnate",
+        "code": "Dente",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "dente"
+        ]
+    },
+    {
+        "id": 1930,
+        "name": "Derdara-Chefchaouen",
+        "code": "chefdrd",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "chefdrd",
+            "derdara",
+            "chefchaouen"
+        ]
+    },
+    {
+        "id": 2069,
+        "name": "Derdara-taroudant",
+        "code": "drdr",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "drdr",
+            "derdara",
+            "taroudant"
+        ]
+    },
+    {
+        "id": 1905,
+        "name": "Dghaliyn-ASILAH",
+        "code": "DGH",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "dgh",
+            "dghaliyn",
+            "asilah"
+        ]
+    },
+    {
+        "id": 1958,
+        "name": "Diki_ksar sghir",
+        "code": "diki",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "diki"
+        ]
+    },
+    {
+        "id": 1661,
+        "name": "Dkhissa-meknes",
+        "code": "Dkh",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "dkh",
+            "dkhissa",
+            "meknes"
+        ]
+    },
+    {
+        "id": 2203,
+        "name": "Dlalha",
+        "code": "Dllhaa",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "dllhaa"
+        ]
+    },
+    {
+        "id": 1673,
+        "name": "Douar Boumaiz",
+        "code": "Baiz",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "baiz"
+        ]
+    },
+    {
+        "id": 2108,
+        "name": "Douar jdida-chichaoua",
+        "code": "jda",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "jda",
+            "douar jdida",
+            "chichaoua"
+        ]
+    },
+    {
+        "id": 2219,
+        "name": "douar larab(ait amira)-agadir",
+        "code": "douarlrb",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "douarlrb",
+            "douar larab(ait amira)",
+            "agadir"
+        ]
+    },
+    {
+        "id": 2047,
+        "name": "DOUAR LKASIT-NADOR",
+        "code": "KST",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "kst",
+            "douar lkasit",
+            "nador"
+        ]
+    },
+    {
+        "id": 2046,
+        "name": "Douar Rja Fellah-nador",
+        "code": "fellah",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "fellah",
+            "douar rja fellah",
+            "nador"
+        ]
+    },
+    {
+        "id": 2105,
+        "name": "Douar si omara-chichaoua",
+        "code": "omara",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "omara",
+            "douar si omara",
+            "chichaoua"
+        ]
+    },
+    {
+        "id": 2021,
+        "name": "douar Zliligue-fes",
+        "code": "douar",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "douar",
+            "douar zliligue",
+            "fes"
+        ]
+    },
+    {
+        "id": 2017,
+        "name": "Douiyat-fes",
+        "code": "DOUY",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "douy",
+            "douiyat",
+            "fes"
+        ]
+    },
+    {
+        "id": 1328,
+        "name": "Drarga",
+        "code": "Drar",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "drar"
+        ]
+    },
+    {
+        "id": 1974,
+        "name": "DRIOUCH VILLE",
+        "code": "DRIO",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "drio"
+        ]
+    },
+    {
+        "id": 2142,
+        "name": "Echammaia-youssoufia",
+        "code": "ACM",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "acm",
+            "echammaia",
+            "youssoufia"
+        ]
+    },
+    {
+        "id": 1858,
+        "name": "El aouama-tanger",
+        "code": "aoama",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "aoama",
+            "el aouama",
+            "tanger"
+        ]
+    },
+    {
+        "id": 2147,
+        "name": "el argoub-dakhla",
+        "code": "ARGB",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "argb",
+            "el argoub",
+            "dakhla"
+        ]
+    },
+    {
+        "id": 1734,
+        "name": "El Borj-KHENIFRA",
+        "code": "Borj",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "borj",
+            "el borj",
+            "khenifra"
+        ]
+    },
+    {
+        "id": 2198,
+        "name": "El Borouj ville",
+        "code": "brjj",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "brjj"
+        ]
+    },
+    {
+        "id": 2054,
+        "name": "El boura-taroudant",
+        "code": "boura",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "boura",
+            "el boura",
+            "taroudant"
+        ]
+    },
+    {
+        "id": 1627,
+        "name": "El Gara-Berrchid",
+        "code": "Gara",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "gara",
+            "el gara",
+            "berrchid"
+        ]
+    },
+    {
+        "id": 1894,
+        "name": "EL HALHAL MEDIOUNA",
+        "code": "LHAL",
+        "courier": "ozon_express",
+        "deliveredPrice": 35,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "lhal"
+        ]
+    },
+    {
+        "id": 2053,
+        "name": "El houmer-taroudant",
+        "code": "houmer",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "houmer",
+            "el houmer",
+            "taroudant"
+        ]
+    },
+    {
+        "id": 109,
+        "name": "El Jadida",
+        "code": "EJD",
+        "courier": "ozon_express",
+        "deliveredPrice": 35,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ejd"
+        ]
+    },
+    {
+        "id": 2271,
+        "name": "El Johra-Ouazzane",
+        "code": "Johra",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "johra",
+            "el johra",
+            "ouazzane"
+        ]
+    },
+    {
+        "id": 1731,
+        "name": "El Kebab-KHENIFRA",
+        "code": "Kebb",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "kebb",
+            "el kebab",
+            "khenifra"
+        ]
+    },
+    {
+        "id": 2333,
+        "name": "El Kotma - Béni Mellal",
+        "code": "kotma",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "kotma",
+            "el kotma",
+            "béni mellal"
+        ]
+    },
+    {
+        "id": 1601,
+        "name": "El Ksiba - Beni-Mellal",
+        "code": "Ksiba",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ksiba",
+            "el ksiba",
+            "beni",
+            "mellal"
+        ]
+    },
+    {
+        "id": 1543,
+        "name": "El Maader El Kabir-TIZNIT",
+        "code": "Maader",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "maader",
+            "el maader el kabir",
+            "tiznit"
+        ]
+    },
+    {
+        "id": 1243,
+        "name": "El Mansouria",
+        "code": "souria",
+        "courier": "ozon_express",
+        "deliveredPrice": 35,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "souria"
+        ]
+    },
+    {
+        "id": 1969,
+        "name": "El Menzel - Sefrou",
+        "code": "MZ",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "mz",
+            "el menzel",
+            "sefrou"
+        ]
+    },
+    {
+        "id": 1791,
+        "name": "El Ouatia",
+        "code": "ATIA",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "atia"
+        ]
+    },
+    {
+        "id": 2308,
+        "name": "Elfajr-errahma",
+        "code": "FAJR",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "fajr",
+            "elfajr",
+            "errahma"
+        ]
+    },
+    {
+        "id": 1363,
+        "name": "ElHajeb VILLE",
+        "code": "ajeb",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ajeb"
+        ]
+    },
+    {
+        "id": 1257,
+        "name": "Erfoud VILLE",
+        "code": "ARRE",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "arre"
+        ]
+    },
+    {
+        "id": 607,
+        "name": "ERRACHIDIA",
+        "code": "ERR",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 0,
+        "aliases": [
+            "err"
+        ]
+    },
+    {
+        "id": 403,
+        "name": "ERRAHMA VILLE",
+        "code": "ER",
+        "courier": "ozon_express",
+        "deliveredPrice": 30,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "er"
+        ]
+    },
+    {
+        "id": 1728,
+        "name": "Essaouira الصويرة",
+        "code": "ESRW",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "esrw"
+        ]
+    },
+    {
+        "id": 1792,
+        "name": "Essemara-السمارة",
+        "code": "mara",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "mara",
+            "essemara",
+            "السمارة"
+        ]
+    },
+    {
+        "id": 1967,
+        "name": "Ezzhiliga",
+        "code": "ezz",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ezz"
+        ]
+    },
+    {
+        "id": 1701,
+        "name": "Fam El Hisn-tata",
+        "code": "Hisn",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "hisn",
+            "fam el hisn",
+            "tata"
+        ]
+    },
+    {
+        "id": 1819,
+        "name": "ferkhana-nador",
+        "code": "ferkh",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ferkh",
+            "ferkhana",
+            "nador"
+        ]
+    },
+    {
+        "id": 127,
+        "name": "Fes",
+        "code": "FES",
+        "courier": "ozon_express",
+        "deliveredPrice": 35,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "fes"
+        ]
+    },
+    {
+        "id": 1841,
+        "name": "FIGUIG",
+        "code": "FIG",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "fig"
+        ]
+    },
+    {
+        "id": 133,
+        "name": "Fnideq",
+        "code": "FNI",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "fni"
+        ]
+    },
+    {
+        "id": 2107,
+        "name": "Forina-chichaoua",
+        "code": "forina",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "forina",
+            "chichaoua"
+        ]
+    },
+    {
+        "id": 1951,
+        "name": "foum jamaa-Azilal",
+        "code": "FMJMA",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "fmjma",
+            "foum jamaa",
+            "azilal"
+        ]
+    },
+    {
+        "id": 1741,
+        "name": "Foum Oudi-زاوية",
+        "code": "Oudi",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "oudi",
+            "foum oudi",
+            "زاوية"
+        ]
+    },
+    {
+        "id": 1700,
+        "name": "Foum Zguid",
+        "code": "Zgd",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "zgd"
+        ]
+    },
+    {
+        "id": 1881,
+        "name": "Fouwarat-meknes",
+        "code": "Frt",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "frt",
+            "fouwarat",
+            "meknes"
+        ]
+    },
+    {
+        "id": 2324,
+        "name": "fquih ben saleh",
+        "code": "rfg",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "rfg"
+        ]
+    },
+    {
+        "id": 2088,
+        "name": "Fraita-kelaa des sraghna",
+        "code": "Fraita",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "fraita",
+            "kelaa des sraghna"
+        ]
+    },
+    {
+        "id": 1942,
+        "name": "galaz - taounate",
+        "code": "galaz",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "galaz",
+            "taounate"
+        ]
+    },
+    {
+        "id": 1580,
+        "name": "Gfifat",
+        "code": "Gfif",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "gfif"
+        ]
+    },
+    {
+        "id": 1920,
+        "name": "Ghafsai",
+        "code": "ghfs",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ghfs"
+        ]
+    },
+    {
+        "id": 2162,
+        "name": "Ghmat-marrakech",
+        "code": "ghmat",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ghmat",
+            "marrakech"
+        ]
+    },
+    {
+        "id": 1632,
+        "name": "Gouassem-VILLE",
+        "code": "Gouass",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "gouass",
+            "gouassem",
+            "ville"
+        ]
+    },
+    {
+        "id": 1286,
+        "name": "Goulmima-errachidia",
+        "code": "Goul",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "goul",
+            "goulmima",
+            "errachidia"
+        ]
+    },
+    {
+        "id": 1788,
+        "name": "Gourrama",
+        "code": "grma",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "grma"
+        ]
+    },
+    {
+        "id": 2304,
+        "name": "grinat-sidi kacem",
+        "code": "grinat",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "grinat",
+            "sidi kacem"
+        ]
+    },
+    {
+        "id": 1824,
+        "name": "Guelmim-ville",
+        "code": "Glj",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "glj",
+            "guelmim",
+            "ville"
+        ]
+    },
+    {
+        "id": 1873,
+        "name": "Guercif",
+        "code": "grcf",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "grcf"
+        ]
+    },
+    {
+        "id": 2149,
+        "name": "guerguerat-DAKHLA",
+        "code": "GRG",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "grg",
+            "guerguerat",
+            "dakhla"
+        ]
+    },
+    {
+        "id": 1723,
+        "name": "Guigou-Azrou",
+        "code": "Ggu",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ggu",
+            "guigou",
+            "azrou"
+        ]
+    },
+    {
+        "id": 1683,
+        "name": "Guisser-settat",
+        "code": "Gui",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "gui",
+            "guisser",
+            "settat"
+        ]
+    },
+    {
+        "id": 1839,
+        "name": "Had bouhssoussen",
+        "code": "had",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "had"
+        ]
+    },
+    {
+        "id": 2243,
+        "name": "Had Dra-safi",
+        "code": "hddra",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "hddra",
+            "had dra",
+            "safi"
+        ]
+    },
+    {
+        "id": 1868,
+        "name": "Had Draa",
+        "code": "Draa",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "draa"
+        ]
+    },
+    {
+        "id": 1556,
+        "name": "Had Hrara-SAFI",
+        "code": "Hrara",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "hrara",
+            "had hrara",
+            "safi"
+        ]
+    },
+    {
+        "id": 1572,
+        "name": "Had Kourt",
+        "code": "Kourt",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "kourt"
+        ]
+    },
+    {
+        "id": 1900,
+        "name": "Had lgharbiya-ASILAH",
+        "code": "GHRB",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ghrb",
+            "had lgharbiya",
+            "asilah"
+        ]
+    },
+    {
+        "id": 1911,
+        "name": "Had Oulad Aissa",
+        "code": "WAISSA",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "waissa"
+        ]
+    },
+    {
+        "id": 724,
+        "name": "had soualem",
+        "code": "HDS",
+        "courier": "ozon_express",
+        "deliveredPrice": 35,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "hds"
+        ]
+    },
+    {
+        "id": 1569,
+        "name": "HAD WLAD FRAJ",
+        "code": "FRAJ",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "fraj"
+        ]
+    },
+    {
+        "id": 2135,
+        "name": "Hadada – Youssoufia",
+        "code": "Hdd",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "hdd"
+        ]
+    },
+    {
+        "id": 2005,
+        "name": "Hadd Ouled Jelloul-TAZI",
+        "code": "TZI",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tzi",
+            "hadd ouled jelloul",
+            "tazi"
+        ]
+    },
+    {
+        "id": 1943,
+        "name": "hajria - taounate",
+        "code": "hajria",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "hajria",
+            "taounate"
+        ]
+    },
+    {
+        "id": 2080,
+        "name": "Harat el morabitine-tinghir",
+        "code": "hrtmrbt",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "hrtmrbt",
+            "harat el morabitine",
+            "tinghir"
+        ]
+    },
+    {
+        "id": 1996,
+        "name": "HARHOURA",
+        "code": "HRH",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "hrh"
+        ]
+    },
+    {
+        "id": 1737,
+        "name": "Hattane-Khouribga",
+        "code": "Hate",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "hate",
+            "hattane",
+            "khouribga"
+        ]
+    },
+    {
+        "id": 2295,
+        "name": "helalia-sidi yahya",
+        "code": "helalia",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "helalia",
+            "sidi yahya"
+        ]
+    },
+    {
+        "id": 1321,
+        "name": "Houara",
+        "code": "Hou",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "hou"
+        ]
+    },
+    {
+        "id": 2275,
+        "name": "Idlsan-ouarzazate",
+        "code": "idlsan",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "idlsan",
+            "ouarzazate"
+        ]
+    },
+    {
+        "id": 2043,
+        "name": "IEASSEN-nador",
+        "code": "IEASSEN",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ieassen",
+            "nador"
+        ]
+    },
+    {
+        "id": 333,
+        "name": "IFRAN",
+        "code": "IF",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "if"
+        ]
+    },
+    {
+        "id": 2195,
+        "name": "ighloud-echemmaia",
+        "code": "ighld",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ighld",
+            "ighloud",
+            "echemmaia"
+        ]
+    },
+    {
+        "id": 2039,
+        "name": "IGHMARIYIN-nador",
+        "code": "ghmr",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ghmr",
+            "ighmariyin",
+            "nador"
+        ]
+    },
+    {
+        "id": 1606,
+        "name": "ighram laalam-beni mellal",
+        "code": "ighram",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ighram",
+            "ighram laalam",
+            "beni mellal"
+        ]
+    },
+    {
+        "id": 2060,
+        "name": "ighram-taroudant",
+        "code": "ighrm",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ighrm",
+            "ighram",
+            "taroudant"
+        ]
+    },
+    {
+        "id": 1965,
+        "name": "ighrem Nougdal-Ouarzazate",
+        "code": "ighem",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ighem",
+            "ighrem nougdal",
+            "ouarzazate"
+        ]
+    },
+    {
+        "id": 2031,
+        "name": "IHDADEN-nador",
+        "code": "hddn",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "hddn",
+            "ihdaden",
+            "nador"
+        ]
+    },
+    {
+        "id": 2278,
+        "name": "Iligh-tata",
+        "code": " Iligh  ",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "iligh",
+            "tata"
+        ]
+    },
+    {
+        "id": 2034,
+        "name": "IMACHROUBEN-nador",
+        "code": "mchrb",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "mchrb",
+            "imachrouben",
+            "nador"
+        ]
+    },
+    {
+        "id": 2035,
+        "name": "IMEHARFEN-nador",
+        "code": "mhrfn",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "mhrfn",
+            "imeharfen",
+            "nador"
+        ]
+    },
+    {
+        "id": 2277,
+        "name": "Imghran-ouarzazate",
+        "code": "IMGHRN",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "imghrn",
+            "imghran",
+            "ouarzazate"
+        ]
+    },
+    {
+        "id": 1598,
+        "name": "Imgon-Tinghir",
+        "code": "Img",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "img",
+            "imgon",
+            "tinghir"
+        ]
+    },
+    {
+        "id": 2013,
+        "name": "Imi Ouaddar-agadir",
+        "code": "ouddr",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ouddr",
+            "imi ouaddar",
+            "agadir"
+        ]
+    },
+    {
+        "id": 2092,
+        "name": "iminifri - kelaa des sraghna",
+        "code": "iminifri",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "iminifri",
+            "kelaa des sraghna"
+        ]
+    },
+    {
+        "id": 2151,
+        "name": "Iminitanoute",
+        "code": "Imnt",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "imnt"
+        ]
+    },
+    {
+        "id": 2274,
+        "name": "Imitk-tata",
+        "code": "Imitk  ",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "imitk",
+            "tata"
+        ]
+    },
+    {
+        "id": 339,
+        "name": "IMOUZAR KANDRE",
+        "code": "IMZ",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "imz"
+        ]
+    },
+    {
+        "id": 2132,
+        "name": "imouzzar marmoucha-azrou",
+        "code": "immzzr",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "immzzr",
+            "imouzzar marmoucha",
+            "azrou"
+        ]
+    },
+    {
+        "id": 2123,
+        "name": "imsouane-agadir",
+        "code": "imso",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "imso",
+            "imsouane",
+            "agadir"
+        ]
+    },
+    {
+        "id": 1482,
+        "name": "imzouren",
+        "code": "Imzm",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "imzm"
+        ]
+    },
+    {
+        "id": 2143,
+        "name": "Inchaden-agadir",
+        "code": "INCH",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "inch",
+            "inchaden",
+            "agadir"
+        ]
+    },
+    {
+        "id": 151,
+        "name": "Inzegane",
+        "code": "INZ",
+        "courier": "ozon_express",
+        "deliveredPrice": 35,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "inz"
+        ]
+    },
+    {
+        "id": 2307,
+        "name": "Iraki-errahma",
+        "code": "Iraki",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "iraki",
+            "errahma"
+        ]
+    },
+    {
+        "id": 2033,
+        "name": "ISAKKAJEN-nador",
+        "code": "skkjn",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "skkjn",
+            "isakkajen",
+            "nador"
+        ]
+    },
+    {
+        "id": 1702,
+        "name": "Issafen-tata",
+        "code": "Issa",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "issa",
+            "issafen",
+            "tata"
+        ]
+    },
+    {
+        "id": 1692,
+        "name": "Issaguen",
+        "code": "Isgue",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "isgue"
+        ]
+    },
+    {
+        "id": 2223,
+        "name": "Issen (Drarga – Route Houara)-agadir",
+        "code": "issen",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "issen",
+            "issen (drarga – route houara)",
+            "agadir"
+        ]
+    },
+    {
+        "id": 1786,
+        "name": "ITZER",
+        "code": "Itzer",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "itzer"
+        ]
+    },
+    {
+        "id": 2029,
+        "name": "JAADAR-nador",
+        "code": "jaad",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "jaad",
+            "jaadar",
+            "nador"
+        ]
+    },
+    {
+        "id": 1618,
+        "name": "jamaat fdala",
+        "code": "jamaat",
+        "courier": "ozon_express",
+        "deliveredPrice": 35,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "jamaat"
+        ]
+    },
+    {
+        "id": 1784,
+        "name": "Jamaat foko-Berrchid",
+        "code": "foko",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "foko",
+            "jamaat foko",
+            "berrchid"
+        ]
+    },
+    {
+        "id": 2096,
+        "name": "Jamaat larracha - Kelaâ des Sraghna",
+        "code": "jmaat",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "jmaat",
+            "jamaat larracha",
+            "kelaâ des sraghna"
+        ]
+    },
+    {
+        "id": 2315,
+        "name": "Jamaat melilla-bensliman",
+        "code": "JAMAT",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "jamat",
+            "jamaat melilla",
+            "bensliman"
+        ]
+    },
+    {
+        "id": 1778,
+        "name": "Jamaat Riah-Berrchid",
+        "code": "Riah",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "riah",
+            "jamaat riah",
+            "berrchid"
+        ]
+    },
+    {
+        "id": 427,
+        "name": "Jamaat shaim",
+        "code": "JMS",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "jms"
+        ]
+    },
+    {
+        "id": 2075,
+        "name": "Jaqma-berrchid",
+        "code": "jaqma",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "jaqma",
+            "berrchid"
+        ]
+    },
+    {
+        "id": 1925,
+        "name": "JEBHA",
+        "code": "Jha",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "jha"
+        ]
+    },
+    {
+        "id": 2331,
+        "name": "Jemaa ahl merbaa",
+        "code": "MRB",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "mrb"
+        ]
+    },
+    {
+        "id": 2231,
+        "name": "Jemâa El Houdrane-khemisset",
+        "code": "jmaa",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "jmaa",
+            "jemâa el houdrane",
+            "khemisset"
+        ]
+    },
+    {
+        "id": 1384,
+        "name": "Jerada",
+        "code": "Jer",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "jer"
+        ]
+    },
+    {
+        "id": 1903,
+        "name": "Jilaliya-ASILAH",
+        "code": "JL",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "jl",
+            "jilaliya",
+            "asilah"
+        ]
+    },
+    {
+        "id": 2253,
+        "name": "Jmaâat Bni Kola-Ouazzane",
+        "code": "Bni Kola",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "bni kola",
+            "jmaâat bni kola",
+            "ouazzane"
+        ]
+    },
+    {
+        "id": 2263,
+        "name": "Jmaât Ben Khlil-tantan",
+        "code": "jmat",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "jmat",
+            "jmaât ben khlil",
+            "tantan"
+        ]
+    },
+    {
+        "id": 2267,
+        "name": "Jmaât Beni Oual-Ouazzane",
+        "code": "Beni Oual",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "beni oual",
+            "jmaât beni oual",
+            "ouazzane"
+        ]
+    },
+    {
+        "id": 2262,
+        "name": "Jmaât Brikcha-Ouazzane",
+        "code": "Brikcha  ",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "brikcha",
+            "jmaât brikcha",
+            "ouazzane"
+        ]
+    },
+    {
+        "id": 2344,
+        "name": "Jmaât mouqrissat-ouazzan",
+        "code": "mouqrissat",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "mouqrissat",
+            "jmaât mouqrissat",
+            "ouazzan"
+        ]
+    },
+    {
+        "id": 2317,
+        "name": "Jmaiaa-bouskoura",
+        "code": "JAMAIA",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "jamaia",
+            "jmaiaa",
+            "bouskoura"
+        ]
+    },
+    {
+        "id": 1571,
+        "name": "Jorf El Melha-OUZZANE",
+        "code": "Jorf",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "jorf",
+            "jorf el melha",
+            "ouzzane"
+        ]
+    },
+    {
+        "id": 1564,
+        "name": "Jorf Sefar",
+        "code": "sefar",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "sefar"
+        ]
+    },
+    {
+        "id": 2160,
+        "name": "Jorf-erfoud",
+        "code": "jrf",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "jrf",
+            "jorf",
+            "erfoud"
+        ]
+    },
+    {
+        "id": 2093,
+        "name": "Jwala-kelaa des sraghna",
+        "code": "jwala",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "jwala",
+            "kelaa des sraghna"
+        ]
+    },
+    {
+        "id": 1687,
+        "name": "Kabila",
+        "code": "Kabi",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "kabi"
+        ]
+    },
+    {
+        "id": 2048,
+        "name": "KACHADIA-NADOR",
+        "code": "KCHD",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "kchd",
+            "kachadia",
+            "nador"
+        ]
+    },
+    {
+        "id": 2294,
+        "name": "Kachla-sidi yahya",
+        "code": "kachla",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "kachla",
+            "sidi yahya"
+        ]
+    },
+    {
+        "id": 1732,
+        "name": "Kaf Nsour-KHENIRA",
+        "code": "Nsours",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "nsours",
+            "kaf nsour",
+            "khenira"
+        ]
+    },
+    {
+        "id": 1989,
+        "name": "kamouni",
+        "code": "KMN",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "kmn"
+        ]
+    },
+    {
+        "id": 1933,
+        "name": "kantra askar - taounate",
+        "code": "kntr",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "kntr",
+            "kantra askar",
+            "taounate"
+        ]
+    },
+    {
+        "id": 1555,
+        "name": "Kariat Arkman‎-Nador",
+        "code": "Arkman",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "arkman",
+            "kariat arkman‎",
+            "nador"
+        ]
+    },
+    {
+        "id": 1468,
+        "name": "Kariat Ba Mohamed",
+        "code": "Kariat",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "kariat"
+        ]
+    },
+    {
+        "id": 157,
+        "name": "Kasba Tadla",
+        "code": "KAS",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "kas"
+        ]
+    },
+    {
+        "id": 2081,
+        "name": "Kasba tadla-oulad yaich-benimellal",
+        "code": "ksb",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ksb",
+            "kasba tadla",
+            "oulad yaich",
+            "benimellal"
+        ]
+    },
+    {
+        "id": 2082,
+        "name": "Kasba tadla-oulad youssef-beni mellal",
+        "code": "ysssf",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ysssf",
+            "kasba tadla",
+            "oulad youssef",
+            "beni mellal"
+        ]
+    },
+    {
+        "id": 1578,
+        "name": "Kasbah El Taher",
+        "code": "Taher",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "taher"
+        ]
+    },
+    {
+        "id": 1980,
+        "name": "Kasita-DRIOUCH",
+        "code": "KASITA",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "kasita",
+            "driouch"
+        ]
+    },
+    {
+        "id": 1754,
+        "name": "Kelâa des Sraghna",
+        "code": "Srgn",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "srgn"
+        ]
+    },
+    {
+        "id": 1391,
+        "name": "Kelâat M Gouna-قلعة امڭونة",
+        "code": "Gouna",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "gouna",
+            "kelâat m gouna",
+            "قلعة امڭونة"
+        ]
+    },
+    {
+        "id": 949,
+        "name": "KELIAA",
+        "code": "KLIAA",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "kliaa"
+        ]
+    },
+    {
+        "id": 1089,
+        "name": "KENITRA VILLE",
+        "code": "KNVI",
+        "courier": "ozon_express",
+        "deliveredPrice": 35,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "knvi"
+        ]
+    },
+    {
+        "id": 2025,
+        "name": "Ketama-houcima",
+        "code": "KTM",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ktm",
+            "ketama",
+            "houcima"
+        ]
+    },
+    {
+        "id": 1929,
+        "name": "Khamis M Diq-chefchaouen",
+        "code": "khmdq",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "khmdq",
+            "khamis m diq",
+            "chefchaouen"
+        ]
+    },
+    {
+        "id": 2065,
+        "name": "Khdadra-ksar el kbir",
+        "code": "khdr",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "khdr",
+            "khdadra",
+            "ksar el kbir"
+        ]
+    },
+    {
+        "id": 2224,
+        "name": "Khemis Dades -boumalen dades",
+        "code": "dadess",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "dadess",
+            "khemis dades",
+            "boumalen dades"
+        ]
+    },
+    {
+        "id": 2220,
+        "name": "Khemis Dades -kelaa mgouna",
+        "code": "khmsd",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "khmsd",
+            "khemis dades",
+            "kelaa mgouna"
+        ]
+    },
+    {
+        "id": 2250,
+        "name": "Khemis Meskala-Essaouira",
+        "code": "khmsskl",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "khmsskl",
+            "khemis meskala",
+            "essaouira"
+        ]
+    },
+    {
+        "id": 1669,
+        "name": "Khemis Sahel",
+        "code": "Sah",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "sah"
+        ]
+    },
+    {
+        "id": 1750,
+        "name": "khemis zemamra",
+        "code": "zmmr",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "zmmr"
+        ]
+    },
+    {
+        "id": 1271,
+        "name": "Khemisset ville",
+        "code": "Khem",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "khem"
+        ]
+    },
+    {
+        "id": 1671,
+        "name": "Khenichet-SIDI KACEM",
+        "code": "Khei",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "khei",
+            "khenichet",
+            "sidi kacem"
+        ]
+    },
+    {
+        "id": 1711,
+        "name": "KHENIFRA VILLE",
+        "code": "khnf",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "khnf"
+        ]
+    },
+    {
+        "id": 1932,
+        "name": "Khlalfa-Taounate",
+        "code": "khllf",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "khllf",
+            "khlalfa",
+            "taounate"
+        ]
+    },
+    {
+        "id": 2139,
+        "name": "Khnoufa – Youssoufia",
+        "code": "KHNOUFA",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "khnoufa"
+        ]
+    },
+    {
+        "id": 169,
+        "name": "Khouribga",
+        "code": "KHO",
+        "courier": "ozon_express",
+        "deliveredPrice": 40,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "kho"
+        ]
+    },
+    {
+        "id": 2140,
+        "name": "Khwalqa – Youssoufia",
+        "code": "Khwalqa",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "khwalqa"
+        ]
+    },
+    {
+        "id": 2070,
+        "name": "khzana-chefchaouen",
+        "code": "KHZN",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "khzn",
+            "khzana",
+            "chefchaouen"
+        ]
+    },
+    {
+        "id": 1805,
+        "name": "Kouassem-el jadida",
+        "code": "Koua",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "koua",
+            "kouassem",
+            "el jadida"
+        ]
+    },
+    {
+        "id": 2254,
+        "name": "Krimat-essaouira",
+        "code": "krimat",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "krimat",
+            "essaouira"
+        ]
+    },
+    {
+        "id": 1908,
+        "name": "Ksar El Kebir",
+        "code": "KS",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ks"
+        ]
+    },
+    {
+        "id": 2287,
+        "name": "Ksar Lmajaz- ksar Sghir",
+        "code": "Lmajaz",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "lmajaz",
+            "ksar lmajaz",
+            "ksar sghir"
+        ]
+    },
+    {
+        "id": 1919,
+        "name": "ksar sghir",
+        "code": "ksrss",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ksrss"
+        ]
+    },
+    {
+        "id": 1889,
+        "name": "Kwidar-meknes",
+        "code": "kdr",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "kdr",
+            "kwidar",
+            "meknes"
+        ]
+    },
+    {
+        "id": 2328,
+        "name": "Laajana",
+        "code": "laajan",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "laajan"
+        ]
+    },
+    {
+        "id": 1990,
+        "name": "LAARJATE",
+        "code": "LRJT",
+        "courier": "ozon_express",
+        "deliveredPrice": 40,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "lrjt"
+        ]
+    },
+    {
+        "id": 886,
+        "name": "LAAROUI",
+        "code": "AROUI",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "aroui"
+        ]
+    },
+    {
+        "id": 2125,
+        "name": "Laâtamna",
+        "code": "Lata",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "lata"
+        ]
+    },
+    {
+        "id": 2094,
+        "name": "Laâtamna-kelaa des sraghna",
+        "code": "laatmn",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "laatmn",
+            "laâtamna",
+            "kelaa des sraghna"
+        ]
+    },
+    {
+        "id": 1832,
+        "name": "LAAYOUNE-PLAYA",
+        "code": "PLYA",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "plya",
+            "laayoune",
+            "playa"
+        ]
+    },
+    {
+        "id": 1831,
+        "name": "LAAYOUNE-PORT",
+        "code": "PRT",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "prt",
+            "laayoune",
+            "port"
+        ]
+    },
+    {
+        "id": 1830,
+        "name": "Laayoune-ville",
+        "code": "Layn",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "layn",
+            "laayoune",
+            "ville"
+        ]
+    },
+    {
+        "id": 2309,
+        "name": "Labissa-bouskoura",
+        "code": "LBSS",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "lbss",
+            "labissa",
+            "bouskoura"
+        ]
+    },
+    {
+        "id": 2305,
+        "name": "Labza-sidi kacem",
+        "code": "labza",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "labza",
+            "sidi kacem"
+        ]
+    },
+    {
+        "id": 2329,
+        "name": "Lahlalma",
+        "code": "lhlm",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "lhlm"
+        ]
+    },
+    {
+        "id": 2192,
+        "name": "Lahraouyine-casablanca",
+        "code": "hrouin",
+        "courier": "ozon_express",
+        "deliveredPrice": 20,
+        "returnedPrice": 0,
+        "refusedPrice": 0,
+        "aliases": [
+            "hrouin",
+            "lahraouyine",
+            "casablanca"
+        ]
+    },
+    {
+        "id": 1906,
+        "name": "Lakhssas",
+        "code": "Lakhsa",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "lakhsa"
+        ]
+    },
+    {
+        "id": 2111,
+        "name": "Lalla aziza-chichaoua",
+        "code": "lallaazz",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "lallaazz",
+            "lalla aziza",
+            "chichaoua"
+        ]
+    },
+    {
+        "id": 2291,
+        "name": "Lalla btoul / Lwzar (sidi yahya)",
+        "code": "Bṭoul",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "bṭoul",
+            "lalla btoul",
+            "lwzar (sidi yahya)"
+        ]
+    },
+    {
+        "id": 1588,
+        "name": "Lalla Fatna",
+        "code": "Fatna",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "fatna"
+        ]
+    },
+    {
+        "id": 1753,
+        "name": "Lalla Mimouna",
+        "code": "MIMNA",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "mimna"
+        ]
+    },
+    {
+        "id": 1766,
+        "name": "Lalla Takerkoust",
+        "code": "Take",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "take"
+        ]
+    },
+    {
+        "id": 2129,
+        "name": "Lamriss",
+        "code": "Lamriss",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "lamriss"
+        ]
+    },
+    {
+        "id": 1599,
+        "name": "Laouamra",
+        "code": "Laoua",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "laoua"
+        ]
+    },
+    {
+        "id": 187,
+        "name": "Larache",
+        "code": "LAR",
+        "courier": "ozon_express",
+        "deliveredPrice": 40,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "lar"
+        ]
+    },
+    {
+        "id": 1398,
+        "name": "Layoun cherkia-العيون الشرقية",
+        "code": "Aion",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "aion",
+            "layoun cherkia",
+            "العيون الشرقية"
+        ]
+    },
+    {
+        "id": 1733,
+        "name": "Lehri-KHENIFRA",
+        "code": "Lehri",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "lehri",
+            "khenifra"
+        ]
+    },
+    {
+        "id": 2296,
+        "name": "Lghyabat-sidi sliman",
+        "code": "Lghyabat",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "lghyabat",
+            "sidi sliman"
+        ]
+    },
+    {
+        "id": 801,
+        "name": "LHAJ KADOUR VILLE",
+        "code": "HJK",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 20,
+        "aliases": [
+            "hjk"
+        ]
+    },
+    {
+        "id": 1567,
+        "name": "Lhawzia-JADIDA",
+        "code": "Lhawz",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "lhawz",
+            "lhawzia",
+            "jadida"
+        ]
+    },
+    {
+        "id": 2091,
+        "name": "Lhmadna-kelaa des sraghna",
+        "code": "lhmadna",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "lhmadna",
+            "kelaa des sraghna"
+        ]
+    },
+    {
+        "id": 2310,
+        "name": "Lilasparck-bouskoura",
+        "code": "LILAS",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "lilas",
+            "lilasparck",
+            "bouskoura"
+        ]
+    },
+    {
+        "id": 1893,
+        "name": "lkhyayta-had soualem",
+        "code": "khyay",
+        "courier": "ozon_express",
+        "deliveredPrice": 35,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "khyay",
+            "lkhyayta",
+            "had soualem"
+        ]
+    },
+    {
+        "id": 2154,
+        "name": "Lmakina-imintanout",
+        "code": "Mkn",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "mkn",
+            "lmakina",
+            "imintanout"
+        ]
+    },
+    {
+        "id": 794,
+        "name": "LMHAYA",
+        "code": "lMH",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "lmh"
+        ]
+    },
+    {
+        "id": 2159,
+        "name": "lmnabha-marrakech",
+        "code": "mnbh",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "mnbh",
+            "lmnabha",
+            "marrakech"
+        ]
+    },
+    {
+        "id": 1955,
+        "name": "Lmnar Park-ksar sghir",
+        "code": "lmnr",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "lmnr",
+            "lmnar park",
+            "ksar sghir"
+        ]
+    },
+    {
+        "id": 2297,
+        "name": "Lmssada-sidi sliman",
+        "code": "Lmssada",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "lmssada",
+            "sidi sliman"
+        ]
+    },
+    {
+        "id": 2032,
+        "name": "LOMMAL-nador",
+        "code": "lmml",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "lmml",
+            "lommal",
+            "nador"
+        ]
+    },
+    {
+        "id": 2137,
+        "name": "Louihat – Youssoufia",
+        "code": "louihat",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "louihat"
+        ]
+    },
+    {
+        "id": 1561,
+        "name": "Louizia",
+        "code": "Loui",
+        "courier": "ozon_express",
+        "deliveredPrice": 35,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "loui"
+        ]
+    },
+    {
+        "id": 1890,
+        "name": "Lozin-meknes",
+        "code": "lzn",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "lzn",
+            "lozin",
+            "meknes"
+        ]
+    },
+    {
+        "id": 193,
+        "name": "M Diq",
+        "code": "MDQ",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "mdq"
+        ]
+    },
+    {
+        "id": 1991,
+        "name": "MAAMORA",
+        "code": "MAAMRA",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "maamra"
+        ]
+    },
+    {
+        "id": 1544,
+        "name": "Maaziz",
+        "code": "Mzi",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "mzi"
+        ]
+    },
+    {
+        "id": 2163,
+        "name": "Madagh-berkane",
+        "code": "mdgh",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "mdgh",
+            "madagh",
+            "berkane"
+        ]
+    },
+    {
+        "id": 1904,
+        "name": "Marghouba-ASILAH",
+        "code": "MGH",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "mgh",
+            "marghouba",
+            "asilah"
+        ]
+    },
+    {
+        "id": 1686,
+        "name": "marina smir",
+        "code": "smir",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "smir"
+        ]
+    },
+    {
+        "id": 199,
+        "name": "Marrakech",
+        "code": "MRK",
+        "courier": "ozon_express",
+        "deliveredPrice": 35,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "mrk"
+        ]
+    },
+    {
+        "id": 205,
+        "name": "Martil",
+        "code": "MAM",
+        "courier": "ozon_express",
+        "deliveredPrice": 40,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "mam"
+        ]
+    },
+    {
+        "id": 1768,
+        "name": "Marzouga",
+        "code": "Marz",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "marz"
+        ]
+    },
+    {
+        "id": 1656,
+        "name": "Masmouda - Ouazzane",
+        "code": "Mas",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "mas",
+            "masmouda",
+            "ouazzane"
+        ]
+    },
+    {
+        "id": 2001,
+        "name": "Massa",
+        "code": "Msasa",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "msasa"
+        ]
+    },
+    {
+        "id": 2014,
+        "name": "massa chtouka-agadir",
+        "code": "mssa",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "mssa",
+            "massa chtouka",
+            "agadir"
+        ]
+    },
+    {
+        "id": 1565,
+        "name": "Mazagan",
+        "code": "Maza",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "maza"
+        ]
+    },
+    {
+        "id": 2126,
+        "name": "MDAR",
+        "code": "MDA",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "mda"
+        ]
+    },
+    {
+        "id": 571,
+        "name": "Mediouna",
+        "code": "MEDA",
+        "courier": "ozon_express",
+        "deliveredPrice": 35,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "meda"
+        ]
+    },
+    {
+        "id": 1082,
+        "name": "MEHDIA",
+        "code": "meh",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "meh"
+        ]
+    },
+    {
+        "id": 1096,
+        "name": "MEHDIA VILLE",
+        "code": "MHDV",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "mhdv"
+        ]
+    },
+    {
+        "id": 2152,
+        "name": "Mejjat-imintanout",
+        "code": "mjjt",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "mjjt",
+            "mejjat",
+            "imintanout"
+        ]
+    },
+    {
+        "id": 1846,
+        "name": "Mejjat-meknes",
+        "code": "Mejte",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "mejte",
+            "mejjat",
+            "meknes"
+        ]
+    },
+    {
+        "id": 211,
+        "name": "Meknes",
+        "code": "MEK",
+        "courier": "ozon_express",
+        "deliveredPrice": 35,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "mek"
+        ]
+    },
+    {
+        "id": 2150,
+        "name": "MELJAW-ASILAH",
+        "code": "MLJW",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "mljw",
+            "meljaw",
+            "asilah"
+        ]
+    },
+    {
+        "id": 1999,
+        "name": "MERS EL KHIR",
+        "code": "MRSKH",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "mrskh"
+        ]
+    },
+    {
+        "id": 1945,
+        "name": "mezraoua - taounate",
+        "code": "mezraoua",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "mezraoua",
+            "taounate"
+        ]
+    },
+    {
+        "id": 1131,
+        "name": "MHamid El Ghizlane",
+        "code": "MHa",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "mha"
+        ]
+    },
+    {
+        "id": 1975,
+        "name": "Midar-Driouch",
+        "code": "MIDA",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "mida",
+            "midar",
+            "driouch"
+        ]
+    },
+    {
+        "id": 535,
+        "name": "MIDELT",
+        "code": "MDL",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "mdl"
+        ]
+    },
+    {
+        "id": 1623,
+        "name": "Mimosa-mohammedia",
+        "code": "Mimos",
+        "courier": "ozon_express",
+        "deliveredPrice": 35,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "mimos",
+            "mimosa",
+            "mohammedia"
+        ]
+    },
+    {
+        "id": 1782,
+        "name": "mirleft",
+        "code": "mirl",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "mirl"
+        ]
+    },
+    {
+        "id": 1264,
+        "name": "Missour",
+        "code": "Miss",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "miss"
+        ]
+    },
+    {
+        "id": 2252,
+        "name": "Mji (entre Hanchan et Tafdacht)-essaouira",
+        "code": "mjji",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "mjji",
+            "mji (entre hanchan et tafdacht)",
+            "essaouira"
+        ]
+    },
+    {
+        "id": 1895,
+        "name": "MKANSA-MEDIOUNA",
+        "code": "KAN",
+        "courier": "ozon_express",
+        "deliveredPrice": 35,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "kan",
+            "mkansa",
+            "mediouna"
+        ]
+    },
+    {
+        "id": 2007,
+        "name": "Mograne-TAZI",
+        "code": "MGRN",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "mgrn",
+            "mograne",
+            "tazi"
+        ]
+    },
+    {
+        "id": 345,
+        "name": "Mohammedia",
+        "code": "MH",
+        "courier": "ozon_express",
+        "deliveredPrice": 35,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "mh"
+        ]
+    },
+    {
+        "id": 787,
+        "name": "MOLY DRISSE ZARHOUNE",
+        "code": "MLDRI",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 20,
+        "aliases": [
+            "mldri"
+        ]
+    },
+    {
+        "id": 2247,
+        "name": "MOUL EL BERGUI-safi",
+        "code": "mlbrg",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "mlbrg",
+            "moul el bergui",
+            "safi"
+        ]
+    },
+    {
+        "id": 529,
+        "name": "MOULAY ABDELLAH",
+        "code": "MLY",
+        "courier": "ozon_express",
+        "deliveredPrice": 40,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "mly"
+        ]
+    },
+    {
+        "id": 1840,
+        "name": "Moulay bouazza khenifra",
+        "code": "ML",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ml"
+        ]
+    },
+    {
+        "id": 2202,
+        "name": "Moulay Bouselham",
+        "code": "Bslhmm",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "bslhmm"
+        ]
+    },
+    {
+        "id": 1440,
+        "name": "Moulay Yaâcoub",
+        "code": "Yaa",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "yaa"
+        ]
+    },
+    {
+        "id": 1720,
+        "name": "Mrirt Ville",
+        "code": "Mrirt",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "mrirt"
+        ]
+    },
+    {
+        "id": 1712,
+        "name": "Mrirte",
+        "code": "mrie",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "mrie"
+        ]
+    },
+    {
+        "id": 1566,
+        "name": "Msawar Raso",
+        "code": "Raso",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "raso"
+        ]
+    },
+    {
+        "id": 1597,
+        "name": "Msemrir-Tinghir",
+        "code": "Msemr",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "msemr",
+            "msemrir",
+            "tinghir"
+        ]
+    },
+    {
+        "id": 2256,
+        "name": "Msseyed-tantan",
+        "code": "msseyed",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "msseyed",
+            "tantan"
+        ]
+    },
+    {
+        "id": 2314,
+        "name": "Mzabiyin-bouskoura",
+        "code": "MZABI",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "mzabi",
+            "mzabiyin",
+            "bouskoura"
+        ]
+    },
+    {
+        "id": 2153,
+        "name": "mzouda-imintanout",
+        "code": "mzoda",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "mzoda",
+            "mzouda",
+            "imintanout"
+        ]
+    },
+    {
+        "id": 1736,
+        "name": "Mzoudia",
+        "code": "Mzdi",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "mzdi"
+        ]
+    },
+    {
+        "id": 217,
+        "name": "Nador",
+        "code": "NAD",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "nad"
+        ]
+    },
+    {
+        "id": 2109,
+        "name": "Nfifa-chichaoua",
+        "code": "Nfifa",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "nfifa",
+            "chichaoua"
+        ]
+    },
+    {
+        "id": 1760,
+        "name": "NKob Zagora",
+        "code": "nkob",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "nkob"
+        ]
+    },
+    {
+        "id": 433,
+        "name": "Nouaceur",
+        "code": "NSR",
+        "courier": "ozon_express",
+        "deliveredPrice": 35,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "nsr"
+        ]
+    },
+    {
+        "id": 2058,
+        "name": "nouail-taroudant",
+        "code": "nouail",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "nouail",
+            "taroudant"
+        ]
+    },
+    {
+        "id": 2114,
+        "name": "Nowasser-chichaoua",
+        "code": "Nsser",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "nsser",
+            "nowasser",
+            "chichaoua"
+        ]
+    },
+    {
+        "id": 1956,
+        "name": "Nwinwich_ksar sghir",
+        "code": "nw",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "nw"
+        ]
+    },
+    {
+        "id": 1886,
+        "name": "Nzala-meknes",
+        "code": "nzl",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "nzl",
+            "nzala",
+            "meknes"
+        ]
+    },
+    {
+        "id": 2061,
+        "name": "nzalat laadam-benguerir",
+        "code": "nzlt",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "nzlt",
+            "nzalat laadam",
+            "benguerir"
+        ]
+    },
+    {
+        "id": 2097,
+        "name": "Nzalat Laadam-benguerir",
+        "code": "nzalat",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "nzalat",
+            "nzalat laadam",
+            "benguerir"
+        ]
+    },
+    {
+        "id": 1639,
+        "name": "Ouahat Sidi Brahim",
+        "code": "Ouaha",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ouaha"
+        ]
+    },
+    {
+        "id": 2040,
+        "name": "OUAHDANA-nador",
+        "code": "ohdn",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ohdn",
+            "ouahdana",
+            "nador"
+        ]
+    },
+    {
+        "id": 1300,
+        "name": "OUALMES VILLE",
+        "code": "OULM",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "oulm"
+        ]
+    },
+    {
+        "id": 1950,
+        "name": "ouaouizeght-AZILAL",
+        "code": "OUAOUI",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ouaoui",
+            "ouaouizeght",
+            "azilal"
+        ]
+    },
+    {
+        "id": 1838,
+        "name": "Ouaoumana",
+        "code": "ouaoumana",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ouaoumana"
+        ]
+    },
+    {
+        "id": 223,
+        "name": "Ouarzazat",
+        "code": "OUZ",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ouz"
+        ]
+    },
+    {
+        "id": 1040,
+        "name": "Ouazzane",
+        "code": "OZN",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ozn"
+        ]
+    },
+    {
+        "id": 1560,
+        "name": "OUDAYA-Marrakech",
+        "code": "OUDAY",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ouday",
+            "oudaya",
+            "marrakech"
+        ]
+    },
+    {
+        "id": 1876,
+        "name": "Oued Amlil",
+        "code": "od",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "od"
+        ]
+    },
+    {
+        "id": 1688,
+        "name": "Oued Laou",
+        "code": "Laou",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "laou"
+        ]
+    },
+    {
+        "id": 2320,
+        "name": "Oued merzeg-dar bouaza",
+        "code": "MRZG",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "mrzg",
+            "oued merzeg",
+            "dar bouaza"
+        ]
+    },
+    {
+        "id": 2300,
+        "name": "Oued Rman- sidi kacem",
+        "code": "Oued Rman",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "oued rman",
+            "sidi kacem"
+        ]
+    },
+    {
+        "id": 2341,
+        "name": "Oued zem",
+        "code": "Ouedzm",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ouedzm"
+        ]
+    },
+    {
+        "id": 229,
+        "name": "Oujda",
+        "code": "OUJ",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ouj"
+        ]
+    },
+    {
+        "id": 1777,
+        "name": "Oulad Abbou-Berrchid",
+        "code": "Abbo",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "abbo",
+            "oulad abbou",
+            "berrchid"
+        ]
+    },
+    {
+        "id": 2042,
+        "name": "OULAD AISSA-nador",
+        "code": "aissan",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "aissan",
+            "oulad aissa",
+            "nador"
+        ]
+    },
+    {
+        "id": 1603,
+        "name": "Oulad Ayad",
+        "code": "Ayad",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ayad"
+        ]
+    },
+    {
+        "id": 2337,
+        "name": "Oulad Ayoub - Fquih Ben Salah",
+        "code": "ayb",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ayb",
+            "oulad ayoub",
+            "fquih ben salah"
+        ]
+    },
+    {
+        "id": 1584,
+        "name": "Oulad Berhil",
+        "code": "Berhil",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "berhil"
+        ]
+    },
+    {
+        "id": 2293,
+        "name": "Oulad bourahma-sidi yahya",
+        "code": "rahma",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "rahma",
+            "oulad bourahma",
+            "sidi yahya"
+        ]
+    },
+    {
+        "id": 2051,
+        "name": "Oulad brahim-taroudant",
+        "code": "brhmm",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "brhmm",
+            "oulad brahim",
+            "taroudant"
+        ]
+    },
+    {
+        "id": 1581,
+        "name": "Oulad Dahou",
+        "code": "Dahou",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "dahou"
+        ]
+    },
+    {
+        "id": 1745,
+        "name": "Oulad Hamdane-El Jadida",
+        "code": "Hadn",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "hadn",
+            "oulad hamdane",
+            "el jadida"
+        ]
+    },
+    {
+        "id": 2020,
+        "name": "Oulad Hammou-fes",
+        "code": "hmm",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "hmm",
+            "oulad hammou",
+            "fes"
+        ]
+    },
+    {
+        "id": 2124,
+        "name": "Oulad hassoun-marrakech",
+        "code": "HSSN",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "hssn",
+            "oulad hassoun",
+            "marrakech"
+        ]
+    },
+    {
+        "id": 1541,
+        "name": "oulad jerrar-Tiznit",
+        "code": "jerrar",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "jerrar",
+            "oulad jerrar",
+            "tiznit"
+        ]
+    },
+    {
+        "id": 2090,
+        "name": "Oulad Khallouf -Kelaâ des Sraghna",
+        "code": "KHLLLF",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "khlllf",
+            "oulad khallouf",
+            "kelaâ des sraghna"
+        ]
+    },
+    {
+        "id": 1743,
+        "name": "Oulad M barek-Beni Mellal",
+        "code": "brek",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "brek",
+            "oulad m barek",
+            "beni mellal"
+        ]
+    },
+    {
+        "id": 2059,
+        "name": "oulad mhela-taroudant",
+        "code": "oldmhla",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "oldmhla",
+            "oulad mhela",
+            "taroudant"
+        ]
+    },
+    {
+        "id": 2338,
+        "name": "Oulad Rbiâa - Fquih Ben Salah",
+        "code": "RBIAA",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "rbiaa",
+            "oulad rbiâa",
+            "fquih ben salah"
+        ]
+    },
+    {
+        "id": 1612,
+        "name": "Oulad Said-Beni Mellal",
+        "code": "Said",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "said",
+            "oulad said",
+            "beni mellal"
+        ]
+    },
+    {
+        "id": 1682,
+        "name": "Oulad Said-settat",
+        "code": "Sad",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "sad",
+            "oulad said",
+            "settat"
+        ]
+    },
+    {
+        "id": 1892,
+        "name": "Oulad Salah-bouskoura",
+        "code": "BSSK",
+        "courier": "ozon_express",
+        "deliveredPrice": 35,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "bssk",
+            "oulad salah",
+            "bouskoura"
+        ]
+    },
+    {
+        "id": 2067,
+        "name": "Oulad Sbaita-assilah",
+        "code": "sbaita",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "sbaita",
+            "oulad sbaita",
+            "assilah"
+        ]
+    },
+    {
+        "id": 2019,
+        "name": "Oulad Tayeb-fes",
+        "code": "tyb",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tyb",
+            "oulad tayeb",
+            "fes"
+        ]
+    },
+    {
+        "id": 956,
+        "name": "Oulad Teima",
+        "code": "OULDTAIMA",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ouldtaima"
+        ]
+    },
+    {
+        "id": 2056,
+        "name": "oulad terna-taroudant",
+        "code": "oldtrn",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "oldtrn",
+            "oulad terna",
+            "taroudant"
+        ]
+    },
+    {
+        "id": 2100,
+        "name": "Oulad Yaïch-chichaoua",
+        "code": "oldych",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "oldych",
+            "oulad yaïch",
+            "chichaoua"
+        ]
+    },
+    {
+        "id": 1609,
+        "name": "Oulad Zmam - Beni-Mellal",
+        "code": "Zmam",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "zmam",
+            "oulad zmam",
+            "beni",
+            "mellal"
+        ]
+    },
+    {
+        "id": 2332,
+        "name": "Ouled abdellah",
+        "code": "ABDL",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "abdl"
+        ]
+    },
+    {
+        "id": 2321,
+        "name": "Ouled Azzouz-dar bouaza",
+        "code": "AZZOUZ",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "azzouz",
+            "ouled azzouz",
+            "dar bouaza"
+        ]
+    },
+    {
+        "id": 1637,
+        "name": "OULED BEN RAHMOUN",
+        "code": "RAHM",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "rahm"
+        ]
+    },
+    {
+        "id": 1672,
+        "name": "Ouled Boutabet",
+        "code": "oldb",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "oldb"
+        ]
+    },
+    {
+        "id": 2158,
+        "name": "Ouled dlim - marrakech",
+        "code": "dlim",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "dlim",
+            "ouled dlim",
+            "marrakech"
+        ]
+    },
+    {
+        "id": 2327,
+        "name": "Ouled driss",
+        "code": "driss",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "driss"
+        ]
+    },
+    {
+        "id": 1744,
+        "name": "Ouled Moussa-Beni Mellal",
+        "code": "Msa",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "msa",
+            "ouled moussa",
+            "beni mellal"
+        ]
+    },
+    {
+        "id": 2325,
+        "name": "Ouled rguiaa",
+        "code": "rguiaa",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "rguiaa"
+        ]
+    },
+    {
+        "id": 2068,
+        "name": "Ouled riahi-assilah",
+        "code": "riahi",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "riahi",
+            "ouled riahi",
+            "assilah"
+        ]
+    },
+    {
+        "id": 2041,
+        "name": "OULED SALEM-NADOR",
+        "code": "SLMD",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "slmd",
+            "ouled salem",
+            "nador"
+        ]
+    },
+    {
+        "id": 1986,
+        "name": "OUM AZZA",
+        "code": "OMAZZ",
+        "courier": "ozon_express",
+        "deliveredPrice": 40,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "omazz"
+        ]
+    },
+    {
+        "id": 1869,
+        "name": "ounagha",
+        "code": "ouagha",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ouagha"
+        ]
+    },
+    {
+        "id": 2245,
+        "name": "Ounagha-safi",
+        "code": "ounaga",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ounaga",
+            "ounagha",
+            "safi"
+        ]
+    },
+    {
+        "id": 1631,
+        "name": "Ourika-VILLE",
+        "code": "OuriK",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ourik",
+            "ourika",
+            "ville"
+        ]
+    },
+    {
+        "id": 1944,
+        "name": "ourtzagh - taounate",
+        "code": "ourtzagh",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ourtzagh",
+            "taounate"
+        ]
+    },
+    {
+        "id": 1628,
+        "name": "Outat El Haj",
+        "code": "Haj",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "haj"
+        ]
+    },
+    {
+        "id": 2301,
+        "name": "outitba-sidi kacem",
+        "code": "outitba",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "outitba",
+            "sidi kacem"
+        ]
+    },
+    {
+        "id": 1867,
+        "name": "ouzioua",
+        "code": "ozioa",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ozioa"
+        ]
+    },
+    {
+        "id": 1621,
+        "name": "Plage David-Bouznika",
+        "code": "David",
+        "courier": "ozon_express",
+        "deliveredPrice": 35,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "david",
+            "plage david",
+            "bouznika"
+        ]
+    },
+    {
+        "id": 2036,
+        "name": "POBLAW-nador",
+        "code": "pblw",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "pblw",
+            "poblaw",
+            "nador"
+        ]
+    },
+    {
+        "id": 2045,
+        "name": "Quartier Al Boustane-nador",
+        "code": "bstn",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "bstn",
+            "quartier al boustane",
+            "nador"
+        ]
+    },
+    {
+        "id": 2157,
+        "name": "Quetara- marrakech",
+        "code": "qtr",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "qtr",
+            "quetara",
+            "marrakech"
+        ]
+    },
+    {
+        "id": 1984,
+        "name": "Rabat",
+        "code": "RABT",
+        "courier": "ozon_express",
+        "deliveredPrice": 35,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "rabt"
+        ]
+    },
+    {
+        "id": 2136,
+        "name": "Ras El Ain – Youssoufia",
+        "code": "rsain",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "rsain"
+        ]
+    },
+    {
+        "id": 2233,
+        "name": "Ras El Ain-settat",
+        "code": "ainras",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ainras",
+            "ras el ain",
+            "settat"
+        ]
+    },
+    {
+        "id": 2118,
+        "name": "Ras El Ma-berkan",
+        "code": "BRKMA",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "brkma",
+            "ras el ma",
+            "berkan"
+        ]
+    },
+    {
+        "id": 1454,
+        "name": "Ras El Ma-FES",
+        "code": "Ras",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ras",
+            "ras el ma",
+            "fes"
+        ]
+    },
+    {
+        "id": 2261,
+        "name": "Ras Oum Lile-tantan",
+        "code": "rasoum",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "rasoum",
+            "ras oum lile",
+            "tantan"
+        ]
+    },
+    {
+        "id": 1972,
+        "name": "Ras Tabouda",
+        "code": "TBD",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tbd"
+        ]
+    },
+    {
+        "id": 1968,
+        "name": "Ribate El Kheir",
+        "code": "rbtkh",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "rbtkh"
+        ]
+    },
+    {
+        "id": 619,
+        "name": "RICHE-02",
+        "code": "RICH-",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 0,
+        "aliases": [
+            "rich-",
+            "riche",
+            "02"
+        ]
+    },
+    {
+        "id": 1250,
+        "name": "RISSANI VILLE",
+        "code": "RIS",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ris"
+        ]
+    },
+    {
+        "id": 1314,
+        "name": "ROMMANI VILLE",
+        "code": "ROM",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "rom"
+        ]
+    },
+    {
+        "id": 1860,
+        "name": "Rouadi-Al Hoceima",
+        "code": "Roua",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "roua",
+            "rouadi",
+            "al hoceima"
+        ]
+    },
+    {
+        "id": 2030,
+        "name": "ROUISSI-nador",
+        "code": "rss",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "rss",
+            "rouissi",
+            "nador"
+        ]
+    },
+    {
+        "id": 1762,
+        "name": "SAAIDIA",
+        "code": "SADII",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "sadii"
+        ]
+    },
+    {
+        "id": 61,
+        "name": "Safi",
+        "code": "SFI",
+        "courier": "ozon_express",
+        "deliveredPrice": 40,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "sfi"
+        ]
+    },
+    {
+        "id": 2063,
+        "name": "Salama-ksar el kbir",
+        "code": "salama",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "salama",
+            "ksar el kbir"
+        ]
+    },
+    {
+        "id": 1982,
+        "name": "SALE",
+        "code": "SALE",
+        "courier": "ozon_express",
+        "deliveredPrice": 35,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "sale"
+        ]
+    },
+    {
+        "id": 1983,
+        "name": "Sale El Jadida",
+        "code": "SLEJ",
+        "courier": "ozon_express",
+        "deliveredPrice": 35,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "slej"
+        ]
+    },
+    {
+        "id": 2101,
+        "name": "Samba-chichaoua",
+        "code": "samba",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "samba",
+            "chichaoua"
+        ]
+    },
+    {
+        "id": 2270,
+        "name": "Sanhaja-sefrou",
+        "code": "snhj",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "snhj",
+            "sanhaja",
+            "sefrou"
+        ]
+    },
+    {
+        "id": 780,
+        "name": "Sbaa Ayoune",
+        "code": "SBY",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "sby"
+        ]
+    },
+    {
+        "id": 2134,
+        "name": "Sbiaat – Youssoufia",
+        "code": "Sbiaat",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "sbiaat"
+        ]
+    },
+    {
+        "id": 1545,
+        "name": "Sebt El Guerdane",
+        "code": "grd",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "grd"
+        ]
+    },
+    {
+        "id": 439,
+        "name": "SEBT GZOULA",
+        "code": "SBT",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "sbt"
+        ]
+    },
+    {
+        "id": 2027,
+        "name": "Sebt Jahjouhe-meknes",
+        "code": "jhjh",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "jhjh",
+            "sebt jahjouhe",
+            "meknes"
+        ]
+    },
+    {
+        "id": 2071,
+        "name": "sebt malha-chefchaouen",
+        "code": "sbtmlh",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "sbtmlh",
+            "sebt malha",
+            "chefchaouen"
+        ]
+    },
+    {
+        "id": 2286,
+        "name": "Sebt Oulad Bouaziz-jadida",
+        "code": "bouaziz",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "bouaziz",
+            "sebt oulad bouaziz",
+            "jadida"
+        ]
+    },
+    {
+        "id": 2284,
+        "name": "Sebt Oulad Douib-jadida",
+        "code": "douib",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "douib",
+            "sebt oulad douib",
+            "jadida"
+        ]
+    },
+    {
+        "id": 1747,
+        "name": "Sebt Saiss",
+        "code": "Saiss",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "saiss"
+        ]
+    },
+    {
+        "id": 1914,
+        "name": "sefrou",
+        "code": "sfr",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "sfr"
+        ]
+    },
+    {
+        "id": 900,
+        "name": "Segangan-nador",
+        "code": "ZGN",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "zgn",
+            "segangan",
+            "nador"
+        ]
+    },
+    {
+        "id": 2076,
+        "name": "sehoul-sale",
+        "code": "sehoul",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "sehoul",
+            "sale"
+        ]
+    },
+    {
+        "id": 893,
+        "name": "Selouane",
+        "code": "SLWNE",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "slwne"
+        ]
+    },
+    {
+        "id": 1651,
+        "name": "Settate",
+        "code": "Sts",
+        "courier": "ozon_express",
+        "deliveredPrice": 40,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "sts"
+        ]
+    },
+    {
+        "id": 1973,
+        "name": "Sfassif-khemisset",
+        "code": "stass",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "stass",
+            "sfassif",
+            "khemisset"
+        ]
+    },
+    {
+        "id": 1697,
+        "name": "Sid L Mokhtar",
+        "code": "Mka",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "mka"
+        ]
+    },
+    {
+        "id": 1626,
+        "name": "Sid Zouine",
+        "code": "Zouine",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "zouine"
+        ]
+    },
+    {
+        "id": 370,
+        "name": "sidi aadi - azrou",
+        "code": "sda",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "sda",
+            "sidi aadi",
+            "azrou"
+        ]
+    },
+    {
+        "id": 1746,
+        "name": "Sidi Abbad",
+        "code": "Abbad",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "abbad"
+        ]
+    },
+    {
+        "id": 2298,
+        "name": "sidi abdelaziz-sidi slimane",
+        "code": "abdelaziz",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "abdelaziz",
+            "sidi abdelaziz",
+            "sidi slimane"
+        ]
+    },
+    {
+        "id": 2089,
+        "name": "Sidi Aissa Ben Slimane-kelaa des sraghna",
+        "code": "slmnn",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "slmnn",
+            "sidi aissa ben slimane",
+            "kelaa des sraghna"
+        ]
+    },
+    {
+        "id": 1607,
+        "name": "Sidi Aissa-Beni-Mellal",
+        "code": "SAissa",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "saissa",
+            "sidi aissa",
+            "beni",
+            "mellal"
+        ]
+    },
+    {
+        "id": 2006,
+        "name": "Sidi Al Kamel-TAZI",
+        "code": "KML",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "kml",
+            "sidi al kamel",
+            "tazi"
+        ]
+    },
+    {
+        "id": 2024,
+        "name": "Sidi ali ben hamdoch-jadida",
+        "code": "hmdch",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "hmdch",
+            "sidi ali ben hamdoch",
+            "jadida"
+        ]
+    },
+    {
+        "id": 1992,
+        "name": "Sidi Allal El Bahraoui",
+        "code": "BHR",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "bhr"
+        ]
+    },
+    {
+        "id": 2002,
+        "name": "sidi Allal Tazi",
+        "code": "sdal",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "sdal"
+        ]
+    },
+    {
+        "id": 1772,
+        "name": "Sidi Ayache",
+        "code": "aayc",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "aayc"
+        ]
+    },
+    {
+        "id": 935,
+        "name": "Sidi Bennour",
+        "code": "BANOUR",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "banour"
+        ]
+    },
+    {
+        "id": 2312,
+        "name": "Sidi bettach-bensliman",
+        "code": "Bettach",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "bettach",
+            "sidi bettach",
+            "bensliman"
+        ]
+    },
+    {
+        "id": 1640,
+        "name": "Sidi Bou Othmane-VILLE",
+        "code": "SiDBO",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "sidbo",
+            "sidi bou othmane",
+            "ville"
+        ]
+    },
+    {
+        "id": 2164,
+        "name": "sidi bouhriya-berkane",
+        "code": "bhry",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "bhry",
+            "sidi bouhriya",
+            "berkane"
+        ]
+    },
+    {
+        "id": 2248,
+        "name": "Sidi Bousbar-Ouazzane",
+        "code": "Bousbar",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "bousbar",
+            "sidi bousbar",
+            "ouazzane"
+        ]
+    },
+    {
+        "id": 1563,
+        "name": "Sidi Bouzid-EL JADIDA",
+        "code": "Bouzid",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "bouzid",
+            "sidi bouzid",
+            "el jadida"
+        ]
+    },
+    {
+        "id": 1767,
+        "name": "Sidi Bouzid-SAFI",
+        "code": "Bosf",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "bosf",
+            "sidi bouzid",
+            "safi"
+        ]
+    },
+    {
+        "id": 1735,
+        "name": "Sidi Chiker",
+        "code": "Chik",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "chik"
+        ]
+    },
+    {
+        "id": 2138,
+        "name": "Sidi Chiker – Youssoufia",
+        "code": "SCHIKER",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "schiker"
+        ]
+    },
+    {
+        "id": 2141,
+        "name": "sidi el aidi-berrchid",
+        "code": "sdaaid",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "sdaaid",
+            "sidi el aidi",
+            "berrchid"
+        ]
+    },
+    {
+        "id": 1941,
+        "name": "sidi el makhfi - taounate",
+        "code": "mkhf",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "mkhf",
+            "sidi el makhfi",
+            "taounate"
+        ]
+    },
+    {
+        "id": 1638,
+        "name": "Sidi Ghiat",
+        "code": "Ghia",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ghia"
+        ]
+    },
+    {
+        "id": 1783,
+        "name": "Sidi Hajjaj-Berrchid",
+        "code": "Haja",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "haja",
+            "sidi hajjaj",
+            "berrchid"
+        ]
+    },
+    {
+        "id": 1419,
+        "name": "sidi hajjaj-casa",
+        "code": "sbit",
+        "courier": "ozon_express",
+        "deliveredPrice": 35,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "sbit",
+            "sidi hajjaj",
+            "casa"
+        ]
+    },
+    {
+        "id": 1447,
+        "name": "Sidi Harazem",
+        "code": "Hara",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "hara"
+        ]
+    },
+    {
+        "id": 1826,
+        "name": "SIDI IFNI-VILLE",
+        "code": "SFNI",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "sfni",
+            "sidi ifni",
+            "ville"
+        ]
+    },
+    {
+        "id": 2336,
+        "name": "Sidi Jaber - Fquih Ben Salah",
+        "code": "JAB",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "jab",
+            "sidi jaber",
+            "fquih ben salah"
+        ]
+    },
+    {
+        "id": 457,
+        "name": "SIDI KACEM",
+        "code": "SDK",
+        "courier": "ozon_express",
+        "deliveredPrice": 40,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "sdk"
+        ]
+    },
+    {
+        "id": 1798,
+        "name": "SIDI KAML",
+        "code": "KAML",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "kaml"
+        ]
+    },
+    {
+        "id": 1124,
+        "name": "Sidi Kaouki-ESSOUIRA",
+        "code": "Kaouki",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "kaouki",
+            "sidi kaouki",
+            "essouira"
+        ]
+    },
+    {
+        "id": 1899,
+        "name": "Sidi lyamani-ASILAH",
+        "code": "YMN",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ymn",
+            "sidi lyamani",
+            "asilah"
+        ]
+    },
+    {
+        "id": 1897,
+        "name": "Sidi Moussa Ben Ali",
+        "code": "ussa",
+        "courier": "ozon_express",
+        "deliveredPrice": 40,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ussa"
+        ]
+    },
+    {
+        "id": 1896,
+        "name": "Sidi Moussa El Majdoub",
+        "code": "Majd",
+        "courier": "ozon_express",
+        "deliveredPrice": 40,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "majd"
+        ]
+    },
+    {
+        "id": 2050,
+        "name": "Sidi moussa lhamri-TAROUDANT",
+        "code": "SDMOUSSA",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "sdmoussa",
+            "sidi moussa lhamri",
+            "taroudant"
+        ]
+    },
+    {
+        "id": 1866,
+        "name": "sidi ouaaziz",
+        "code": "aaziz",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "aaziz"
+        ]
+    },
+    {
+        "id": 731,
+        "name": "Sidi Rahhal",
+        "code": "SDR",
+        "courier": "ozon_express",
+        "deliveredPrice": 35,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "sdr"
+        ]
+    },
+    {
+        "id": 2249,
+        "name": "Sidi Redouane-Ouazzane",
+        "code": "Redouane",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "redouane",
+            "sidi redouane",
+            "ouazzane"
+        ]
+    },
+    {
+        "id": 463,
+        "name": "SIDI SLIMAN",
+        "code": "SDS",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "sds"
+        ]
+    },
+    {
+        "id": 1657,
+        "name": "Sidi Taibi",
+        "code": "Tai",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tai"
+        ]
+    },
+    {
+        "id": 2011,
+        "name": "sidi yahia elgharb",
+        "code": "SDYH",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "sdyh"
+        ]
+    },
+    {
+        "id": 1998,
+        "name": "Sidi Yahya Zaer",
+        "code": "YHYZ",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "yhyz"
+        ]
+    },
+    {
+        "id": 942,
+        "name": "Sidi-Bibi",
+        "code": "SIDIBIBI",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "sidibibi",
+            "sidi",
+            "bibi"
+        ]
+    },
+    {
+        "id": 2018,
+        "name": "Skhinate-fes",
+        "code": "skht",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "skht",
+            "skhinate",
+            "fes"
+        ]
+    },
+    {
+        "id": 1997,
+        "name": "SKHIRAT",
+        "code": "SKH",
+        "courier": "ozon_express",
+        "deliveredPrice": 35,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "skh"
+        ]
+    },
+    {
+        "id": 1019,
+        "name": "Skhour Rehamna",
+        "code": "SKHOR",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "skhor"
+        ]
+    },
+    {
+        "id": 1812,
+        "name": "Skoura-Ouarzazate",
+        "code": "Skoura",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "skoura",
+            "ouarzazate"
+        ]
+    },
+    {
+        "id": 1811,
+        "name": "Smimou - Essaouira",
+        "code": "Smimou",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "smimou",
+            "essaouira"
+        ]
+    },
+    {
+        "id": 2064,
+        "name": "snadla-ksar el kbir",
+        "code": "sndl",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "sndl",
+            "snadla",
+            "ksar el kbir"
+        ]
+    },
+    {
+        "id": 1644,
+        "name": "Souihla-VILLE",
+        "code": "Soui",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "soui",
+            "souihla",
+            "ville"
+        ]
+    },
+    {
+        "id": 445,
+        "name": "Souiria آسفي",
+        "code": "SRI",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "sri"
+        ]
+    },
+    {
+        "id": 1928,
+        "name": "Souk al had Ouazzane",
+        "code": "skhd",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "skhd"
+        ]
+    },
+    {
+        "id": 2230,
+        "name": "Souk El Had Oulad Jelloul-souk larbaa",
+        "code": "hadold",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "hadold",
+            "souk el had oulad jelloul",
+            "souk larbaa"
+        ]
+    },
+    {
+        "id": 1751,
+        "name": "SOUK LARBAA",
+        "code": "SKR",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "skr"
+        ]
+    },
+    {
+        "id": 2272,
+        "name": "Souk Larbaa Sebah (Skhirat)",
+        "code": "SEBAH",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "sebah"
+        ]
+    },
+    {
+        "id": 1885,
+        "name": "Souk lgor-meknes",
+        "code": "sklgr",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "sklgr",
+            "souk lgor",
+            "meknes"
+        ]
+    },
+    {
+        "id": 2003,
+        "name": "SOUK LHAD ALLAL TAZI",
+        "code": "SKLH",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "sklh"
+        ]
+    },
+    {
+        "id": 2302,
+        "name": "Souk Lhad-sidi kacem",
+        "code": "souk lhad",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "souk lhad",
+            "sidi kacem"
+        ]
+    },
+    {
+        "id": 1356,
+        "name": "Souk Sebt Oulad Nemma",
+        "code": "Nemma",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "nemma"
+        ]
+    },
+    {
+        "id": 2228,
+        "name": "Souk Tlat Gharb-souk larbaa",
+        "code": "tlatt",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tlatt",
+            "souk tlat gharb",
+            "souk larbaa"
+        ]
+    },
+    {
+        "id": 1927,
+        "name": "Souk Tlata Tanquoub Ouazzane",
+        "code": "skou",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "skou"
+        ]
+    },
+    {
+        "id": 2008,
+        "name": "Souk Tlet El Gharb",
+        "code": "SKTL",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "sktl"
+        ]
+    },
+    {
+        "id": 1924,
+        "name": "STEHAT-OUED LAOU",
+        "code": "STHT",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "stht",
+            "stehat",
+            "oued laou"
+        ]
+    },
+    {
+        "id": 2004,
+        "name": "SWASIYIN ALAL TAZI",
+        "code": "SWSY",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "swsy"
+        ]
+    },
+    {
+        "id": 2191,
+        "name": "Tacharouk-casablanca",
+        "code": "tchrk",
+        "courier": "ozon_express",
+        "deliveredPrice": 20,
+        "returnedPrice": 0,
+        "refusedPrice": 0,
+        "aliases": [
+            "tchrk",
+            "tacharouk",
+            "casablanca"
+        ]
+    },
+    {
+        "id": 1877,
+        "name": "Taddart-taza",
+        "code": "tdrt",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tdrt",
+            "taddart",
+            "taza"
+        ]
+    },
+    {
+        "id": 2194,
+        "name": "Tafetachte-essaouira",
+        "code": "tftcht",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tftcht",
+            "tafetachte",
+            "essaouira"
+        ]
+    },
+    {
+        "id": 1793,
+        "name": "Tafoughalt",
+        "code": "Tafg",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tafg"
+        ]
+    },
+    {
+        "id": 1540,
+        "name": "Tafraoute",
+        "code": "Tafra",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tafra"
+        ]
+    },
+    {
+        "id": 1979,
+        "name": "Tafrsit-DRIOUCH",
+        "code": "TAFRIST",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tafrist",
+            "tafrsit",
+            "driouch"
+        ]
+    },
+    {
+        "id": 2206,
+        "name": "TAGANT-guelmim",
+        "code": "TGNT",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tgnt",
+            "tagant",
+            "guelmim"
+        ]
+    },
+    {
+        "id": 1547,
+        "name": "Taghazout",
+        "code": "Tagh",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tagh"
+        ]
+    },
+    {
+        "id": 2204,
+        "name": "Taghjijt-guelmim",
+        "code": "TGHJT",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tghjt",
+            "taghjijt",
+            "guelmim"
+        ]
+    },
+    {
+        "id": 2078,
+        "name": "Taghzot- tinghir ville",
+        "code": "Taghzot",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "taghzot",
+            "tinghir ville"
+        ]
+    },
+    {
+        "id": 1703,
+        "name": "Tagmout-tata",
+        "code": "Tagm",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tagm",
+            "tagmout",
+            "tata"
+        ]
+    },
+    {
+        "id": 1668,
+        "name": "Tagounite‬-zagora",
+        "code": "Tagn",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tagn",
+            "tagounite‬",
+            "zagora"
+        ]
+    },
+    {
+        "id": 1901,
+        "name": "Tahadart - ASILAH",
+        "code": "THDRT",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "thdrt",
+            "tahadart",
+            "asilah"
+        ]
+    },
+    {
+        "id": 1633,
+        "name": "Tahanaout-VILLE",
+        "code": "Tahan",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tahan",
+            "tahanaout",
+            "ville"
+        ]
+    },
+    {
+        "id": 1931,
+        "name": "tahar souk - TAOUNATE",
+        "code": "thsk",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "thsk",
+            "tahar souk",
+            "taounate"
+        ]
+    },
+    {
+        "id": 1875,
+        "name": "tahla",
+        "code": "th",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "th"
+        ]
+    },
+    {
+        "id": 1769,
+        "name": "Taliouine",
+        "code": "Tali",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tali"
+        ]
+    },
+    {
+        "id": 1871,
+        "name": "Talmest",
+        "code": "Talmst",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "talmst"
+        ]
+    },
+    {
+        "id": 2244,
+        "name": "talmest-safi",
+        "code": "talmest",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "talmest",
+            "safi"
+        ]
+    },
+    {
+        "id": 2196,
+        "name": "Talsinnt",
+        "code": "tlsnt",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tlsnt"
+        ]
+    },
+    {
+        "id": 2012,
+        "name": "Tamait Izder-agadir",
+        "code": "izdr",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "izdr",
+            "tamait izder",
+            "agadir"
+        ]
+    },
+    {
+        "id": 2057,
+        "name": "tamaloukt-taroudant",
+        "code": "tmlkt",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tmlkt",
+            "tamaloukt",
+            "taroudant"
+        ]
+    },
+    {
+        "id": 1810,
+        "name": "Tamanar-Essaouira",
+        "code": "Tamanar",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tamanar",
+            "essaouira"
+        ]
+    },
+    {
+        "id": 2273,
+        "name": "Tamanart-tata",
+        "code": "Tamanart",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tamanart",
+            "tata"
+        ]
+    },
+    {
+        "id": 1559,
+        "name": "Tamansourt-Marrakech",
+        "code": "Tama",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tama",
+            "tamansourt",
+            "marrakech"
+        ]
+    },
+    {
+        "id": 409,
+        "name": "TAMARIS",
+        "code": "TM",
+        "courier": "ozon_express",
+        "deliveredPrice": 35,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tm"
+        ]
+    },
+    {
+        "id": 1667,
+        "name": "Tamegroute-zagora",
+        "code": "Tag",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tag",
+            "tamegroute",
+            "zagora"
+        ]
+    },
+    {
+        "id": 1757,
+        "name": "Tamellalt",
+        "code": "Taml",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "taml"
+        ]
+    },
+    {
+        "id": 1647,
+        "name": "Tamesluht- VILLE",
+        "code": "Tames",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tames",
+            "tamesluht",
+            "ville"
+        ]
+    },
+    {
+        "id": 1994,
+        "name": "TAMESNA-TEMARA",
+        "code": "TMSN",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tmsn",
+            "tamesna",
+            "temara"
+        ]
+    },
+    {
+        "id": 1579,
+        "name": "Tamraght",
+        "code": "Tamrag",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tamrag"
+        ]
+    },
+    {
+        "id": 1548,
+        "name": "Tamraght-Agadir",
+        "code": "Tamr",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tamr",
+            "tamraght",
+            "agadir"
+        ]
+    },
+    {
+        "id": 2122,
+        "name": "Tamri-agadir",
+        "code": "Tamri",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tamri",
+            "agadir"
+        ]
+    },
+    {
+        "id": 1759,
+        "name": "Tamzmout zagora",
+        "code": "Tamzt",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tamzt"
+        ]
+    },
+    {
+        "id": 1949,
+        "name": "TANANTE-AZILAL",
+        "code": "TANAT",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tanat",
+            "tanante",
+            "azilal"
+        ]
+    },
+    {
+        "id": 2260,
+        "name": "Tanaqob-Ouazzane",
+        "code": "Tanaqob",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tanaqob",
+            "ouazzane"
+        ]
+    },
+    {
+        "id": 2161,
+        "name": "Tandit-outat elhaj",
+        "code": "tnd",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tnd",
+            "tandit",
+            "outat elhaj"
+        ]
+    },
+    {
+        "id": 289,
+        "name": "Tanger",
+        "code": "TGR",
+        "courier": "ozon_express",
+        "deliveredPrice": 35,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tgr"
+        ]
+    },
+    {
+        "id": 1742,
+        "name": "Tanougha-Beni Mellal",
+        "code": "Tang",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tang",
+            "tanougha",
+            "beni mellal"
+        ]
+    },
+    {
+        "id": 1790,
+        "name": "TANTAN",
+        "code": "TANT",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tant"
+        ]
+    },
+    {
+        "id": 2044,
+        "name": "TAOUIMA-NADOR",
+        "code": "TMAA",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tmaa",
+            "taouima",
+            "nador"
+        ]
+    },
+    {
+        "id": 1915,
+        "name": "taounate",
+        "code": "taoun",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "taoun"
+        ]
+    },
+    {
+        "id": 1874,
+        "name": "Taourirt",
+        "code": "trt",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "trt"
+        ]
+    },
+    {
+        "id": 1835,
+        "name": "Tarfaya ville",
+        "code": "tar",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tar"
+        ]
+    },
+    {
+        "id": 1691,
+        "name": "targuist",
+        "code": "tagu",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tagu"
+        ]
+    },
+    {
+        "id": 2221,
+        "name": "Tarmoucht-boumalne dades",
+        "code": "trmch",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "trmch",
+            "tarmoucht",
+            "boumalne dades"
+        ]
+    },
+    {
+        "id": 382,
+        "name": "Taroudant",
+        "code": "TR",
+        "courier": "ozon_express",
+        "deliveredPrice": 40,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tr"
+        ]
+    },
+    {
+        "id": 2095,
+        "name": "Tassawt-kelaa des sraghna",
+        "code": "tsswt",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tsswt",
+            "tassawt",
+            "kelaa des sraghna"
+        ]
+    },
+    {
+        "id": 1635,
+        "name": "Tassoultant-VILLE",
+        "code": "Tassoul",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tassoul",
+            "tassoultant",
+            "ville"
+        ]
+    },
+    {
+        "id": 1696,
+        "name": "Tata",
+        "code": "TTA",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tta"
+        ]
+    },
+    {
+        "id": 2289,
+        "name": "tawarii- Sidi Yahya",
+        "code": "tawarii",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tawarii",
+            "sidi yahya"
+        ]
+    },
+    {
+        "id": 808,
+        "name": "TAWJTAT",
+        "code": "TWJT",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "twjt"
+        ]
+    },
+    {
+        "id": 1872,
+        "name": "TAZA-VILLE",
+        "code": "TZV",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tzv",
+            "taza",
+            "ville"
+        ]
+    },
+    {
+        "id": 1758,
+        "name": "Tazarine",
+        "code": "Tarin",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tarin"
+        ]
+    },
+    {
+        "id": 2055,
+        "name": "tazmourt-taroudant",
+        "code": "tzmrt",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tzmrt",
+            "tazmourt",
+            "taroudant"
+        ]
+    },
+    {
+        "id": 1704,
+        "name": "Taznakht",
+        "code": "Tazn",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tazn"
+        ]
+    },
+    {
+        "id": 1993,
+        "name": "TEMARA",
+        "code": "TMRA",
+        "courier": "ozon_express",
+        "deliveredPrice": 35,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tmra"
+        ]
+    },
+    {
+        "id": 2128,
+        "name": "temsamane-Driouch",
+        "code": "tmsan",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tmsan",
+            "temsamane",
+            "driouch"
+        ]
+    },
+    {
+        "id": 1576,
+        "name": "Temsia-agadir",
+        "code": "Tems",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tems",
+            "temsia",
+            "agadir"
+        ]
+    },
+    {
+        "id": 2229,
+        "name": "Temsia(Ait Moussa)",
+        "code": "Temsia",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "temsia"
+        ]
+    },
+    {
+        "id": 1653,
+        "name": "Teroual - Ouazzane",
+        "code": "Ter",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ter",
+            "teroual",
+            "ouazzane"
+        ]
+    },
+    {
+        "id": 313,
+        "name": "Tetouan",
+        "code": "TET",
+        "courier": "ozon_express",
+        "deliveredPrice": 35,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tet"
+        ]
+    },
+    {
+        "id": 1748,
+        "name": "Tidas-Khemisset",
+        "code": "Tids",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tids",
+            "tidas",
+            "khemisset"
+        ]
+    },
+    {
+        "id": 1278,
+        "name": "Tiflet Ville",
+        "code": "Tif",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tif"
+        ]
+    },
+    {
+        "id": 2145,
+        "name": "Tifnit-agadir",
+        "code": "tfnt",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tfnt",
+            "tifnit",
+            "agadir"
+        ]
+    },
+    {
+        "id": 1719,
+        "name": "Tighassaline ville",
+        "code": "Tighas",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tighas"
+        ]
+    },
+    {
+        "id": 2207,
+        "name": "TIGHIRT-tiznit",
+        "code": "tghrt",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tghrt",
+            "tighirt",
+            "tiznit"
+        ]
+    },
+    {
+        "id": 2084,
+        "name": "TIGHMI-tiznit",
+        "code": "TGHM",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tghm",
+            "tighmi",
+            "tiznit"
+        ]
+    },
+    {
+        "id": 1716,
+        "name": "Tikiouine",
+        "code": "Tiki",
+        "courier": "ozon_express",
+        "deliveredPrice": 35,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tiki"
+        ]
+    },
+    {
+        "id": 1721,
+        "name": "Timahdite",
+        "code": "TMHD",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tmhd"
+        ]
+    },
+    {
+        "id": 2281,
+        "name": "Timdline-ouarzazate",
+        "code": "timdline",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "timdline",
+            "ouarzazate"
+        ]
+    },
+    {
+        "id": 2205,
+        "name": "TIMOLAY-guelmim",
+        "code": "tml",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tml",
+            "timolay",
+            "guelmim"
+        ]
+    },
+    {
+        "id": 1740,
+        "name": "Timoulilt-Béni Mellal",
+        "code": "Tim",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tim",
+            "timoulilt",
+            "béni mellal"
+        ]
+    },
+    {
+        "id": 1582,
+        "name": "Tin Mansour",
+        "code": "TiN",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tin"
+        ]
+    },
+    {
+        "id": 2066,
+        "name": "Tindafel-assilah",
+        "code": "tndfl",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tndfl",
+            "tindafel",
+            "assilah"
+        ]
+    },
+    {
+        "id": 1293,
+        "name": "Tinejdad Ville",
+        "code": "Tine",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tine"
+        ]
+    },
+    {
+        "id": 1475,
+        "name": "Tinghir ville",
+        "code": "Tingi",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tingi"
+        ]
+    },
+    {
+        "id": 1907,
+        "name": "Tioughza",
+        "code": "Tio",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tio"
+        ]
+    },
+    {
+        "id": 1940,
+        "name": "tissa - taounate",
+        "code": "tissa",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tissa",
+            "taounate"
+        ]
+    },
+    {
+        "id": 1698,
+        "name": "Tissint-tata",
+        "code": "Tiss",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tiss",
+            "tissint",
+            "tata"
+        ]
+    },
+    {
+        "id": 478,
+        "name": "TIT MELLIL",
+        "code": "TTM",
+        "courier": "ozon_express",
+        "deliveredPrice": 30,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ttm"
+        ]
+    },
+    {
+        "id": 1864,
+        "name": "tizi nisly-Beni Mellal",
+        "code": "nisly",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "nisly",
+            "tizi nisly",
+            "beni mellal"
+        ]
+    },
+    {
+        "id": 1879,
+        "name": "Tizi Ousli",
+        "code": "TZO",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tzo"
+        ]
+    },
+    {
+        "id": 376,
+        "name": "TIZNIT",
+        "code": "TZ",
+        "courier": "ozon_express",
+        "deliveredPrice": 40,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tz"
+        ]
+    },
+    {
+        "id": 1976,
+        "name": "Tiztotine-DRIOUCH",
+        "code": "TZTO",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tzto",
+            "tiztotine",
+            "driouch"
+        ]
+    },
+    {
+        "id": 2212,
+        "name": "Tkemast-tinghir",
+        "code": "tkmst",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tkmst",
+            "tkemast",
+            "tinghir"
+        ]
+    },
+    {
+        "id": 1592,
+        "name": "Tlat Bouaris",
+        "code": "Bouari",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "bouari"
+        ]
+    },
+    {
+        "id": 2074,
+        "name": "Tlat lghnimiyin-berrchid",
+        "code": "ghnmit",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ghnmit",
+            "tlat lghnimiyin",
+            "berrchid"
+        ]
+    },
+    {
+        "id": 1738,
+        "name": "Tlat Loulad-fini",
+        "code": "fini",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 1,
+        "aliases": [
+            "fini",
+            "tlat loulad"
+        ]
+    },
+    {
+        "id": 2257,
+        "name": "Tlensen-tantan",
+        "code": "tlensen",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tlensen",
+            "tantan"
+        ]
+    },
+    {
+        "id": 1947,
+        "name": "Tlet El Hanchane",
+        "code": "hnch",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "hnch"
+        ]
+    },
+    {
+        "id": 1591,
+        "name": "Tleta Bouguedra",
+        "code": "Tleta",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tleta"
+        ]
+    },
+    {
+        "id": 1834,
+        "name": "Tnin beni khelloug-settat",
+        "code": "tbkh",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tbkh",
+            "tnin beni khelloug",
+            "settat"
+        ]
+    },
+    {
+        "id": 1936,
+        "name": "tnin beni onjel - taounate",
+        "code": "onjel",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "onjel",
+            "tnin beni onjel",
+            "taounate"
+        ]
+    },
+    {
+        "id": 1557,
+        "name": "TNIN EL GHIATE-SAFI",
+        "code": "GHIATE",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ghiate",
+            "tnin el ghiate",
+            "safi"
+        ]
+    },
+    {
+        "id": 2103,
+        "name": "Tnin jnan bih-chichaoua",
+        "code": "tnnjnan",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tnnjnan",
+            "tnin jnan bih",
+            "chichaoua"
+        ]
+    },
+    {
+        "id": 1650,
+        "name": "Tnine Chtouka el jadida",
+        "code": "Chto",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "chto"
+        ]
+    },
+    {
+        "id": 1590,
+        "name": "Tnine Gharbia",
+        "code": "harbia",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "harbia"
+        ]
+    },
+    {
+        "id": 1577,
+        "name": "tohmo agadir",
+        "code": "tohm",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tohm"
+        ]
+    },
+    {
+        "id": 2049,
+        "name": "Toundout-OUARZAZET",
+        "code": "tndt",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tndt",
+            "toundout",
+            "ouarzazet"
+        ]
+    },
+    {
+        "id": 1963,
+        "name": "Tounfite-Midelt",
+        "code": "Tunf",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tunf",
+            "tounfite",
+            "midelt"
+        ]
+    },
+    {
+        "id": 2276,
+        "name": "Tskmoudin-tata",
+        "code": " Tskmoudin",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "tskmoudin",
+            "tata"
+        ]
+    },
+    {
+        "id": 2288,
+        "name": "twiza-Sidi Kacem",
+        "code": "twiza",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "twiza",
+            "sidi kacem"
+        ]
+    },
+    {
+        "id": 2280,
+        "name": "Wad Lmalh-ouarzazate",
+        "code": "wdmlh",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "wdmlh",
+            "wad lmalh",
+            "ouarzazate"
+        ]
+    },
+    {
+        "id": 1960,
+        "name": "Wad lmarssa",
+        "code": "wdmrs",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "wdmrs"
+        ]
+    },
+    {
+        "id": 1957,
+        "name": "Wadalyane_ksar sghir",
+        "code": "wd",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "wd"
+        ]
+    },
+    {
+        "id": 970,
+        "name": "Walidia",
+        "code": "wld",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "wld"
+        ]
+    },
+    {
+        "id": 2086,
+        "name": "wargi-kelaa sraghna",
+        "code": "wrgi",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "wrgi",
+            "wargi",
+            "kelaa sraghna"
+        ]
+    },
+    {
+        "id": 1891,
+        "name": "wislan-meknes",
+        "code": "wsln",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "wsln",
+            "wislan",
+            "meknes"
+        ]
+    },
+    {
+        "id": 2009,
+        "name": "Wlad amer-ALAL TAZI",
+        "code": "wldm",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "wldm",
+            "wlad amer",
+            "alal tazi"
+        ]
+    },
+    {
+        "id": 1855,
+        "name": "Wlad Ghanem",
+        "code": "Ghnem",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ghnem"
+        ]
+    },
+    {
+        "id": 1887,
+        "name": "Wlad sidi yhya-meknes",
+        "code": "sid",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "sid",
+            "wlad sidi yhya",
+            "meknes"
+        ]
+    },
+    {
+        "id": 1888,
+        "name": "wlad slim-meknes",
+        "code": "slim",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "slim",
+            "wlad slim",
+            "meknes"
+        ]
+    },
+    {
+        "id": 1985,
+        "name": "Youssoufia-RABAT",
+        "code": "YSSF",
+        "courier": "ozon_express",
+        "deliveredPrice": 35,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "yssf",
+            "youssoufia",
+            "rabat"
+        ]
+    },
+    {
+        "id": 2133,
+        "name": "youssoufia-ville",
+        "code": "yssfia",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "yssfia",
+            "youssoufia",
+            "ville"
+        ]
+    },
+    {
+        "id": 1829,
+        "name": "Zag-VILLE",
+        "code": "VZag",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "vzag",
+            "zag",
+            "ville"
+        ]
+    },
+    {
+        "id": 1033,
+        "name": "ZAGORA",
+        "code": "ZGO",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "zgo"
+        ]
+    },
+    {
+        "id": 1594,
+        "name": "Zaida",
+        "code": "Zaida",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "zaida"
+        ]
+    },
+    {
+        "id": 2217,
+        "name": "Zaouiat al bir-kelaa mgouna",
+        "code": "zaouia",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "zaouia",
+            "zaouiat al bir",
+            "kelaa mgouna"
+        ]
+    },
+    {
+        "id": 1970,
+        "name": "Zaouiat Bougrine",
+        "code": "ZBGR",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "zbgr"
+        ]
+    },
+    {
+        "id": 1047,
+        "name": "Zaouiat Cheikh",
+        "code": "ZAKH",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "zakh"
+        ]
+    },
+    {
+        "id": 2313,
+        "name": "Zaouiat nouaceurr-nouaceur",
+        "code": "zaouiet",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "zaouiet",
+            "zaouiat nouaceurr",
+            "nouaceur"
+        ]
+    },
+    {
+        "id": 1568,
+        "name": "Zaouit Sidi Smail",
+        "code": "Zaouit",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "zaouit"
+        ]
+    },
+    {
+        "id": 1536,
+        "name": "zayou",
+        "code": "DS",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "ds"
+        ]
+    },
+    {
+        "id": 1962,
+        "name": "ZGOUTA",
+        "code": "ZGT",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "zgt"
+        ]
+    },
+    {
+        "id": 2022,
+        "name": "Zouada-LAARACHE",
+        "code": "zda",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "zda",
+            "zouada",
+            "laarache"
+        ]
+    },
+    {
+        "id": 1654,
+        "name": "Zoumi-Ouazzane",
+        "code": "Zou",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "zou",
+            "zoumi",
+            "ouazzane"
+        ]
+    },
+    {
+        "id": 1937,
+        "name": "zrizer - taounate",
+        "code": "zrizer",
+        "courier": "ozon_express",
+        "deliveredPrice": 45,
+        "returnedPrice": 0,
+        "refusedPrice": 10,
+        "aliases": [
+            "zrizer",
+            "taounate"
+        ]
+    }
+];

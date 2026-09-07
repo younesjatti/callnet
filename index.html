@@ -1,0 +1,158 @@
+
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>callnet plateform</title>
+    <meta name="description" content="An intuitive platform for call center and e-commerce seller teams to upload, manage, confirm orders, extract marketing customer lists, and dispatch parcels automatically via courier APIs (Ozon Express, Kargo Express, DIGYLOG, Ameex Delivery) with official city synchronization and installable PWA mobile app support." />
+    <meta property="og:title" content="callnet plateform" />
+    <meta property="og:description" content="An intuitive platform for call center and e-commerce seller teams to upload, manage, confirm orders, extract marketing customer lists, and dispatch parcels automatically via courier APIs (Ozon Express, Kargo Express, DIGYLOG, Ameex Delivery) with official city synchronization and installable PWA mobile app support." />
+    <meta property="og:image" content="https://ywycwjkkjmlxrwohkgas.supabase.co/storage/v1/object/public/callnet%20assets/logo_whit_bg-removebg-preview.png" />
+    <meta name="theme-color" content="#2563EB" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="CallNet" />
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+    <link rel="icon" type="image/png" href="/pwa-192x192.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      :root {
+        --color-primary: #2563EB;
+        --color-secondary: #EF4444;
+        --color-base-100: #F8FAFC;
+        --color-base-200: #FFFFFF;
+        --color-base-300: #E2E8F0;
+        --color-sidebar: #0F172A;
+        --color-text-primary: #0F172A;
+        --color-text-secondary: #64748B;
+        --ink: #0F172A;
+        --ink-muted: #64748B;
+        --ink-faint: rgba(15, 23, 42, 0.06);
+        --bg-grid: rgba(37, 99, 235, 0.02);
+      }
+      .dark {
+        --color-primary: #3B82F6;
+        --color-secondary: #EF4444;
+        --color-base-100: #0B1120;
+        --color-base-200: #131D31;
+        --color-base-300: #1E293B;
+        --color-sidebar: #0B1120;
+        --color-text-primary: #F8FAFC;
+        --color-text-secondary: #94A3B8;
+        --ink: #F8FAFC;
+        --ink-muted: #94A3B8;
+        --ink-faint: rgba(255, 255, 255, 0.06);
+        --bg-grid: rgba(255, 255, 255, 0.02);
+      }
+      
+      * {
+        box-sizing: border-box;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      ::selection {
+        background: #2563EB;
+        color: #FFFFFF;
+      }
+
+      html {
+        height: 100%;
+        overflow-x: hidden;
+        overflow-y: auto;
+      }
+
+      body {
+        font-family: 'Montserrat', sans-serif;
+        background-color: var(--color-base-100);
+        color: var(--color-text-primary);
+        min-height: 100%;
+        letter-spacing: -0.01em;
+        overflow-x: hidden;
+        overflow-y: auto;
+      }
+
+      .font-montserrat {
+        font-family: 'Montserrat', sans-serif;
+      }
+      .font-arabic {
+        font-family: 'Cairo', sans-serif;
+      }
+      .font-syne {
+        font-family: 'Montserrat', sans-serif;
+      }
+      .font-mono {
+        font-family: 'JetBrains Mono', monospace;
+      }
+      
+      /* Minimalist sleek scrollbar */
+      ::-webkit-scrollbar {
+        height: 5px;
+        width: 5px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #CBD5E1;
+        border-radius: 9999px;
+      }
+      .dark ::-webkit-scrollbar-thumb {
+        background: #334155;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #94A3B8;
+      }
+
+      .hide-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .hide-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+    </style>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Montserrat', 'sans-serif'],
+              montserrat: ['Montserrat', 'sans-serif'],
+              syne: ['Montserrat', 'sans-serif'],
+              mono: ['JetBrains Mono', 'monospace'],
+              arabic: ['Cairo', 'sans-serif'],
+            },
+            colors: {
+              accent: '#2563EB',
+              'accent-green': '#10B981',
+              'accent-red': '#EF4444',
+              'accent-amber': '#F59E0B',
+              primary: 'var(--color-primary)',
+              secondary: 'var(--color-secondary)',
+              sidebar: 'var(--color-sidebar)',
+              'base-100': 'var(--color-base-100)',
+              'base-200': 'var(--color-base-200)',
+              'base-300': 'var(--color-base-300)',
+              'text-primary': 'var(--color-text-primary)',
+              'text-secondary': 'var(--color-text-secondary)',
+            },
+          }
+        }
+      }
+    </script>
+    <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+</head>
+<body class="bg-base-100 text-text-primary antialiased selection:bg-[#3C50E0] selection:text-white min-h-screen w-full">
+    <div id="root" class="relative z-10 min-h-screen w-full"></div>
+    <script type="module" src="/index.tsx"></script>
+</body>
+</html>
