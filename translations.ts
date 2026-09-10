@@ -49,6 +49,10 @@ export const translations = {
     enterEmailPlaceholder: 'Enter your email', 
     dashboard: 'Dashboard',
     orders: 'Orders',
+    orderEntry: 'Order Entry / Dispatch',
+    tracking: 'Parcel Tracking',
+    trackingTitle: 'Live Parcel Tracking',
+    trackingDescription: 'Track shipped orders and live carrier delivery status in real-time.',
     customers: 'Customers & Marketing',
     customersTitle: 'Customer Database & Marketing',
     customersDescription: 'Extract unique buyers and send WhatsApp/SMS marketing offers.',
@@ -231,6 +235,7 @@ export const translations = {
     [OrderStatus.Expire]: 'Expired',
     [OrderStatus.EnDouble]: 'Duplicate',
     [OrderStatus.HorsZone]: 'Out of Area',
+    [OrderStatus.Inconnu]: 'Unknown',
   },
   fr: {
     city: 'Ville',
@@ -279,6 +284,10 @@ export const translations = {
     enterEmailPlaceholder: 'Entrez votre email', 
     dashboard: 'Tableau de bord',
     orders: 'Commandes',
+    orderEntry: 'Saisie des commandes',
+    tracking: 'Suivi des Colis',
+    trackingTitle: 'Suivi des Colis en Temps Réel',
+    trackingDescription: 'Suivez vos commandes expédiées et leur statut de livraison en direct via les API transporteurs.',
     customers: 'Fichier Clients (Marketing)',
     customersTitle: 'Base Clients & Marketing',
     customersDescription: 'Extraction des acheteurs depuis les commandes pour campagnes WhatsApp et SMS.',
@@ -461,6 +470,7 @@ export const translations = {
     [OrderStatus.Expire]: 'Expiré',
     [OrderStatus.EnDouble]: 'En double',
     [OrderStatus.HorsZone]: 'Hors zone',
+    [OrderStatus.Inconnu]: 'Inconnu',
   },
   ar: {
     city: 'المدينة',
@@ -509,6 +519,10 @@ export const translations = {
     enterEmailPlaceholder: 'أدخل بريدك الإلكتروني', 
     dashboard: 'لوحة القيادة',
     orders: 'الطلبيات',
+    orderEntry: 'إدخال وإرسال الطلبيات',
+    tracking: 'تتبع الشحنات',
+    trackingTitle: 'تتبع الشحنات والطرود في الوقت الفعلي',
+    trackingDescription: 'متابعة وتتبع حالة التوصيل لجميع الطلبيات المشحونة مباشرة عبر شركات التوصيل.',
     customers: 'قاعدة الزبائن (تسويق)',
     customersTitle: 'قاعدة بيانات الزبائن والتسويق',
     customersDescription: 'استخراج الزبائن من سجل الطلبيات لإرسال عروض واتساب والرسائل القصيرة.',
@@ -691,6 +705,7 @@ export const translations = {
     [OrderStatus.Expire]: 'منتهية',
     [OrderStatus.EnDouble]: 'مكررة',
     [OrderStatus.HorsZone]: 'خارج التغطية',
+    [OrderStatus.Inconnu]: 'غير معروف',
   }
 };
 

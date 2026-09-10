@@ -6,14 +6,11 @@ import {
     Clock, 
     Truck, 
     AlertCircle, 
-    PhoneCall, 
-    FileSpreadsheet, 
     ArrowUpRight, 
     ArrowDownRight,
     DollarSign,
     Sparkles,
     ChevronRight,
-    PlusCircle,
     Headphones,
     UserCheck,
     Phone,
@@ -255,16 +252,6 @@ const Dashboard: React.FC<DashboardProps> = ({
                         </div>
                     )}
 
-                    {/* Switch to Operator Dashboard view */}
-                    <button
-                        onClick={() => setActiveDashboardMode('operator')}
-                        className="px-3 py-1.5 bg-[#3C50E0]/10 hover:bg-[#3C50E0] text-[#3C50E0] hover:text-white border border-[#3C50E0]/30 rounded-[4px] text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer shadow-xs"
-                        title="Ouvrir la vue opérateur call center (action immédiate, quota 30 conf., commissions)"
-                    >
-                        <Headphones className="w-3.5 h-3.5" />
-                        <span>Vue Opérateur (Action & Quota)</span>
-                    </button>
-
                     {/* Period Pills */}
                     <div className="flex items-center bg-[#F7F9FC] dark:bg-[#1C2434] p-1 rounded-[4px] border border-base-300">
                         {[
@@ -380,59 +367,6 @@ const Dashboard: React.FC<DashboardProps> = ({
                         )}
                     </div>
                 </div>
-            </div>
-
-            {/* Quick Action Bar */}
-            <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
-                {onAddOrderClick && (
-                    <button
-                        onClick={onAddOrderClick}
-                        className="flex items-center justify-center gap-2 p-3 bg-[#3C50E0] hover:bg-[#3243be] text-white rounded-[4px] font-semibold text-xs transition-all shadow-sm cursor-pointer"
-                    >
-                        <PlusCircle className="w-4 h-4" />
-                        <span>Nouvelle Commande</span>
-                    </button>
-                )}
-
-                {onNavigate && (
-                    <button
-                        onClick={() => onNavigate('messages')}
-                        className="flex items-center justify-center gap-2 p-3 bg-[#3C50E0]/10 hover:bg-[#3C50E0]/20 border border-[#3C50E0]/30 text-[#3C50E0] rounded-[4px] font-semibold text-xs transition-all shadow-sm cursor-pointer"
-                    >
-                        <MessageSquare className="w-4 h-4" />
-                        <span>Messagerie Interne</span>
-                    </button>
-                )}
-
-                {onNavigate && (
-                    <button
-                        onClick={() => onNavigate(currentUser?.role === Role.Agent ? 'callcenter' : 'orders')}
-                        className="flex items-center justify-center gap-2 p-3 bg-base-200 hover:bg-base-300 border border-base-300 text-text-primary rounded-[4px] font-semibold text-xs transition-all shadow-sm cursor-pointer"
-                    >
-                        <PhoneCall className="w-4 h-4 text-[#FFBA45]" />
-                        <span>Centre d'Appels</span>
-                    </button>
-                )}
-
-                {onNavigate && (
-                    <button
-                        onClick={() => onNavigate('livraison')}
-                        className="flex items-center justify-center gap-2 p-3 bg-base-200 hover:bg-base-300 border border-base-300 text-text-primary rounded-[4px] font-semibold text-xs transition-all shadow-sm cursor-pointer"
-                    >
-                        <Truck className="w-4 h-4 text-[#3C50E0]" />
-                        <span>Bons & Export</span>
-                    </button>
-                )}
-
-                {onSync && (
-                    <button
-                        onClick={onSync}
-                        className="flex items-center justify-center gap-2 p-3 bg-base-200 hover:bg-base-300 border border-base-300 text-text-primary rounded-[4px] font-semibold text-xs transition-all shadow-sm cursor-pointer"
-                    >
-                        <FileSpreadsheet className="w-4 h-4 text-[#10B981]" />
-                        <span>Sync Google Sheets</span>
-                    </button>
-                )}
             </div>
 
             {/* Assigned Agents Section for Seller / Store View */}

@@ -5,6 +5,8 @@ export const STATUS_COLORS: Record<OrderStatus, string> = {
   [OrderStatus.Confirme]: 'bg-green-100 text-green-800 border-green-200',
   [OrderStatus.Expedie]: 'bg-purple-100 text-purple-800 border-purple-200',
   [OrderStatus.Expider]: 'bg-purple-100 text-purple-800 border-purple-200',
+  [OrderStatus.Livre]: 'bg-emerald-100 text-emerald-800 border-emerald-200',
+  [OrderStatus.Retourne]: 'bg-rose-100 text-rose-800 border-rose-200',
   [OrderStatus.PasDeRep1]: 'bg-red-50 text-red-600 border-red-100',
   [OrderStatus.PasDeRep2]: 'bg-red-50 text-red-600 border-red-100',
   [OrderStatus.PasDeRep3]: 'bg-red-50 text-red-600 border-red-100',
@@ -26,12 +28,15 @@ export const STATUS_COLORS: Record<OrderStatus, string> = {
   [OrderStatus.Expire]: 'bg-[#F3E5AB] text-[#8B4513] border-[#D2B48C]', // Brownish
   [OrderStatus.EnDouble]: 'bg-gray-200 text-gray-800 border-gray-300',
   [OrderStatus.HorsZone]: 'bg-cyan-50 text-cyan-700 border-cyan-100',
+  [OrderStatus.Inconnu]: 'bg-zinc-100 text-zinc-700 border-zinc-200',
 };
 
 export const PIE_CHART_COLORS: Record<OrderStatus, string> = {
     [OrderStatus.Confirme]: '#10b981', // emerald-500
     [OrderStatus.Expedie]: '#8b5cf6', // violet-500
     [OrderStatus.Expider]: '#8b5cf6', // violet-500
+    [OrderStatus.Livre]: '#059669', // emerald-600
+    [OrderStatus.Retourne]: '#e11d48', // rose-600
     [OrderStatus.PasDeRep1]: '#fecaca', // red-200
     [OrderStatus.PasDeRep2]: '#fecaca',
     [OrderStatus.PasDeRep3]: '#fecaca',
@@ -53,4 +58,5 @@ export const PIE_CHART_COLORS: Record<OrderStatus, string> = {
     [OrderStatus.Expire]: '#8b4513', // saddle brown
     [OrderStatus.EnDouble]: '#4b5563', // gray-600
     [OrderStatus.HorsZone]: '#06b6d4', // cyan-500
+    [OrderStatus.Inconnu]: '#71717a', // zinc-500
 };

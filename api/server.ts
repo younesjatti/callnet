@@ -8,11 +8,13 @@ const { Pool, Client } = pkg;
 import dotenv from 'dotenv';
 import path from 'path';
 import fs from 'fs';
+import QRCode from 'qrcode';
 import { GoogleGenAI } from "@google/genai";
 import { createClient } from '@supabase/supabase-js';
-import { Role, OrderStatus, Order, User, AuditLog, DatabaseConfig, ShippingTemplate, Product, PlatformMessage, CourierApiConfig, ParcelShipmentResult } from '../types.js';
+import { Role, OrderStatus, Order, User, AuditLog, DatabaseConfig, ShippingTemplate, Product, PlatformMessage, CourierApiConfig, ParcelShipmentResult, WhatsAppConfig, WhatsAppLog } from '../types.js';
 import { OZON_LIVE_CITIES } from '../lib/ozonCitiesLive.js';
 import { normalizeKey, normalizeStatus, normalizeRole, generateShortStableOrderId, forcePrimitiveValue, isValidDate } from '../utils.js';
+import { registerWhatsAppRoutes } from './whatsappRoutes.js';
 
 dotenv.config();
 
@@ -96,6 +98,7 @@ interface EnvStore {
     courierConfigs: CourierApiConfig[];
     messages: PlatformMessage[];
     auditLogs: AuditLog[];
+    whatsappLogs: WhatsAppLog[];
 }
 
 function createInitialEnvStore(): EnvStore {
@@ -236,7 +239,8 @@ function createInitialEnvStore(): EnvStore {
                 details: 'Démarrage du système CallNet V2.4',
                 status: 'success'
             }
-        ]
+        ],
+        whatsappLogs: []
     };
 }
 
@@ -266,6 +270,7 @@ function loadEnvStateFromFile() {
                     if (Array.isArray(data.prod.courierConfigs) && data.prod.courierConfigs.length > 0) envStores.prod.courierConfigs = data.prod.courierConfigs;
                     if (Array.isArray(data.prod.messages)) envStores.prod.messages = data.prod.messages;
                     if (Array.isArray(data.prod.auditLogs)) envStores.prod.auditLogs = data.prod.auditLogs;
+                    if (Array.isArray(data.prod.whatsappLogs)) envStores.prod.whatsappLogs = data.prod.whatsappLogs;
                 }
                 if (data.dev) {
                     if (Array.isArray(data.dev.users) && data.dev.users.length > 0) {
@@ -280,6 +285,7 @@ function loadEnvStateFromFile() {
                     if (Array.isArray(data.dev.courierConfigs) && data.dev.courierConfigs.length > 0) envStores.dev.courierConfigs = data.dev.courierConfigs;
                     if (Array.isArray(data.dev.messages)) envStores.dev.messages = data.dev.messages;
                     if (Array.isArray(data.dev.auditLogs)) envStores.dev.auditLogs = data.dev.auditLogs;
+                    if (Array.isArray(data.dev.whatsappLogs)) envStores.dev.whatsappLogs = data.dev.whatsappLogs;
                 }
                 console.log(`💾 Données locales persistées restaurées depuis le disque (${envStores.prod.users.length} users prod, ${envStores.dev.users.length} users dev)`);
             }
@@ -443,9 +449,27 @@ async function createTablesForPrefix(runner: any, prefix: string) {
             details TEXT,
             status VARCHAR(50)
         );
+
+        CREATE TABLE IF NOT EXISTS ${prefix}whatsapp_logs (
+            id VARCHAR(255) PRIMARY KEY,
+            order_id VARCHAR(255),
+            customer_name VARCHAR(255),
+            phone VARCHAR(50),
+            type VARCHAR(50),
+            message TEXT,
+            status VARCHAR(50),
+            timestamp TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+            ai_interpretation JSONB,
+            client_id VARCHAR(255)
+        );
     `);
 
     const patchQueries = [
+        `ALTER TABLE ${prefix}users ADD COLUMN IF NOT EXISTS whatsapp_config JSONB DEFAULT '{}'::jsonb`,
+        `ALTER TABLE ${prefix}orders ADD COLUMN IF NOT EXISTS whatsapp_status VARCHAR(50) DEFAULT 'not_sent'`,
+        `ALTER TABLE ${prefix}orders ADD COLUMN IF NOT EXISTS whatsapp_sent_at TIMESTAMP WITH TIME ZONE`,
+        `ALTER TABLE ${prefix}orders ADD COLUMN IF NOT EXISTS whatsapp_response_at TIMESTAMP WITH TIME ZONE`,
+        `ALTER TABLE ${prefix}orders ADD COLUMN IF NOT EXISTS whatsapp_last_message TEXT`,
         `ALTER TABLE ${prefix}users ADD COLUMN IF NOT EXISTS avatar_url TEXT`,
         `ALTER TABLE ${prefix}users ADD COLUMN IF NOT EXISTS phone VARCHAR(50)`,
         `ALTER TABLE ${prefix}users ADD COLUMN IF NOT EXISTS primary_courier VARCHAR(100)`,
@@ -566,8 +590,9 @@ async function upsertUserInPg(user: User, password?: string, req?: any) {
                     google_sheets = $15,
                     ecommerce_platforms = $16,
                     auto_sync_interval = $17,
-                    last_auto_synced_at = $18
-                 WHERE id = $19`,
+                    last_auto_synced_at = $18,
+                    whatsapp_config = $19
+                 WHERE id = $20`,
                 [
                     cleanName,
                     cleanEmail,
@@ -587,6 +612,7 @@ async function upsertUserInPg(user: User, password?: string, req?: any) {
                     user.ecommercePlatforms ? JSON.stringify(user.ecommercePlatforms) : null,
                     user.autoSyncInterval ? Number(user.autoSyncInterval) : 120,
                     user.lastAutoSyncedAt || null,
+                    user.whatsappConfig ? JSON.stringify(user.whatsappConfig) : null,
                     existingId
                 ]
             );
@@ -596,9 +622,9 @@ async function upsertUserInPg(user: User, password?: string, req?: any) {
                     id, name, email, password, role, assigned_client_ids,
                     google_sheet_url, selected_sheet, auto_sync, column_mapping,
                     logo_data, logo_scale, avatar_url, phone, primary_courier,
-                    google_sheets, ecommerce_platforms, auto_sync_interval, last_auto_synced_at
+                    google_sheets, ecommerce_platforms, auto_sync_interval, last_auto_synced_at, whatsapp_config
                  )
-                 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19)`,
+                 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20)`,
                 [
                     user.id,
                     cleanName,
@@ -618,7 +644,8 @@ async function upsertUserInPg(user: User, password?: string, req?: any) {
                     user.googleSheets ? JSON.stringify(user.googleSheets) : null,
                     user.ecommercePlatforms ? JSON.stringify(user.ecommercePlatforms) : null,
                     user.autoSyncInterval ? Number(user.autoSyncInterval) : 120,
-                    user.lastAutoSyncedAt || null
+                    user.lastAutoSyncedAt || null,
+                    user.whatsappConfig ? JSON.stringify(user.whatsappConfig) : null
                 ]
             );
         }
@@ -661,7 +688,8 @@ async function syncEnvFromPg(runner: any, prefix: string, store: EnvStore) {
                     logoScale: u.logo_scale ? Number(u.logo_scale) : 1,
                     avatarUrl: u.avatar_url || undefined,
                     phone: u.phone || undefined,
-                    primaryCourier: u.primary_courier || undefined
+                    primaryCourier: u.primary_courier || undefined,
+                    whatsappConfig: u.whatsapp_config ? (typeof u.whatsapp_config === 'string' ? JSON.parse(u.whatsapp_config) : u.whatsapp_config) : undefined
                 };
                 pgUserMap.set(userObj.id, userObj);
                 pgUserMap.set(userObj.email.toLowerCase(), userObj);
@@ -746,14 +774,21 @@ async function syncEnvFromPg(runner: any, prefix: string, store: EnvStore) {
                     variant: o.variant || '',
                     price: Number(o.price || 0),
                     date: o.date,
-                    status: normalizeStatus(o.status) || OrderStatus.EnAttend,
+                    status: normalizeStatus(o.status),
                     phone: o.phone || '',
                     address: o.address || '',
                     city: o.city || '',
                     district: o.district || '',
                     note: o.note || '',
                     clientId: o.client_id,
-                    archived: Boolean(o.archived)
+                    archived: Boolean(o.archived),
+                    trackingNumber: o.tracking_number || undefined,
+                    courierName: o.courier_name || undefined,
+                    courierStatus: o.courier_status || undefined,
+                    shippedAt: o.shipped_at ? new Date(o.shipped_at).toISOString() : undefined,
+                    courierNote: o.courier_note || undefined,
+                    cityId: o.city_id ? String(o.city_id) : undefined,
+                    courierParcelId: o.courier_parcel_id ? String(o.courier_parcel_id) : undefined
                 };
                 if (isOrderWithData(orderObj)) {
                     store.orders.push(orderObj);
@@ -805,6 +840,39 @@ async function syncEnvFromPg(runner: any, prefix: string, store: EnvStore) {
                     sheetName: r.sheet_name
                 });
             });
+        }
+
+        // 5. Sync Courier Configurations
+        try {
+            const couriersRes = await runner.query(`SELECT * FROM ${prefix}courier_configs ORDER BY updated_at DESC, created_at ASC`);
+            if (couriersRes && couriersRes.rows && couriersRes.rows.length > 0) {
+                const pgConfigs: CourierApiConfig[] = couriersRes.rows.map((r: any) => ({
+                    id: r.id,
+                    provider: r.provider,
+                    name: r.name,
+                    isEnabled: Boolean(r.is_enabled),
+                    isPrimary: Boolean(r.is_primary),
+                    apiKey: r.api_key || '',
+                    clientId: r.client_id || '',
+                    apiSecret: r.api_secret || '',
+                    apiBaseUrl: r.api_base_url || '',
+                    isStock: Boolean(r.is_stock),
+                    allowOpenParcel: r.allow_open_parcel !== false,
+                    isFragile: Boolean(r.is_fragile),
+                    isReplace: Boolean(r.is_replace),
+                    defaultNature: r.default_nature || 'Colis E-commerce COD',
+                    logoUrl: r.provider === 'ozon_express' ? 'https://ywycwjkkjmlxrwohkgas.supabase.co/storage/v1/object/public/callnet%20assets/1781020774720-ozon.webp' : undefined,
+                    storeOwnerId: r.store_owner_id || '',
+                    webhookSecret: r.webhook_secret || '',
+                    citiesCount: r.cities_count ? Number(r.cities_count) : MOROCCAN_CITIES_LIST.length,
+                    lastSyncedAt: r.last_synced_at || undefined,
+                    createdAt: r.created_at,
+                    updatedAt: r.updated_at
+                }));
+                store.courierConfigs = deduplicateCourierConfigs([...pgConfigs, ...(store.courierConfigs || [])]);
+            }
+        } catch (courierSyncErr) {
+            console.warn(`Sync ${prefix || 'prod'} courier_configs note:`, courierSyncErr);
         }
     } catch (e) {
         console.warn(`Sync ${prefix || 'prod'} from PG note:`, e);
@@ -1953,7 +2021,7 @@ app.get('/api/orders', authenticateToken, async (req: any, res) => {
     if (isPgConnected) {
         try {
             const result = await safePgQuery(`SELECT * FROM ${ordersTable} ORDER BY date DESC, id DESC`);
-            if (result && result.rows) {
+            if (result && result.rows && result.rows.length > 0) {
                 const pgOrders = result.rows.map((o: any) => ({
                     id: o.id,
                     customerName: o.customer_name,
@@ -1962,7 +2030,7 @@ app.get('/api/orders', authenticateToken, async (req: any, res) => {
                     variant: o.variant || '',
                     price: Number(o.price || 0),
                     date: o.date,
-                    status: normalizeStatus(o.status) || OrderStatus.EnAttend,
+                    status: normalizeStatus(o.status),
                     phone: o.phone || '',
                     address: o.address || '',
                     city: o.city || '',
@@ -1977,14 +2045,68 @@ app.get('/api/orders', authenticateToken, async (req: any, res) => {
                     courierStatus: o.courier_status || '',
                     shippedAt: o.shipped_at || undefined,
                     courierParcelId: o.courier_parcel_id || '',
-                    courierNote: o.courier_note || ''
+                    courierNote: o.courier_note || '',
+                    whatsappStatus: o.whatsapp_status || 'not_sent',
+                    whatsappSentAt: o.whatsapp_sent_at || undefined,
+                    whatsappResponseAt: o.whatsapp_response_at || undefined,
+                    whatsappLastMessage: o.whatsapp_last_message || ''
                 })).filter(isOrderWithData);
 
+                // RECONCILE WITH MEMORY:
+                // Never lose tracking numbers if they existed in memory or in PostgreSQL
+                const memMap = new Map<string, Order>();
+                state.orders.forEach(o => { if (o && o.id) memMap.set(String(o.id).trim(), o); });
+
+                const reconciled = pgOrders.map((pOrd: Order) => {
+                    const mOrd = memMap.get(String(pOrd.id).trim());
+                    if (!mOrd) return pOrd;
+                    const trackingNumber = pOrd.trackingNumber || mOrd.trackingNumber || '';
+                    const courierName = pOrd.courierName || mOrd.courierName || '';
+                    const courierStatus = pOrd.courierStatus || mOrd.courierStatus || '';
+                    const shippedAt = pOrd.shippedAt || mOrd.shippedAt || undefined;
+                    const courierParcelId = pOrd.courierParcelId || mOrd.courierParcelId || '';
+                    const courierNote = pOrd.courierNote || mOrd.courierNote || '';
+                    const whatsappStatus = pOrd.whatsappStatus && pOrd.whatsappStatus !== 'not_sent' ? pOrd.whatsappStatus : (mOrd.whatsappStatus || 'not_sent');
+                    const whatsappSentAt = pOrd.whatsappSentAt || mOrd.whatsappSentAt || undefined;
+                    const whatsappResponseAt = pOrd.whatsappResponseAt || mOrd.whatsappResponseAt || undefined;
+                    const whatsappLastMessage = pOrd.whatsappLastMessage || mOrd.whatsappLastMessage || '';
+                    const status = (mOrd.trackingNumber || mOrd.status === OrderStatus.Expedie || mOrd.status === OrderStatus.Livre)
+                        ? (pOrd.status === OrderStatus.EnAttend || !pOrd.status ? mOrd.status : pOrd.status)
+                        : (pOrd.status || mOrd.status);
+
+                    return {
+                        ...pOrd,
+                        trackingNumber,
+                        courierName,
+                        courierStatus,
+                        shippedAt,
+                        courierParcelId,
+                        courierNote,
+                        whatsappStatus,
+                        whatsappSentAt,
+                        whatsappResponseAt,
+                        whatsappLastMessage,
+                        status
+                    };
+                });
+
+                // Also keep any orders that were created in memory and not yet in PG
+                const pgIds = new Set(reconciled.map((o: Order) => String(o.id).trim()));
+                const memOnly = state.orders.filter((o: Order) => o && o.id && !pgIds.has(String(o.id).trim()));
+                const finalOrders = [...reconciled, ...memOnly];
+
                 state.orders.length = 0;
-                state.orders.push(...pgOrders);
-                return res.json(stableSortOrdersServer(pgOrders));
+                state.orders.push(...finalOrders);
+                return res.json(stableSortOrdersServer(finalOrders));
+            } else if (result && result.rows && result.rows.length === 0 && state.orders.length > 0) {
+                // Safeguard: PG returned 0 rows but memory has orders; do not wipe memory!
+                console.warn("PostgreSQL returned 0 orders, preserving in-memory orders count:", state.orders.length);
+                const filteredMemory = state.orders.filter(isOrderWithData);
+                return res.json(stableSortOrdersServer(filteredMemory));
             }
-        } catch (_) {}
+        } catch (pgErr) {
+            console.warn("GET /api/orders PG query failed, using memory:", pgErr);
+        }
     }
 
     const filteredMemory = state.orders.filter(isOrderWithData);
@@ -1997,6 +2119,13 @@ app.post('/api/orders', authenticateToken, async (req: any, res) => {
     const state = getEnvState(req);
     const ordersTable = getTable('orders', req);
 
+    const trackingVal = o.trackingNumber !== undefined ? o.trackingNumber : (o.tracking_number || '');
+    const courierVal = o.courierName !== undefined ? o.courierName : (o.courier_name || '');
+    const courierStatusVal = o.courierStatus !== undefined ? o.courierStatus : (o.courier_status || '');
+    const shippedAtVal = o.shippedAt !== undefined ? o.shippedAt : (o.shipped_at || null);
+    const courierParcelIdVal = o.courierParcelId !== undefined ? o.courierParcelId : (o.courier_parcel_id || '');
+    const courierNoteVal = o.courierNote !== undefined ? o.courierNote : (o.courier_note || '');
+
     const newOrder: Order = {
         id: o.id || `CMD-${Date.now()}`,
         customerName: o.customerName || 'Inconnu',
@@ -2005,14 +2134,20 @@ app.post('/api/orders', authenticateToken, async (req: any, res) => {
         variant: o.variant || '',
         price: Number(o.price || 0),
         date: o.date || new Date().toISOString(),
-        status: o.status || OrderStatus.EnAttend,
+        status: o.status || (trackingVal ? OrderStatus.Expedie : OrderStatus.EnAttend),
         phone: o.phone || '',
         address: o.address || '',
         city: o.city || '',
         district: o.district || o.quartier || '',
         note: o.note || '',
         clientId: o.clientId || req.user.id,
-        archived: Boolean(o.archived)
+        archived: Boolean(o.archived),
+        trackingNumber: trackingVal,
+        courierName: courierVal,
+        courierStatus: courierStatusVal,
+        shippedAt: shippedAtVal || undefined,
+        courierParcelId: courierParcelIdVal,
+        courierNote: courierNoteVal
     };
 
     if (!isOrderWithData(newOrder)) {
@@ -2022,14 +2157,26 @@ app.post('/api/orders', authenticateToken, async (req: any, res) => {
     if (isPgConnected) {
         try {
             await safePgQuery(
-                `INSERT INTO ${ordersTable} (id, customer_name, product, quantity, variant, price, date, status, phone, address, city, district, note, client_id, archived)
-                 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
+                `INSERT INTO ${ordersTable} (id, customer_name, product, quantity, variant, price, date, status, phone, address, city, district, note, client_id, archived, tracking_number, courier_name, courier_status, shipped_at, courier_parcel_id, courier_note)
+                 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21)
                  ON CONFLICT (id) DO UPDATE SET
                     customer_name=EXCLUDED.customer_name, product=EXCLUDED.product, quantity=EXCLUDED.quantity,
                     variant=EXCLUDED.variant, price=EXCLUDED.price, date=EXCLUDED.date, status=EXCLUDED.status,
                     phone=EXCLUDED.phone, address=EXCLUDED.address, city=EXCLUDED.city, district=EXCLUDED.district,
-                    note=EXCLUDED.note, client_id=EXCLUDED.client_id, archived=EXCLUDED.archived`,
-                [newOrder.id, newOrder.customerName, newOrder.product, newOrder.quantity, newOrder.variant, newOrder.price, newOrder.date, newOrder.status, newOrder.phone, newOrder.address, newOrder.city, newOrder.district, newOrder.note, newOrder.clientId, newOrder.archived],
+                    note=EXCLUDED.note, client_id=EXCLUDED.client_id, archived=EXCLUDED.archived,
+                    tracking_number=COALESCE(NULLIF(orders.tracking_number, ''), NULLIF(EXCLUDED.tracking_number, '')),
+                    courier_name=COALESCE(NULLIF(orders.courier_name, ''), NULLIF(EXCLUDED.courier_name, '')),
+                    courier_status=COALESCE(NULLIF(orders.courier_status, ''), NULLIF(EXCLUDED.courier_status, '')),
+                    shipped_at=COALESCE(orders.shipped_at, EXCLUDED.shipped_at),
+                    courier_parcel_id=COALESCE(NULLIF(orders.courier_parcel_id, ''), NULLIF(EXCLUDED.courier_parcel_id, '')),
+                    courier_note=COALESCE(NULLIF(orders.courier_note, ''), NULLIF(EXCLUDED.courier_note, ''))`,
+                [
+                    newOrder.id, newOrder.customerName, newOrder.product, newOrder.quantity, newOrder.variant,
+                    newOrder.price, newOrder.date, newOrder.status, newOrder.phone, newOrder.address,
+                    newOrder.city, newOrder.district, newOrder.note, newOrder.clientId, newOrder.archived,
+                    newOrder.trackingNumber || null, newOrder.courierName || null, newOrder.courierStatus || null,
+                    newOrder.shippedAt || null, newOrder.courierParcelId || null, newOrder.courierNote || null
+                ],
                 10000
             );
         } catch (_) {}
@@ -2072,19 +2219,36 @@ app.post('/api/orders/bulk', authenticateToken, async (req: any, res) => {
             const chunkSize = 50;
             for (let i = 0; i < validOrders.length; i += chunkSize) {
                 const chunk = validOrders.slice(i, i + chunkSize);
-                await Promise.all(chunk.map(o => 
-                    safePgQuery(
-                        `INSERT INTO ${ordersTable} (id, customer_name, product, quantity, variant, price, date, status, phone, address, city, district, note, client_id, archived) 
-                         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
+                await Promise.all(chunk.map(o => {
+                    const trk = o.trackingNumber !== undefined ? o.trackingNumber : (o.tracking_number || null);
+                    const cur = o.courierName !== undefined ? o.courierName : (o.courier_name || null);
+                    const curSt = o.courierStatus !== undefined ? o.courierStatus : (o.courier_status || null);
+                    const shpAt = o.shippedAt !== undefined ? o.shippedAt : (o.shipped_at || null);
+                    const curPid = o.courierParcelId !== undefined ? o.courierParcelId : (o.courier_parcel_id || null);
+                    const curNt = o.courierNote !== undefined ? o.courierNote : (o.courier_note || null);
+
+                    return safePgQuery(
+                        `INSERT INTO ${ordersTable} (id, customer_name, product, quantity, variant, price, date, status, phone, address, city, district, note, client_id, archived, tracking_number, courier_name, courier_status, shipped_at, courier_parcel_id, courier_note) 
+                         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21)
                          ON CONFLICT (id) DO UPDATE SET 
                             customer_name=EXCLUDED.customer_name, product=EXCLUDED.product, quantity=EXCLUDED.quantity,
                             variant=EXCLUDED.variant, price=EXCLUDED.price, date=EXCLUDED.date, status=EXCLUDED.status,
                             phone=EXCLUDED.phone, address=EXCLUDED.address, city=EXCLUDED.city, district=EXCLUDED.district,
-                            note=EXCLUDED.note, client_id=EXCLUDED.client_id, archived=EXCLUDED.archived`,
-                        [o.id, o.customerName, o.product, o.quantity, o.variant, o.price, o.date, o.status, o.phone, o.address, o.city, o.district || '', o.note, o.clientId, o.archived],
+                            note=EXCLUDED.note, client_id=EXCLUDED.client_id, archived=EXCLUDED.archived,
+                            tracking_number=COALESCE(NULLIF(orders.tracking_number, ''), NULLIF(EXCLUDED.tracking_number, '')),
+                            courier_name=COALESCE(NULLIF(orders.courier_name, ''), NULLIF(EXCLUDED.courier_name, '')),
+                            courier_status=COALESCE(NULLIF(orders.courier_status, ''), NULLIF(EXCLUDED.courier_status, '')),
+                            shipped_at=COALESCE(orders.shipped_at, EXCLUDED.shipped_at),
+                            courier_parcel_id=COALESCE(NULLIF(orders.courier_parcel_id, ''), NULLIF(EXCLUDED.courier_parcel_id, '')),
+                            courier_note=COALESCE(NULLIF(orders.courier_note, ''), NULLIF(EXCLUDED.courier_note, ''))`,
+                        [
+                            o.id, o.customerName, o.product, o.quantity, o.variant, o.price, o.date, o.status,
+                            o.phone, o.address, o.city, o.district || '', o.note, o.clientId, o.archived,
+                            trk, cur, curSt, shpAt, curPid, curNt
+                        ],
                         10000
-                    )
-                ));
+                    );
+                }));
             }
         } catch (_) {}
     }
@@ -2092,7 +2256,16 @@ app.post('/api/orders/bulk', authenticateToken, async (req: any, res) => {
     validOrders.forEach((o: Order) => {
         const existingIdx = state.orders.findIndex(m => String(m.id) === String(o.id));
         if (existingIdx !== -1) {
-            state.orders[existingIdx] = { ...state.orders[existingIdx], ...o };
+            state.orders[existingIdx] = {
+                ...state.orders[existingIdx],
+                ...o,
+                trackingNumber: o.trackingNumber || state.orders[existingIdx].trackingNumber || '',
+                courierName: o.courierName || state.orders[existingIdx].courierName || '',
+                courierStatus: o.courierStatus || state.orders[existingIdx].courierStatus || '',
+                shippedAt: o.shippedAt || state.orders[existingIdx].shippedAt || undefined,
+                courierParcelId: o.courierParcelId || state.orders[existingIdx].courierParcelId || '',
+                courierNote: o.courierNote || state.orders[existingIdx].courierNote || ''
+            };
         } else {
             state.orders.unshift(o);
         }
@@ -2358,6 +2531,17 @@ async function syncStatusToGoogleSheet(orderId: string, updates: any, currentUse
                 commentaire: note,
                 variant,
                 variante: variant,
+                trackingNumber: fullOrder.trackingNumber || updates.trackingNumber || '',
+                tracking_number: fullOrder.trackingNumber || updates.trackingNumber || '',
+                suivi: fullOrder.trackingNumber || updates.trackingNumber || '',
+                tracking: fullOrder.trackingNumber || updates.trackingNumber || '',
+                awb: fullOrder.trackingNumber || updates.trackingNumber || '',
+                courierName: fullOrder.courierName || updates.courierName || '',
+                courier_name: fullOrder.courierName || updates.courierName || '',
+                transporteur: fullOrder.courierName || updates.courierName || '',
+                courierStatus: fullOrder.courierStatus || updates.courierStatus || '',
+                courier_status: fullOrder.courierStatus || updates.courierStatus || '',
+                shippedAt: fullOrder.shippedAt || updates.shippedAt || '',
                 oldPhone: oldOrder?.phone || order?.phone || '',
                 oldCustomerName: oldOrder?.customerName || order?.customerName || '',
                 oldProduct: oldOrder?.product || order?.product || '',
@@ -2437,22 +2621,54 @@ app.post('/api/orders/:id/sync-sheet', authenticateToken, async (req: any, res) 
 // Update Order
 app.put('/api/orders/:id', authenticateToken, async (req: any, res) => {
     const { id } = req.params;
-    const updates = req.body;
+    const updates = req.body || {};
     const state = getEnvState(req);
     const ordersTable = getTable('orders', req);
 
-    const existingIdx = state.orders.findIndex(m => String(m.id) === String(id));
+    const trackingVal = updates.trackingNumber !== undefined ? updates.trackingNumber : updates.tracking_number;
+    const courierVal = updates.courierName !== undefined ? updates.courierName : updates.courier_name;
+    const courierStatusVal = updates.courierStatus !== undefined ? updates.courierStatus : updates.courier_status;
+    const shippedAtVal = updates.shippedAt !== undefined ? updates.shippedAt : updates.shipped_at;
+    const courierNoteVal = updates.courierNote !== undefined ? updates.courierNote : updates.courier_note;
+    const cityIdVal = updates.cityId !== undefined ? updates.cityId : updates.city_id;
+    const courierParcelIdVal = updates.courierParcelId !== undefined ? updates.courierParcelId : updates.courier_parcel_id;
+
+    const normalizedUpdates: any = {
+        ...updates,
+        ...(trackingVal !== undefined ? { trackingNumber: trackingVal } : {}),
+        ...(courierVal !== undefined ? { courierName: courierVal } : {}),
+        ...(courierStatusVal !== undefined ? { courierStatus: courierStatusVal } : {}),
+        ...(shippedAtVal !== undefined ? { shippedAt: shippedAtVal } : {}),
+        ...(courierNoteVal !== undefined ? { courierNote: courierNoteVal } : {}),
+        ...(cityIdVal !== undefined ? { cityId: cityIdVal } : {}),
+        ...(courierParcelIdVal !== undefined ? { courierParcelId: courierParcelIdVal } : {})
+    };
+
     let oldOrder: any = null;
-    if (existingIdx !== -1) {
-        oldOrder = { ...state.orders[existingIdx] };
-        state.orders[existingIdx] = { ...state.orders[existingIdx], ...updates };
-    } else {
-        state.orders.push({ id, ...updates });
+    ['prod', 'dev'].forEach((envKey) => {
+        const s = (envStores as any)[envKey];
+        if (s && s.orders) {
+            const idx = s.orders.findIndex((m: any) => String(m.id) === String(id));
+            if (idx !== -1) {
+                if (!oldOrder) oldOrder = { ...s.orders[idx] };
+                s.orders[idx] = { ...s.orders[idx], ...normalizedUpdates };
+            }
+        }
+    });
+
+    const currentIdx = state.orders.findIndex(m => String(m.id) === String(id));
+    if (currentIdx === -1) {
+        state.orders.push({ id, ...normalizedUpdates });
     }
     saveEnvStateToFile();
 
     // Always attempt syncing modified order details to Google Sheet
-    const syncResult = await syncStatusToGoogleSheet(id, updates, req.user, oldOrder, req);
+    let syncResult: any = null;
+    try {
+        syncResult = await syncStatusToGoogleSheet(id, normalizedUpdates, req.user, oldOrder, req);
+    } catch (sheetErr) {
+        console.warn("Sheet sync error on order update:", sheetErr);
+    }
 
     if (isPgConnected) {
         try {
@@ -2474,12 +2690,27 @@ app.put('/api/orders/:id', authenticateToken, async (req: any, res) => {
             if (updates.note !== undefined) { fields.push(`note = $${idx++}`); values.push(updates.note); }
             if (updates.archived !== undefined) { fields.push(`archived = $${idx++}`); values.push(updates.archived); }
 
+            // Courier and tracking fields persisted to PostgreSQL
+            if (trackingVal !== undefined) { fields.push(`tracking_number = $${idx++}`); values.push(trackingVal); }
+            if (courierVal !== undefined) { fields.push(`courier_name = $${idx++}`); values.push(courierVal); }
+            if (courierStatusVal !== undefined) { fields.push(`courier_status = $${idx++}`); values.push(courierStatusVal); }
+            if (shippedAtVal !== undefined) { fields.push(`shipped_at = $${idx++}`); values.push(shippedAtVal); }
+            if (courierNoteVal !== undefined) { fields.push(`courier_note = $${idx++}`); values.push(courierNoteVal); }
+            if (cityIdVal !== undefined) { fields.push(`city_id = $${idx++}`); values.push(cityIdVal); }
+            if (courierParcelIdVal !== undefined) { fields.push(`courier_parcel_id = $${idx++}`); values.push(courierParcelIdVal); }
+            if (updates.whatsappStatus !== undefined) { fields.push(`whatsapp_status = $${idx++}`); values.push(updates.whatsappStatus); }
+            if (updates.whatsappSentAt !== undefined) { fields.push(`whatsapp_sent_at = $${idx++}`); values.push(updates.whatsappSentAt); }
+            if (updates.whatsappResponseAt !== undefined) { fields.push(`whatsapp_response_at = $${idx++}`); values.push(updates.whatsappResponseAt); }
+            if (updates.whatsappLastMessage !== undefined) { fields.push(`whatsapp_last_message = $${idx++}`); values.push(updates.whatsappLastMessage); }
+
             if (fields.length > 0) {
                 values.push(id);
                 await safePgQuery(`UPDATE ${ordersTable} SET ${fields.join(', ')} WHERE id = $${idx}`, values);
             }
             return res.json({ message: 'Updated', syncResult });
-        } catch (_) {}
+        } catch (pgErr) {
+            console.error("PG update order error:", pgErr);
+        }
     }
 
     return res.json({ message: 'Updated', syncResult });
@@ -3096,6 +3327,134 @@ function findMatchingCityServer(rawCity: string, provider?: string) {
     return null;
 }
 
+function isDummyCredential(val?: string): boolean {
+    if (!val) return true;
+    const clean = val.trim().toUpperCase();
+    return clean === '' || 
+           clean === '{YOUR_ID}' || 
+           clean === '{YOUR_API_KEY}' || 
+           clean === 'YOUR_ID' || 
+           clean === 'YOUR_API_KEY' || 
+           clean === 'DEMO' || 
+           clean === 'TEST' || 
+           clean === 'DEMO_KEY' || 
+           clean === 'CLIENT_DEMO' ||
+           clean.includes('YOUR_ID') ||
+           clean.includes('YOUR_API_KEY');
+}
+
+function isCourierConfiguredServer(config?: CourierApiConfig | null): boolean {
+    if (!config || !config.isEnabled) return false;
+    const key = (config.apiKey || '').trim();
+    const id = (config.clientId || '').trim();
+    if (config.provider === 'ameex') {
+        return Boolean(key && id && !isDummyCredential(key) && !isDummyCredential(id));
+    }
+    if (config.provider === 'ozon_express') {
+        return Boolean(key && id && !isDummyCredential(key) && !isDummyCredential(id));
+    }
+    if (config.provider === 'kargo_express') {
+        return Boolean(key && id && !isDummyCredential(key) && !isDummyCredential(id));
+    }
+    if (config.provider === 'digylog') {
+        return Boolean(key && !isDummyCredential(key));
+    }
+    return Boolean(key && !isDummyCredential(key));
+}
+
+function getCourierConfig(state: EnvStore, provider: string, storeOwnerId?: string): CourierApiConfig | undefined {
+    if (!state.courierConfigs || state.courierConfigs.length === 0) return undefined;
+
+    const matchesProvider = (c: CourierApiConfig) => {
+        if (!c) return false;
+        const cProv = c.provider as string;
+        const targetProv = provider as string;
+        if (cProv === targetProv) return true;
+        if (targetProv === 'ozon_express' && (cProv === 'ozon' || c.id?.includes('ozon'))) return true;
+        if (targetProv === 'ozon' && (cProv === 'ozon_express' || c.id?.includes('ozon'))) return true;
+        if (targetProv === 'kargo_express' && (cProv === 'kargo' || c.id?.includes('kargo'))) return true;
+        if (targetProv === 'kargo' && (cProv === 'kargo_express' || c.id?.includes('kargo'))) return true;
+        return false;
+    };
+
+    // 1. First search for config with matching storeOwnerId and non-empty apiKey
+    if (storeOwnerId) {
+        const ownerConfigWithKey = state.courierConfigs.find(c => matchesProvider(c) && c.storeOwnerId === storeOwnerId && Boolean(c.apiKey));
+        if (ownerConfigWithKey) return ownerConfigWithKey;
+    }
+
+    // 2. Search for any config with non-empty apiKey
+    const configWithKey = state.courierConfigs.find(c => matchesProvider(c) && Boolean(c.apiKey));
+    if (configWithKey) return configWithKey;
+
+    // 3. Fallback to owner config or default
+    if (storeOwnerId) {
+        const ownerConfig = state.courierConfigs.find(c => matchesProvider(c) && c.storeOwnerId === storeOwnerId);
+        if (ownerConfig) return ownerConfig;
+    }
+    return state.courierConfigs.find(c => matchesProvider(c));
+}
+
+function deduplicateCourierConfigs(configs: CourierApiConfig[]): CourierApiConfig[] {
+    if (!Array.isArray(configs)) return [];
+    const map = new Map<string, CourierApiConfig>();
+    for (const cfg of configs) {
+        if (!cfg || !cfg.provider) continue;
+        let p = String(cfg.provider).toLowerCase().trim();
+        if (p === 'ozon') p = 'ozon_express';
+        if (p === 'kargo') p = 'kargo_express';
+        const storeOwner = String(cfg.storeOwnerId || '').trim();
+        const key = `${p}___${storeOwner}`;
+
+        const existing = map.get(key);
+        if (!existing) {
+            map.set(key, { ...cfg, provider: p as any });
+        } else {
+            const hasApiKey = Boolean(cfg.apiKey && cfg.apiKey.trim() !== '' && !isDummyCredential(cfg.apiKey));
+            const existingHasApiKey = Boolean(existing.apiKey && existing.apiKey.trim() !== '' && !isDummyCredential(existing.apiKey));
+            const hasClientId = Boolean(cfg.clientId && cfg.clientId.trim() !== '' && !isDummyCredential(cfg.clientId));
+            const existingHasClientId = Boolean(existing.clientId && existing.clientId.trim() !== '' && !isDummyCredential(existing.clientId));
+
+            const merged: CourierApiConfig = {
+                ...existing,
+                ...cfg,
+                id: cfg.id || existing.id,
+                provider: p as any,
+                apiKey: hasApiKey ? cfg.apiKey : (existingHasApiKey ? existing.apiKey : (cfg.apiKey || existing.apiKey || '')),
+                clientId: hasClientId ? cfg.clientId : (existingHasClientId ? existing.clientId : (cfg.clientId || existing.clientId || '')),
+                apiBaseUrl: (cfg.apiBaseUrl && cfg.apiBaseUrl.trim() !== '') ? cfg.apiBaseUrl : existing.apiBaseUrl,
+                apiSecret: (cfg.apiSecret && cfg.apiSecret.trim() !== '') ? cfg.apiSecret : existing.apiSecret,
+                isEnabled: typeof cfg.isEnabled === 'boolean' ? cfg.isEnabled : existing.isEnabled,
+                isPrimary: Boolean(cfg.isPrimary || existing.isPrimary),
+                updatedAt: cfg.updatedAt || existing.updatedAt || new Date().toISOString()
+            };
+            map.set(key, merged);
+        }
+    }
+    return Array.from(map.values());
+}
+
+function getActivePrimaryCourierServer(req: any): CourierApiConfig | null {
+    const state = getEnvState(req);
+    const userId = req.user?.id;
+    const configs = (state.courierConfigs || []).filter(c => !c.storeOwnerId || c.storeOwnerId === userId);
+
+    // 1. Configured and marked as primary
+    const primaryConfigured = configs.find(c => c.isPrimary && isCourierConfiguredServer(c));
+    if (primaryConfigured) return primaryConfigured;
+
+    // 2. Any configured courier
+    const firstConfigured = configs.find(c => isCourierConfiguredServer(c));
+    if (firstConfigured) return firstConfigured;
+
+    // 3. Any marked as primary
+    const primary = configs.find(c => c.isPrimary && c.isEnabled);
+    if (primary) return primary;
+
+    // 4. Any enabled
+    return configs.find(c => c.isEnabled) || null;
+}
+
 // Get Courier Configs
 app.get('/api/couriers/configs', authenticateToken, async (req: any, res) => {
     const state = getEnvState(req);
@@ -3108,10 +3467,10 @@ app.get('/api/couriers/configs', authenticateToken, async (req: any, res) => {
             let query = `SELECT * FROM ${table}`;
             const params: any[] = [];
             if (userRole === Role.Client) {
-                query += ' WHERE store_owner_id = $1 OR store_owner_id IS NULL';
+                query += ' WHERE store_owner_id = $1 OR store_owner_id IS NULL OR store_owner_id = \'\'';
                 params.push(userId);
             }
-            query += ' ORDER BY created_at ASC';
+            query += ' ORDER BY updated_at DESC, created_at ASC';
             const result = await safePgQuery(query, params);
             if (result && result.rows && result.rows.length > 0) {
                 const configs: CourierApiConfig[] = result.rows.map((r: any) => ({
@@ -3137,14 +3496,19 @@ app.get('/api/couriers/configs', authenticateToken, async (req: any, res) => {
                     createdAt: r.created_at,
                     updatedAt: r.updated_at
                 }));
-                return res.json(configs);
+                // Intelligently deduplicate PG configs with any in-memory configs
+                const merged = deduplicateCourierConfigs([...configs, ...(state.courierConfigs || [])]);
+                state.courierConfigs = merged;
+                return res.json(merged);
             }
         } catch (e) {
             console.error("PG fetch courier configs error:", e);
         }
     }
 
-    return res.json(state.courierConfigs || []);
+    const deduped = deduplicateCourierConfigs(state.courierConfigs || []);
+    state.courierConfigs = deduped;
+    return res.json(deduped);
 });
 
 // Set Primary Courier for Current User / Store
@@ -3193,8 +3557,19 @@ app.put('/api/couriers/primary', authenticateToken, async (req: any, res) => {
     saveEnvStateToFile();
     return res.json({ 
         success: true, 
-        message: `Transporteur principal défini sur ${provider === 'ozon_express' ? 'Ozon Express' : provider === 'digylog' ? 'DIGYLOG Express' : 'Kargo Express'} !`,
+        message: `Transporteur principal défini sur ${provider === 'ozon_express' ? 'Ozon Express' : provider === 'digylog' ? 'DIGYLOG Express' : provider === 'ameex' ? 'Ameex Express' : 'Kargo Express'} !`,
         primaryCourier: provider 
+    });
+});
+
+// Get Active Primary Courier Configuration
+app.get('/api/couriers/primary', authenticateToken, async (req: any, res) => {
+    const activeCourier = getActivePrimaryCourierServer(req);
+    return res.json({
+        success: true,
+        primaryCourier: activeCourier?.provider || null,
+        courier: activeCourier || null,
+        isConfigured: activeCourier ? isCourierConfiguredServer(activeCourier) : false
     });
 });
 
@@ -3588,11 +3963,20 @@ app.post('/api/couriers/configs', authenticateToken, async (req: any, res) => {
         return res.status(400).json({ message: 'Configuration invalide' });
     }
 
-    const configId = config.id || `courier-${config.provider}-${Date.now()}`;
+    // Canonicalize provider name
+    let provider = config.provider as string;
+    if (provider === 'ozon') provider = 'ozon_express';
+    if (provider === 'kargo') provider = 'kargo_express';
+
+    // Standardize canonical ID
+    const canonicalId = `${provider}-config`;
+    const storeOwnerId = config.storeOwnerId || (req.user?.role === Role.Client ? userId : '');
+
     const preparedConfig: CourierApiConfig = {
         ...config,
-        id: configId,
-        storeOwnerId: config.storeOwnerId || (req.user?.role === Role.Client ? userId : ''),
+        id: canonicalId,
+        provider: provider as CourierApiConfig['provider'],
+        storeOwnerId,
         isPrimary: Boolean(config.isPrimary),
         citiesCount: config.citiesCount || MOROCCAN_CITIES_LIST.length,
         lastSyncedAt: config.lastSyncedAt || new Date().toISOString(),
@@ -3649,13 +4033,29 @@ app.post('/api/couriers/configs', authenticateToken, async (req: any, res) => {
         }
     }
 
-    if (!state.courierConfigs) state.courierConfigs = [];
-    const idx = state.courierConfigs.findIndex(c => c.id === preparedConfig.id);
-    if (idx !== -1) {
-        state.courierConfigs[idx] = preparedConfig;
-    } else {
-        state.courierConfigs.push(preparedConfig);
-    }
+    // Synchronize across both prod and dev stores, preserving API key and Client ID
+    ['prod', 'dev'].forEach((envKey: string) => {
+        const s = (envStores as any)[envKey];
+        if (s) {
+            if (!s.courierConfigs) s.courierConfigs = [];
+            const idx = s.courierConfigs.findIndex((c: any) => 
+                c.id === preparedConfig.id || 
+                (c.provider === preparedConfig.provider && (!c.storeOwnerId || c.storeOwnerId === preparedConfig.storeOwnerId))
+            );
+            if (idx !== -1) {
+                s.courierConfigs[idx] = { 
+                    ...s.courierConfigs[idx], 
+                    ...preparedConfig,
+                    apiKey: preparedConfig.apiKey || s.courierConfigs[idx].apiKey || '',
+                    clientId: preparedConfig.clientId || s.courierConfigs[idx].clientId || ''
+                };
+            } else {
+                s.courierConfigs.push(preparedConfig);
+            }
+            s.courierConfigs = deduplicateCourierConfigs(s.courierConfigs);
+        }
+    });
+
     saveEnvStateToFile();
 
     return res.json({ message: 'Configuration transporteur enregistrée avec succès', config: preparedConfig });
@@ -3675,12 +4075,20 @@ app.delete('/api/couriers/configs/:id', authenticateToken, async (req: any, res)
         }
     }
 
-    if (state.courierConfigs) {
-        const idx = state.courierConfigs.findIndex(c => c.id === id);
-        if (idx !== -1) {
-            state.courierConfigs.splice(idx, 1);
+    const matchesId = (c: any) => {
+        if (!c) return false;
+        if (c.id === id) return true;
+        if (c.provider === id || `${c.provider}-config` === id) return true;
+        return false;
+    };
+
+    ['prod', 'dev'].forEach((envKey: string) => {
+        const s = (envStores as any)[envKey];
+        if (s && s.courierConfigs) {
+            s.courierConfigs = s.courierConfigs.filter((c: any) => !matchesId(c));
         }
-    }
+    });
+
     saveEnvStateToFile();
 
     return res.json({ message: 'Configuration supprimée' });
@@ -3730,14 +4138,6 @@ app.post('/api/couriers/kargo/test', authenticateToken, async (req: any, res) =>
             });
         }
     } catch (err: any) {
-        // If external network is blocked or timeout, return structured test verification
-        if (String(err?.message || '').includes('abort') || String(err?.message || '').includes('fetch')) {
-            return res.json({
-                success: true,
-                simulated: true,
-                message: `Configuration Kargo Express validée avec succès pour le compte ${clientId}. Mode connecté prêt pour l'envoi de colis.`
-            });
-        }
         return res.status(500).json({
             success: false,
             message: `Erreur lors de la connexion à l'API: ${err.message || 'Impossible de joindre le serveur Kargo Express'}`
@@ -3755,9 +4155,20 @@ app.post('/api/couriers/kargo/add-parcel', authenticateToken, async (req: any, r
         return res.status(400).json({ success: false, message: 'Données de commande incomplètes pour l\'expédition.' });
     }
 
-    const effectiveApiKey = apiKey || 'DEMO_KEY';
-    const effectiveClientId = clientId || 'CLIENT_DEMO';
-    const baseUrl = (apiBaseUrl || 'https://api.kargoexpress.app').replace(/\/+$/, '');
+    const kargoSaved = state.courierConfigs?.find(c => c.provider === 'kargo_express' && (!c.storeOwnerId || c.storeOwnerId === req.user?.id));
+    const effectiveApiKey = String(apiKey || kargoSaved?.apiKey || '').trim();
+    const effectiveClientId = String(clientId || kargoSaved?.clientId || '').trim();
+    const baseUrl = String(apiBaseUrl || kargoSaved?.apiBaseUrl || 'https://api.kargoexpress.app').replace(/\/+$/, '');
+
+    // Strict: reject if unconfigured or dummy credentials
+    if (!effectiveApiKey || !effectiveClientId || isDummyCredential(effectiveApiKey) || isDummyCredential(effectiveClientId)) {
+        return res.status(400).json({
+            success: false,
+            configured: false,
+            message: "La société de livraison Kargo Express n'est pas configurée avec des identifiants valides. Expédition bloquée."
+        });
+    }
+
     const endpoint = `${baseUrl}/customers/${encodeURIComponent(effectiveClientId)}/${encodeURIComponent(effectiveApiKey)}/add-parcel`;
 
     // Construct form-data matching Kargo Express specification from screenshot
@@ -3807,21 +4218,23 @@ app.post('/api/couriers/kargo/add-parcel', authenticateToken, async (req: any, r
         if (response.ok) {
             const data = await response.json().catch(() => null);
             apiResponseData = data;
-            apiSuccess = true;
             if (data && (data['TRACKING-NUMBER'] || data['tracking_number'] || data['trackingNumber'] || data['code'] || data['id'])) {
                 generatedTracking = data['TRACKING-NUMBER'] || data['tracking_number'] || data['trackingNumber'] || data['code'] || String(data['id']);
+                apiSuccess = true;
             }
+        } else {
+            apiResponseData = await response.json().catch(() => ({}));
         }
     } catch (err: any) {
         console.warn("Kargo API call notice:", err?.message || err);
     }
 
-    // Fallback realistic tracking number generation if sandbox or offline
-    if (!generatedTracking) {
-        const prefix = 'KG';
-        const randDigits = Math.floor(100000 + Math.random() * 900000);
-        generatedTracking = `${prefix}${Date.now().toString().slice(-6)}${randDigits.toString().slice(-3)}`;
-        apiSuccess = true;
+    if (!apiSuccess || !generatedTracking) {
+        const errMsg = apiResponseData?.message || apiResponseData?.error || `Échec de l'expédition auprès de l'API Kargo Express`;
+        return res.status(400).json({
+            success: false,
+            message: `Erreur Kargo Express : ${errMsg}`
+        });
     }
 
     const shippedAt = new Date().toISOString();
@@ -3893,17 +4306,28 @@ app.post('/api/couriers/kargo/batch-add', authenticateToken, async (req: any, re
         return res.status(400).json({ success: false, message: 'Aucune commande sélectionnée pour l\'expédition.' });
     }
 
+    const kargoSaved = state.courierConfigs?.find(c => c.provider === 'kargo_express' && (!c.storeOwnerId || c.storeOwnerId === req.user?.id));
+    const effectiveApiKey = String(apiKey || kargoSaved?.apiKey || '').trim();
+    const effectiveClientId = String(clientId || kargoSaved?.clientId || '').trim();
+    const baseUrl = String(apiBaseUrl || kargoSaved?.apiBaseUrl || 'https://api.kargoexpress.app').replace(/\/+$/, '');
+
+    // Strict: reject if unconfigured
+    if (!effectiveApiKey || !effectiveClientId || isDummyCredential(effectiveApiKey) || isDummyCredential(effectiveClientId)) {
+        return res.status(400).json({
+            success: false,
+            configured: false,
+            message: "Kargo Express n'est pas configurée avec des identifiants valides. Expédition bloquée."
+        });
+    }
+
     const results: ParcelShipmentResult[] = [];
-    const effectiveApiKey = apiKey || 'DEMO_KEY';
-    const effectiveClientId = clientId || 'CLIENT_DEMO';
-    const baseUrl = (apiBaseUrl || 'https://api.kargoexpress.app').replace(/\/+$/, '');
+    const errors: any[] = [];
 
     for (let i = 0; i < targetOrders.length; i++) {
         const ord = targetOrders[i];
         if (!ord || !ord.customerName) continue;
 
-        const randDigits = Math.floor(100000 + Math.random() * 900000);
-        let trackingNum = ord.trackingNumber || `KG${Date.now().toString().slice(-6)}${randDigits.toString().slice(-3)}${i}`;
+        let trackingNum = '';
         const shippedAt = new Date().toISOString();
 
         // Push to Kargo API
@@ -3920,24 +4344,36 @@ app.post('/api/couriers/kargo/batch-add', authenticateToken, async (req: any, re
             formParams.append('products', JSON.stringify([{ ref: ord.product || 'PROD', qnty: Number(ord.quantity || 1) }]));
 
             const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 4000);
+            const timeoutId = setTimeout(() => controller.abort(), 8000);
             const response = await fetch(`${baseUrl}/customers/${encodeURIComponent(effectiveClientId)}/${encodeURIComponent(effectiveApiKey)}/add-parcel`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json' },
                 body: formParams.toString(),
                 signal: controller.signal
-            }).catch(() => null);
+            });
             clearTimeout(timeoutId);
 
             if (response && response.ok) {
                 const data = await response.json().catch(() => null);
-                if (data && (data['TRACKING-NUMBER'] || data['tracking_number'])) {
-                    trackingNum = data['TRACKING-NUMBER'] || data['tracking_number'];
+                if (data && (data['TRACKING-NUMBER'] || data['tracking_number'] || data['code'] || data['id'])) {
+                    trackingNum = String(data['TRACKING-NUMBER'] || data['tracking_number'] || data['code'] || data['id']);
                 }
+            } else {
+                const errText = await response?.text().catch(() => '');
+                errors.push({ orderId: ord.id, error: errText || `Erreur Kargo HTTP ${response?.status}` });
+                continue;
             }
-        } catch (_) {}
+        } catch (e: any) {
+            errors.push({ orderId: ord.id, error: e?.message || 'Erreur réseau Kargo' });
+            continue;
+        }
 
-        // Update in database & state
+        if (!trackingNum) {
+            errors.push({ orderId: ord.id, error: 'Numéro de suivi non retourné par Kargo' });
+            continue;
+        }
+
+        // Update in database & state only on real success
         if (isPgConnected && ord.id) {
             try {
                 await safePgQuery(
@@ -3970,16 +4406,17 @@ app.post('/api/couriers/kargo/batch-add', authenticateToken, async (req: any, re
             trackingNumber: trackingNum,
             courier: 'Kargo Express',
             status: 'success',
-            message: `Colis ${trackingNum} généré pour ${ord.customerName}`,
+            message: `Colis ${trackingNum} transmis avec succès à Kargo Express`,
             timestamp: shippedAt
         });
     }
 
     return res.json({
-        success: true,
+        success: results.length > 0,
         count: results.length,
         results,
-        message: `${results.length} colis transmis avec succès vers Kargo Express API !`
+        errors,
+        message: `${results.length} colis transmis avec succès vers Kargo Express API ! (${errors.length} échecs)`
     });
 });
 
@@ -4068,11 +4505,9 @@ app.post('/api/couriers/ozon/test', authenticateToken, async (req: any, res) => 
             });
         }
     } catch (error: any) {
-        // If network sandbox or unreachable
-        return res.json({
-            success: true,
-            simulated: true,
-            message: 'Configuration Ozon Express validée (Mode simulation activé si le réseau distant est filtré).'
+        return res.status(500).json({
+            success: false,
+            message: `Impossible de contacter le serveur Ozon Express (${error?.message || 'Erreur réseau'}).`
         });
     }
 });
@@ -4200,20 +4635,87 @@ function extractOzonError(responseData: any, rawText?: string, httpStatus?: numb
     return `Erreur Ozon Express (HTTP ${httpStatus || 400})`;
 }
 
-function isDummyCredential(val?: string): boolean {
-    if (!val) return true;
-    const clean = val.trim().toUpperCase();
-    return clean === '' || 
-           clean === '{YOUR_ID}' || 
-           clean === '{YOUR_API_KEY}' || 
-           clean === 'YOUR_ID' || 
-           clean === 'YOUR_API_KEY' || 
-           clean === 'DEMO' || 
-           clean === 'TEST' || 
-           clean === 'DEMO_KEY' || 
-           clean === 'CLIENT_DEMO' ||
-           clean.includes('YOUR_ID') ||
-           clean.includes('YOUR_API_KEY');
+function extractOzonTrackingData(responseData: any, rawText?: string): { status?: string; trackingNumber?: string; history: any[]; rawMessage?: string } {
+    if (!responseData && !rawText) return { history: [] };
+
+    let data = responseData;
+    if ((!data || typeof data !== 'object') && rawText) {
+        try {
+            data = JSON.parse(rawText);
+        } catch {
+            data = {};
+        }
+    }
+
+    if (!data || typeof data !== 'object') return { history: [] };
+
+    // Check API credentials or server errors
+    if (data.CHECK_API?.RESULT === 'FAILED' || (data.CHECK_API?.MESSAGE && String(data.CHECK_API.MESSAGE).toLowerCase().includes('invalide'))) {
+        return { rawMessage: data.CHECK_API.MESSAGE, history: [] };
+    }
+
+    const trackingObj = data.TRACKING || data.tracking || data;
+    if (trackingObj?.RESULT === 'FAILED' && !trackingObj.HISTORY && !trackingObj.LAST_TRACKING) {
+        return { rawMessage: trackingObj.MESSAGE || trackingObj.DESCRIPTION, history: [] };
+    }
+
+    const trackingNumber = trackingObj?.['TRACKING-NUMBER'] || trackingObj?.['tracking-number'] || trackingObj?.trackingNumber;
+
+    // 1. Get status from LAST_TRACKING
+    let status = trackingObj?.LAST_TRACKING?.STATUT || trackingObj?.LAST_TRACKING?.status || trackingObj?.LAST_TRACKING?.statut;
+
+    // 2. Parse HISTORY object { "1": {...}, "2": {...} } or array
+    const historyObj = trackingObj?.HISTORY || trackingObj?.history || {};
+    let rawSteps: any[] = [];
+    if (Array.isArray(historyObj)) {
+        rawSteps = historyObj;
+    } else if (typeof historyObj === 'object' && historyObj !== null) {
+        const sortedKeys = Object.keys(historyObj).sort((a, b) => {
+            const numA = parseInt(a, 10);
+            const numB = parseInt(b, 10);
+            if (!isNaN(numA) && !isNaN(numB)) return numA - numB;
+            return a.localeCompare(b);
+        });
+        rawSteps = sortedKeys.map(k => historyObj[k]);
+    }
+
+    // If status was not in LAST_TRACKING, get from latest step in HISTORY
+    if (!status && rawSteps.length > 0) {
+        const lastStep = rawSteps[rawSteps.length - 1];
+        status = lastStep?.STATUT || lastStep?.status || lastStep?.statut;
+    }
+
+    // Direct fallback
+    if (!status) {
+        status = trackingObj?.STATUT || trackingObj?.status || trackingObj?.statut;
+    }
+
+    const parsedHistory = rawSteps.map(s => {
+        let cleanComment = String(s.COMMENT || s.comment || s.note || '').trim();
+        cleanComment = cleanComment
+            .replace(/&lt;/g, '<')
+            .replace(/&gt;/g, '>')
+            .replace(/&amp;/g, '&')
+            .replace(/<br\s*\/?>/gi, ' - ')
+            .replace(/<[^>]*>/g, ' ')
+            .replace(/\s+/g, ' ')
+            .replace(/^\|\s*/, '')
+            .trim();
+
+        return {
+            status: s.STATUT || s.status || s.statut || 'Étape de livraison',
+            date: s.TIME_STR || s.time_str || (s.TIME ? new Date(Number(s.TIME) * 1000).toLocaleString('fr-FR') : ''),
+            location: s.LOCATION || s.location || s.city || '',
+            done: true,
+            note: cleanComment
+        };
+    });
+
+    return {
+        status: status ? String(status).trim() : undefined,
+        trackingNumber: trackingNumber ? String(trackingNumber).trim() : undefined,
+        history: parsedHistory
+    };
 }
 
 // Add Single Parcel to Ozon Express
@@ -4257,51 +4759,12 @@ app.post('/api/couriers/ozon/add-parcel', authenticateToken, async (req: any, re
     const cityParam = matchedCity ? String(matchedCity.id) : (order.cityId ? String(order.cityId) : '1');
     const officialCityName = matchedCity ? matchedCity.name : (order.city || 'Casablanca');
 
-    // If simulation mode or dummy credentials
-    if (isDummyCredential(effApiKey) || isDummyCredential(effClientId)) {
-        const randDigits = Math.floor(100000 + Math.random() * 900000);
-        const simTracking = customTrackingNumber || `OZE${Date.now().toString().slice(-6)}${randDigits.toString().slice(-3)}`;
-        const shippedAt = new Date().toISOString();
-
-        order.trackingNumber = simTracking;
-        order.courierName = 'Ozon Express';
-        order.courierStatus = 'Nouveau Colis Créé (Ozon - Simulation)';
-        order.shippedAt = shippedAt;
-        order.status = OrderStatus.Expedie;
-        order.courierNote = isStock ? 'Expédié depuis Stock' : 'Ramassage planifié';
-        order.city = officialCityName;
-        order.cityId = String(matchedCity.id);
-
-        if (isPgConnected) {
-            try {
-                await safePgQuery(
-                    `UPDATE ${table} SET 
-                        tracking_number = $1, 
-                        courier_name = $2, 
-                        courier_status = $3, 
-                        shipped_at = $4, 
-                        status = $5, 
-                        courier_note = $6,
-                        city = $7,
-                        city_id = $8,
-                        updated_at = NOW() 
-                     WHERE id = $9`,
-                    [simTracking, 'Ozon Express', 'Nouveau Colis Créé (Ozon - Simulation)', shippedAt, OrderStatus.Expedie, order.courierNote, officialCityName, String(matchedCity.id), order.id]
-                );
-            } catch (e) {
-                console.error("PG update order tracking error:", e);
-            }
-        }
-
-        saveEnvStateToFile();
-
-        return res.json({
-            success: true,
-            simulated: true,
-            orderId: order.id,
-            trackingNumber: simTracking,
-            courier: 'Ozon Express',
-            message: `Colis ${simTracking} créé en mode simulation (Ozon Express). Renseignez votre Clé API dans la configuration pour l'envoi réel.`
+    // Strict: reject if unconfigured or dummy credentials
+    if (!effApiKey || !effClientId || isDummyCredential(effApiKey) || isDummyCredential(effClientId)) {
+        return res.status(400).json({
+            success: false,
+            configured: false,
+            message: "La société de livraison Ozon Express n'est pas configurée avec des identifiants valides. Expédition bloquée."
         });
     }
 
@@ -4364,6 +4827,16 @@ app.post('/api/couriers/ozon/add-parcel', authenticateToken, async (req: any, re
         order.courierNote = isStock ? 'Expédié depuis Stock' : 'Ramassage planifié';
         order.city = officialCityName;
         order.cityId = String(matchedCity.id);
+
+        ['prod', 'dev'].forEach((envKey) => {
+            const s = (envStores as any)[envKey];
+            if (s && s.orders) {
+                const idx = s.orders.findIndex((m: any) => String(m.id) === String(order.id));
+                if (idx !== -1) {
+                    s.orders[idx] = { ...s.orders[idx], ...order };
+                }
+            }
+        });
 
         if (isPgConnected) {
             try {
@@ -4459,7 +4932,14 @@ app.post('/api/couriers/ozon/batch-add', authenticateToken, async (req: any, res
     const effClientId = String(clientId || ozonSaved?.clientId || '').trim();
     const effBaseUrl = String(apiBaseUrl || ozonSaved?.apiBaseUrl || 'https://api.ozonexpress.ma').trim().replace(/\/+$/, '');
 
-    const isSimulated = isDummyCredential(effApiKey) || isDummyCredential(effClientId);
+    // Strict: reject if unconfigured or dummy credentials
+    if (!effApiKey || !effClientId || isDummyCredential(effApiKey) || isDummyCredential(effClientId)) {
+        return res.status(400).json({
+            success: false,
+            configured: false,
+            message: "La société de livraison Ozon Express n'est pas configurée avec des identifiants réels. Expédition bloquée."
+        });
+    }
 
     const results: any[] = [];
     const errors: any[] = [];
@@ -4478,58 +4958,6 @@ app.post('/api/couriers/ozon/batch-add', authenticateToken, async (req: any, res
 
         const cityParam = matchedCity ? String(matchedCity.id) : (liveOrder.cityId ? String(liveOrder.cityId) : '1');
         const officialCityName = matchedCity ? matchedCity.name : (liveOrder.city || 'Casablanca');
-
-        // Simulation Mode Handling
-        if (isSimulated) {
-            const randDigits = Math.floor(100000 + Math.random() * 900000);
-            const simTracking = liveOrder.trackingNumber || `OZE${Date.now().toString().slice(-6)}${randDigits.toString().slice(-3)}${i}`;
-            const shippedAt = new Date().toISOString();
-
-            liveOrder.trackingNumber = simTracking;
-            liveOrder.courierName = 'Ozon Express';
-            liveOrder.courierStatus = 'Nouveau Colis Créé (Ozon - Simulation)';
-            liveOrder.shippedAt = shippedAt;
-            liveOrder.status = OrderStatus.Expedie;
-            liveOrder.courierNote = isStock ? 'Expédié depuis Stock' : 'Ramassage planifié';
-            liveOrder.city = officialCityName;
-            liveOrder.cityId = String(matchedCity.id);
-
-            if (orderIndex !== -1) {
-                state.orders[orderIndex] = { ...liveOrder };
-            }
-
-            if (isPgConnected && liveOrder.id) {
-                try {
-                    await safePgQuery(
-                        `UPDATE ${table} SET 
-                            tracking_number = $1, 
-                            courier_name = $2, 
-                            courier_status = $3, 
-                            shipped_at = $4, 
-                            status = $5, 
-                            courier_note = $6,
-                            city = $7,
-                            city_id = $8,
-                            updated_at = NOW() 
-                         WHERE id = $9`,
-                        [simTracking, 'Ozon Express', 'Nouveau Colis Créé (Ozon - Simulation)', shippedAt, OrderStatus.Expedie, liveOrder.courierNote, officialCityName, String(matchedCity.id), liveOrder.id]
-                    );
-                } catch (e) {
-                    console.error("PG update batch order error:", e);
-                }
-            }
-
-            results.push({
-                orderId: liveOrder.id,
-                trackingNumber: simTracking,
-                courier: 'Ozon Express',
-                status: 'success',
-                simulated: true,
-                message: `Colis ${simTracking} généré (Mode simulation Ozon)`,
-                timestamp: shippedAt
-            });
-            continue;
-        }
 
         // Live Real Ozon Express API Call
         try {
@@ -4590,9 +5018,15 @@ app.post('/api/couriers/ozon/batch-add', authenticateToken, async (req: any, res
             liveOrder.city = officialCityName;
             liveOrder.cityId = String(matchedCity.id);
 
-            if (orderIndex !== -1) {
-                state.orders[orderIndex] = { ...liveOrder };
-            }
+            ['prod', 'dev'].forEach((envKey) => {
+                const s = (envStores as any)[envKey];
+                if (s && s.orders) {
+                    const idx = s.orders.findIndex((m: any) => String(m.id) === String(liveOrder.id));
+                    if (idx !== -1) {
+                        s.orders[idx] = { ...s.orders[idx], ...liveOrder };
+                    }
+                }
+            });
 
             if (isPgConnected && liveOrder.id) {
                 try {
@@ -4622,7 +5056,8 @@ app.post('/api/couriers/ozon/batch-add', authenticateToken, async (req: any, res
                 status: 'success',
                 message: `Colis ${realTracking} créé avec succès sur Ozon Express`,
                 timestamp: shippedAt,
-                responseDetails: responseData
+                responseDetails: responseData,
+                order: liveOrder
             });
 
         } catch (err: any) {
@@ -4717,68 +5152,128 @@ app.post('/api/couriers/ozon/tracking', authenticateToken, async (req: any, res)
         return res.status(400).json({ success: false, message: 'Numéro de suivi Ozon requis.' });
     }
 
+    const state = getEnvState(req);
+    const ozonSaved = state.courierConfigs?.find(c => c.provider === 'ozon_express');
+    const effApiKey = String(apiKey || ozonSaved?.apiKey || '').trim();
+    const effClientId = String(clientId || ozonSaved?.clientId || '').trim();
+
+    if (!effApiKey || !effClientId || isDummyCredential(effApiKey) || isDummyCredential(effClientId)) {
+        return res.status(400).json({
+            success: false,
+            configured: false,
+            message: "La société de livraison Ozon Express n'est pas configurée. Récupération des statuts impossible."
+        });
+    }
+
     let remoteTrackingData: any = null;
-    if (apiKey && clientId) {
-        try {
-            const cleanBase = apiBaseUrl.replace(/\/$/, '');
-            const targetUrl = `${cleanBase}/customers/${encodeURIComponent(clientId)}/${encodeURIComponent(apiKey)}/tracking`;
+    try {
+        const cleanBase = apiBaseUrl.replace(/\/$/, '');
+        const targetUrl = `${cleanBase}/customers/${encodeURIComponent(effClientId)}/${encodeURIComponent(effApiKey)}/tracking`;
 
-            let ozonRes;
-            if (trackingNumbers && Array.isArray(trackingNumbers) && trackingNumbers.length > 1) {
-                // Bulk JSON format
-                ozonRes = await fetch(targetUrl, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
-                    },
-                    body: JSON.stringify({ 'tracking-number': trackingNumbers })
-                });
-            } else {
-                // Single form-data
-                const formParams = new URLSearchParams();
-                formParams.append('tracking-number', targetTracking);
-                ozonRes = await fetch(targetUrl, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                        'Accept': 'application/json'
-                    },
-                    body: formParams.toString()
+        let ozonRes;
+        if (trackingNumbers && Array.isArray(trackingNumbers) && trackingNumbers.length > 1) {
+            // Bulk JSON format
+            ozonRes = await fetch(targetUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({ 'tracking-number': trackingNumbers })
+            });
+        } else {
+            // Single form-data
+            const formParams = new URLSearchParams();
+            formParams.append('tracking-number', targetTracking);
+            ozonRes = await fetch(targetUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Accept': 'application/json'
+                },
+                body: formParams.toString()
+            });
+        }
+
+        if (ozonRes.ok) {
+            remoteTrackingData = await ozonRes.json();
+        }
+    } catch (e) {
+        console.warn("Ozon live tracking error:", e);
+    }
+
+    const matchingOrder = state.orders.find(o => o.trackingNumber === targetTracking || o.id === targetTracking);
+    const parsed = extractOzonTrackingData(remoteTrackingData);
+
+    const finalStatus = parsed.status || remoteTrackingData?.status || matchingOrder?.courierStatus || 'Non synchronisé';
+
+    // Build real authentic tracking history (never fake intermediate hubs or timestamps)
+    let trackingSteps: any[] = parsed.history;
+    if (trackingSteps.length === 0) {
+        const rawOzonHistory = Array.isArray(remoteTrackingData?.history) ? remoteTrackingData.history :
+                              Array.isArray(remoteTrackingData?.tracking?.[0]?.history) ? remoteTrackingData.tracking[0].history : [];
+        if (rawOzonHistory.length > 0) {
+            trackingSteps = rawOzonHistory.map((h: any) => ({
+                status: h.status || h.statut || h.name || 'Étape de livraison',
+                date: h.date || h.created_at || h['created-at'] || '',
+                location: h.location || h.city || matchingOrder?.city || 'Réseau Ozon Express',
+                done: true,
+                note: h.comment || h.note || ''
+            }));
+        } else {
+            if (matchingOrder?.shippedAt) {
+                trackingSteps.push({
+                    status: 'Colis Expédié depuis CallNet',
+                    date: new Date(matchingOrder.shippedAt).toLocaleString('fr-FR'),
+                    location: 'Entrepôt Vendeur',
+                    done: true,
+                    note: `Pris en charge pour livraison Ozon Express (N° ${targetTracking})`
                 });
             }
-
-            if (ozonRes.ok) {
-                remoteTrackingData = await ozonRes.json();
+            if (finalStatus && finalStatus !== 'Non synchronisé') {
+                trackingSteps.push({
+                    status: finalStatus,
+                    date: remoteTrackingData?.date || new Date().toLocaleString('fr-FR'),
+                    location: matchingOrder?.city || 'Réseau Ozon Express',
+                    done: true,
+                    note: "Statut direct retourné par l'API Ozon Express"
+                });
             }
-        } catch (e) {
-            console.warn("Ozon live tracking error:", e);
         }
     }
 
-    const state = getEnvState(req);
-    const matchingOrder = state.orders.find(o => o.trackingNumber === targetTracking || o.id === targetTracking);
-
-    const trackingSteps = [
-        { status: 'Nouveau Colis Créé (Ozon Express)', date: matchingOrder?.shippedAt || new Date().toISOString(), location: 'Vendeur / Entrepôt', done: true },
-        { status: 'Pris en charge au Hub Ozon Express', date: new Date(Date.now() - 3600000).toISOString(), location: 'Centre Logistique Ozon', done: true },
-        { status: 'En cours d\'acheminement inter-villes', date: new Date(Date.now() - 1800000).toISOString(), location: 'Transit Hub', done: true },
-        { status: 'En cours de distribution livreur', date: new Date().toISOString(), location: matchingOrder?.city || 'Zone de livraison', done: false },
-        { status: 'Livré & Encaissé (COD)', date: '-', location: 'Client Final', done: false }
-    ];
+    // Persist real status directly to matching order in server state and PostgreSQL
+    if (matchingOrder && parsed.status) {
+        matchingOrder.courierStatus = parsed.status;
+        matchingOrder.courierName = 'Ozon Express';
+        if (isPgConnected) {
+            try {
+                const ordersTable = getTable('orders', req);
+                await safePgQuery(
+                    `UPDATE ${ordersTable} SET courier_status = $1, courier_name = $2 WHERE id = $3`,
+                    [parsed.status, 'Ozon Express', matchingOrder.id]
+                );
+            } catch (dbErr) {
+                console.warn('DB live ozon tracking status update error:', dbErr);
+            }
+        }
+        saveEnvStateToFile();
+    }
 
     return res.json({
         success: true,
-        trackingNumber: targetTracking,
+        trackingNumber: parsed.trackingNumber || targetTracking,
         courier: 'Ozon Express',
-        currentStatus: matchingOrder?.courierStatus || 'En cours d\'acheminement',
+        currentStatus: finalStatus,
         liveData: remoteTrackingData,
         order: matchingOrder ? {
             id: matchingOrder.id,
             customerName: matchingOrder.customerName,
             phone: matchingOrder.phone,
             city: matchingOrder.city,
-            price: matchingOrder.price
+            price: matchingOrder.price,
+            courierStatus: finalStatus,
+            courierName: 'Ozon Express'
         } : null,
         history: trackingSteps
     });
@@ -4792,21 +5287,42 @@ app.post('/api/couriers/kargo/tracking', authenticateToken, async (req: any, res
     }
 
     const state = getEnvState(req);
+    const kargoSaved = state.courierConfigs?.find(c => c.provider === 'kargo_express');
+    if (!kargoSaved || !isCourierConfiguredServer(kargoSaved)) {
+        return res.status(400).json({
+            success: false,
+            configured: false,
+            message: "La société de livraison Kargo Express n'est pas configurée. Récupération des statuts impossible."
+        });
+    }
+
     const matchingOrder = state.orders.find(o => o.trackingNumber === trackingNumber || o.id === trackingNumber);
 
-    const trackingSteps = [
-        { status: 'Nouveau Colis Enregistré', date: matchingOrder?.shippedAt || new Date().toISOString(), location: 'Plateforme CallNet / Vendeur', done: true },
-        { status: 'Ramassage planifié', date: new Date(Date.now() - 3600000).toISOString(), location: 'Centre de tri Kargo Express', done: true },
-        { status: 'Arrivé au Hub Principal', date: new Date(Date.now() - 1800000).toISOString(), location: 'Hub Casablanca', done: true },
-        { status: 'En cours de distribution', date: new Date().toISOString(), location: matchingOrder?.city || 'Ville de destination', done: false },
-        { status: 'Livré & Encaissé (COD)', date: '-', location: 'Client Final', done: false }
-    ];
+    const trackingSteps: any[] = [];
+    if (matchingOrder?.shippedAt) {
+        trackingSteps.push({
+            status: 'Colis Expédié depuis CallNet',
+            date: new Date(matchingOrder.shippedAt).toLocaleString('fr-FR'),
+            location: 'Entrepôt Vendeur',
+            done: true,
+            note: `Pris en charge pour livraison Kargo Express (N° ${trackingNumber})`
+        });
+    }
+    if (matchingOrder?.courierStatus) {
+        trackingSteps.push({
+            status: matchingOrder.courierStatus,
+            date: new Date().toLocaleString('fr-FR'),
+            location: matchingOrder?.city || 'Réseau Kargo Express',
+            done: true,
+            note: "Statut enregistré pour Kargo Express"
+        });
+    }
 
     return res.json({
         success: true,
         trackingNumber,
         courier: 'Kargo Express',
-        currentStatus: matchingOrder?.courierStatus || 'En cours d\'acheminement',
+        currentStatus: matchingOrder?.courierStatus || 'En attente de scan Kargo',
         order: matchingOrder ? {
             id: matchingOrder.id,
             customerName: matchingOrder.customerName,
@@ -4883,13 +5399,6 @@ app.post('/api/couriers/digylog/test', authenticateToken, async (req: any, res) 
             });
         }
     } catch (err: any) {
-        if (String(err?.message || '').includes('abort') || String(err?.message || '').includes('fetch')) {
-            return res.json({
-                success: true,
-                simulated: true,
-                message: 'Configuration DIGYLOG enregistrée et prête. Mode connecté validé.'
-            });
-        }
         return res.status(500).json({
             success: false,
             message: `Erreur lors du test API DIGYLOG : ${err.message || 'Serveur indisponible'}`
@@ -4968,6 +5477,15 @@ app.post('/api/couriers/digylog/add-parcel', authenticateToken, async (req: any,
     const effCanTry = canTry ?? digylogSaved?.digylogCanTry ?? true;
     const effCheckDup = Boolean(checkDuplicate ?? digylogSaved?.digylogCheckDuplicate ?? false);
 
+    // Strict: reject if unconfigured or dummy credentials
+    if (!effApiKey || isDummyCredential(effApiKey)) {
+        return res.status(400).json({
+            success: false,
+            configured: false,
+            message: "La société de livraison DIGYLOG Express n'est pas configurée avec un Bearer Token valide. Expédition bloquée."
+        });
+    }
+
     const randDigits = Math.floor(100000 + Math.random() * 900000);
     const trackingNum = targetOrder.trackingNumber || `DL${Date.now().toString().slice(-6)}${randDigits.toString().slice(-3)}`;
     const receiver = targetOrder.customerName || 'Client';
@@ -4977,73 +5495,82 @@ app.post('/api/couriers/digylog/add-parcel', authenticateToken, async (req: any,
     const price = Number(targetOrder.price || 0);
     const note = targetOrder.note || (effOpen ? 'Ouvrir colis autorisé' : '');
 
-    let generatedTracking = trackingNum;
+    let generatedTracking = '';
     let apiSuccess = false;
     let apiResponseData: any = null;
+    let apiErrorMsg = '';
 
-    if (!isDummyCredential(effApiKey)) {
-        try {
-            const digylogPayload = {
-                network: effNetwork,
-                store: effStore,
-                sentType: effSentType,
-                checkDuplicate: effCheckDup ? 1 : 0,
-                orders: [
-                    {
-                        num: trackingNum,
-                        name: receiver,
-                        phone: phone,
-                        address: address,
-                        city: city,
-                        price: price,
-                        openproduct: effOpen ? 1 : 0,
-                        cantry: effCanTry ? 1 : 0,
-                        port: effPort,
-                        note: note,
-                        refs: [
-                            {
-                                ref: targetOrder.sku || 'PROD',
-                                designation: targetOrder.product || 'Colis E-commerce COD',
-                                quantity: Number(targetOrder.quantity || 1)
-                            }
-                        ]
-                    }
-                ]
-            };
-
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 8000);
-
-            const response = await fetch(`${effBaseUrl}/orders/standard`, {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${effApiKey}`,
-                    'Referer': 'https://apiseller.digylog.com',
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify(digylogPayload),
-                signal: controller.signal
-            });
-            clearTimeout(timeoutId);
-
-            if (response.ok) {
-                const data = await response.json().catch(() => null);
-                apiResponseData = data;
-                apiSuccess = true;
-                if (data) {
-                    if (data.tracking) generatedTracking = data.tracking;
-                    else if (data.trackingNumber) generatedTracking = data.trackingNumber;
-                    else if (Array.isArray(data.orders) && data.orders[0]?.tracking) generatedTracking = data.orders[0].tracking;
-                    else if (Array.isArray(data.orders) && data.orders[0]?.num) generatedTracking = data.orders[0].num;
+    try {
+        const digylogPayload = {
+            network: effNetwork,
+            store: effStore,
+            sentType: effSentType,
+            checkDuplicate: effCheckDup ? 1 : 0,
+            orders: [
+                {
+                    num: trackingNum,
+                    name: receiver,
+                    phone: phone,
+                    address: address,
+                    city: city,
+                    price: price,
+                    openproduct: effOpen ? 1 : 0,
+                    cantry: effCanTry ? 1 : 0,
+                    port: effPort,
+                    note: note,
+                    refs: [
+                        {
+                            ref: targetOrder.sku || 'PROD',
+                            designation: targetOrder.product || 'Colis E-commerce COD',
+                            quantity: Number(targetOrder.quantity || 1)
+                        }
+                    ]
                 }
-            } else {
-                const errText = await response.text().catch(() => '');
-                console.warn(`DIGYLOG API response ${response.status}: ${errText}`);
+            ]
+        };
+
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 8000);
+
+        const response = await fetch(`${effBaseUrl}/orders/standard`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${effApiKey}`,
+                'Referer': 'https://apiseller.digylog.com',
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(digylogPayload),
+            signal: controller.signal
+        });
+        clearTimeout(timeoutId);
+
+        if (response.ok) {
+            const data = await response.json().catch(() => null);
+            apiResponseData = data;
+            if (data) {
+                if (data.tracking) generatedTracking = data.tracking;
+                else if (data.trackingNumber) generatedTracking = data.trackingNumber;
+                else if (Array.isArray(data.orders) && data.orders[0]?.tracking) generatedTracking = data.orders[0].tracking;
+                else if (Array.isArray(data.orders) && data.orders[0]?.num) generatedTracking = data.orders[0].num;
+                else generatedTracking = trackingNum;
+                apiSuccess = true;
             }
-        } catch (e: any) {
-            console.warn("DIGYLOG API call exception:", e?.message || e);
+        } else {
+            const errText = await response.text().catch(() => '');
+            apiErrorMsg = errText || `HTTP ${response.status}`;
+            console.warn(`DIGYLOG API response ${response.status}: ${errText}`);
         }
+    } catch (e: any) {
+        apiErrorMsg = e?.message || 'Erreur de connexion';
+        console.warn("DIGYLOG API call exception:", e?.message || e);
+    }
+
+    if (!apiSuccess || !generatedTracking) {
+        return res.status(400).json({
+            success: false,
+            message: `Échec de l'expédition via DIGYLOG : ${apiErrorMsg || 'Colis refusé par le transporteur'}`
+        });
     }
 
     const shippedAt = new Date().toISOString();
@@ -5141,6 +5668,15 @@ app.post('/api/couriers/digylog/batch-add', authenticateToken, async (req: any, 
     const effCanTry = canTry ?? digylogSaved?.digylogCanTry ?? true;
     const effCheckDup = Boolean(checkDuplicate ?? digylogSaved?.digylogCheckDuplicate ?? false);
 
+    // Strict: reject if unconfigured or dummy credentials
+    if (!effApiKey || isDummyCredential(effApiKey)) {
+        return res.status(400).json({
+            success: false,
+            configured: false,
+            message: "La société de livraison DIGYLOG Express n'est pas configurée avec un Bearer Token valide. Expédition bloquée."
+        });
+    }
+
     const results: ParcelShipmentResult[] = [];
     const formattedOrdersForApi: any[] = [];
 
@@ -5178,7 +5714,11 @@ app.post('/api/couriers/digylog/batch-add', authenticateToken, async (req: any, 
         });
     }
 
-    if (!isDummyCredential(effApiKey) && formattedOrdersForApi.length > 0) {
+    let apiResponseData: any = null;
+    let apiCallOk = false;
+    let apiErrorMsg = '';
+
+    if (formattedOrdersForApi.length > 0) {
         try {
             const digylogPayload = {
                 network: effNetwork,
@@ -5190,7 +5730,7 @@ app.post('/api/couriers/digylog/batch-add', authenticateToken, async (req: any, 
 
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 12000);
-            await fetch(`${effBaseUrl}/orders/standard`, {
+            const response = await fetch(`${effBaseUrl}/orders/standard`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${effApiKey}`,
@@ -5200,9 +5740,25 @@ app.post('/api/couriers/digylog/batch-add', authenticateToken, async (req: any, 
                 },
                 body: JSON.stringify(digylogPayload),
                 signal: controller.signal
-            }).catch(() => null);
+            });
             clearTimeout(timeoutId);
-        } catch (_) {}
+
+            if (response.ok) {
+                apiResponseData = await response.json().catch(() => null);
+                apiCallOk = true;
+            } else {
+                apiErrorMsg = await response.text().catch(() => `HTTP ${response.status}`);
+            }
+        } catch (err: any) {
+            apiErrorMsg = err?.message || 'Erreur réseau';
+        }
+    }
+
+    if (!apiCallOk) {
+        return res.status(400).json({
+            success: false,
+            message: `Échec de l'envoi vers l'API DIGYLOG : ${apiErrorMsg || 'Serveur injoignable ou commande refusée'}`
+        });
     }
 
     const shippedAt = new Date().toISOString();
@@ -5270,25 +5826,34 @@ app.post('/api/couriers/digylog/tracking', authenticateToken, async (req: any, r
     }
 
     const state = getEnvState(req);
+    const digylogSaved = state.courierConfigs?.find(c => c.provider === 'digylog');
+    const effApiKey = String(apiKey || digylogSaved?.apiKey || '').trim();
+
+    if (!effApiKey || isDummyCredential(effApiKey)) {
+        return res.status(400).json({
+            success: false,
+            configured: false,
+            message: "La société de livraison DIGYLOG Express n'est pas configurée. Récupération des statuts impossible."
+        });
+    }
+
     const matchingOrder = state.orders.find(o => o.trackingNumber === trackingNumber || o.id === trackingNumber);
 
     let remoteInfo: any = null;
-    if (apiKey && !isDummyCredential(String(apiKey))) {
-        try {
-            const cleanBase = String(apiBaseUrl).replace(/\/+$/, '');
-            const response = await fetch(`${cleanBase}/order/${encodeURIComponent(trackingNumber)}/infos`, {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${String(apiKey).trim()}`,
-                    'Referer': 'https://apiseller.digylog.com',
-                    'Accept': 'application/json'
-                }
-            });
-            if (response.ok) {
-                remoteInfo = await response.json().catch(() => null);
+    try {
+        const cleanBase = String(apiBaseUrl || digylogSaved?.apiBaseUrl || 'https://api.digylog.com/api/v2/seller').replace(/\/+$/, '');
+        const response = await fetch(`${cleanBase}/order/${encodeURIComponent(trackingNumber)}/infos`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${effApiKey}`,
+                'Referer': 'https://apiseller.digylog.com',
+                'Accept': 'application/json'
             }
-        } catch (_) {}
-    }
+        });
+        if (response.ok) {
+            remoteInfo = await response.json().catch(() => null);
+        }
+    } catch (_) {}
 
     const trackingSteps = [
         { status: 'Nouveau Colis Enregistré', date: matchingOrder?.shippedAt || new Date().toISOString(), location: 'Plateforme CallNet / Vendeur', done: true },
@@ -5656,6 +6221,15 @@ app.post('/api/couriers/ameex/add-parcel', authenticateToken, async (req: any, r
     const effId = String(clientId || ameexSaved?.clientId || '').trim();
     const cleanBase = String(apiBaseUrl || ameexSaved?.apiBaseUrl || 'https://api.ameex.app/customer').trim().replace(/\/+$/, '');
 
+    // Strict: reject if unconfigured or dummy credentials
+    if (!effKey || !effId || isDummyCredential(effKey) || isDummyCredential(effId)) {
+        return res.status(400).json({
+            success: false,
+            configured: false,
+            message: "La société de livraison Ameex Express n'est pas configurée avec des identifiants réels (API Key / Client ID). Expédition bloquée."
+        });
+    }
+
     // Match City ID for Ameex
     const matchedCity = findMatchingCityServer(ord.city || '', 'ameex');
     const ameexCityId = matchedCity ? matchedCity.id : (ord.cityId || 1);
@@ -5668,62 +6242,73 @@ app.post('/api/couriers/ameex/add-parcel', authenticateToken, async (req: any, r
     const comment = String(ord.note || ord.comment || 'Livraison CallNet').trim();
     const orderNum = String(ord.orderNumber || ord.id || `ORD-${Date.now()}`).trim();
 
-    let generatedTracking = customTrackingNumber || `AMX-${Date.now().toString().slice(-6)}`;
+    let generatedTracking = '';
     let apiSuccess = false;
     let apiResponseData: any = null;
+    let apiErrorMsg = '';
 
-    if (!isDummyCredential(effKey) && !isDummyCredential(effId)) {
-        try {
-            const ameexPayload = {
-                type: 'SIMPLE',
-                receiver: receiverName,
-                phone: normalizedPhone,
-                city: ameexCityId,
-                cod: codAmount,
-                address,
-                product,
-                comment,
-                order_num: orderNum
-            };
+    try {
+        const ameexPayload = {
+            type: 'SIMPLE',
+            receiver: receiverName,
+            phone: normalizedPhone,
+            city: ameexCityId,
+            cod: codAmount,
+            address,
+            product,
+            comment,
+            order_num: orderNum
+        };
 
-            const response = await fetch(`${cleanBase}/Delivery/Parcels/Action/Type/Add`, {
-                method: 'POST',
-                headers: {
-                    'C-Api-Id': effId,
-                    'C-Api-Key': effKey,
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                    'User-Agent': 'CallNet-Ameex/1.0'
-                },
-                body: JSON.stringify(ameexPayload)
-            });
+        const response = await fetch(`${cleanBase}/Delivery/Parcels/Action/Type/Add`, {
+            method: 'POST',
+            headers: {
+                'C-Api-Id': effId,
+                'C-Api-Key': effKey,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'User-Agent': 'CallNet-Ameex/1.0'
+            },
+            body: JSON.stringify(ameexPayload)
+        });
 
-            const contentType = response.headers.get('content-type') || '';
-            if (contentType.includes('application/json')) {
-                apiResponseData = await response.json();
-            } else {
-                const text = await response.text();
-                try { apiResponseData = JSON.parse(text); } catch (_) { apiResponseData = text; }
-            }
-
-            if (response.ok && apiResponseData) {
-                const code = apiResponseData.code || 
-                             apiResponseData.parcel_code || 
-                             apiResponseData.tracking_number || 
-                             apiResponseData.tracking || 
-                             apiResponseData.data?.code || 
-                             apiResponseData.data?.parcel_code ||
-                             (typeof apiResponseData === 'string' && apiResponseData.length < 30 ? apiResponseData : null);
-                if (code) {
-                    generatedTracking = String(code);
-                }
-                apiSuccess = true;
-            } else {
-                console.warn('Ameex add parcel API non-OK response:', response.status, apiResponseData);
-            }
-        } catch (err: any) {
-            console.error('Ameex add parcel fetch error:', err);
+        const contentType = response.headers.get('content-type') || '';
+        if (contentType.includes('application/json')) {
+            apiResponseData = await response.json();
+        } else {
+            const text = await response.text();
+            try { apiResponseData = JSON.parse(text); } catch (_) { apiResponseData = text; }
         }
+
+        if (response.ok && apiResponseData) {
+            const code = apiResponseData.code || 
+                         apiResponseData.parcel_code || 
+                         apiResponseData.tracking_number || 
+                         apiResponseData.tracking || 
+                         apiResponseData.data?.code || 
+                         apiResponseData.data?.parcel_code ||
+                         (typeof apiResponseData === 'string' && apiResponseData.length < 30 ? apiResponseData : null);
+            if (code) {
+                generatedTracking = String(code);
+                apiSuccess = true;
+            } else if (customTrackingNumber) {
+                generatedTracking = customTrackingNumber;
+                apiSuccess = true;
+            }
+        } else {
+            apiErrorMsg = typeof apiResponseData === 'object' ? (apiResponseData?.message || JSON.stringify(apiResponseData)) : String(apiResponseData || `HTTP ${response.status}`);
+            console.warn('Ameex add parcel API non-OK response:', response.status, apiResponseData);
+        }
+    } catch (err: any) {
+        apiErrorMsg = err?.message || 'Erreur réseau';
+        console.error('Ameex add parcel fetch error:', err);
+    }
+
+    if (!apiSuccess || !generatedTracking) {
+        return res.status(400).json({
+            success: false,
+            message: `Échec de l'expédition via Ameex Express : ${apiErrorMsg || 'Colis refusé par le transporteur'}`
+        });
     }
 
     const shippedAt = new Date().toISOString();
@@ -5799,6 +6384,15 @@ app.post('/api/couriers/ameex/batch-add', authenticateToken, async (req: any, re
     const effId = String(clientId || ameexSaved?.clientId || '').trim();
     const cleanBase = String(apiBaseUrl || ameexSaved?.apiBaseUrl || 'https://api.ameex.app/customer').trim().replace(/\/+$/, '');
 
+    // Strict: reject if unconfigured or dummy credentials
+    if (!effKey || !effId || isDummyCredential(effKey) || isDummyCredential(effId)) {
+        return res.status(400).json({
+            success: false,
+            configured: false,
+            message: "La société de livraison Ameex Express n'est pas configurée avec des identifiants réels (API Key / Client ID). Expédition bloquée."
+        });
+    }
+
     const dispatchedResults: any[] = [];
     const errors: any[] = [];
 
@@ -5813,41 +6407,49 @@ app.post('/api/couriers/ameex/batch-add', authenticateToken, async (req: any, re
         const comment = String(ord.note || ord.comment || 'Livraison CallNet').trim();
         const orderNum = String(ord.orderNumber || ord.id || `ORD-${Date.now()}`).trim();
 
-        let generatedTracking = `AMX-${Date.now().toString().slice(-6)}${Math.floor(100 + Math.random() * 900)}`;
+        let generatedTracking = '';
 
-        if (!isDummyCredential(effKey) && !isDummyCredential(effId)) {
-            try {
-                const response = await fetch(`${cleanBase}/Delivery/Parcels/Action/Type/Add`, {
-                    method: 'POST',
-                    headers: {
-                        'C-Api-Id': effId,
-                        'C-Api-Key': effKey,
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                        'User-Agent': 'CallNet-Ameex/1.0'
-                    },
-                    body: JSON.stringify({
-                        type: 'SIMPLE',
-                        receiver: receiverName,
-                        phone: normalizedPhone,
-                        city: ameexCityId,
-                        cod: codAmount,
-                        address,
-                        product,
-                        comment,
-                        order_num: orderNum
-                    })
-                });
+        try {
+            const response = await fetch(`${cleanBase}/Delivery/Parcels/Action/Type/Add`, {
+                method: 'POST',
+                headers: {
+                    'C-Api-Id': effId,
+                    'C-Api-Key': effKey,
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'User-Agent': 'CallNet-Ameex/1.0'
+                },
+                body: JSON.stringify({
+                    type: 'SIMPLE',
+                    receiver: receiverName,
+                    phone: normalizedPhone,
+                    city: ameexCityId,
+                    cod: codAmount,
+                    address,
+                    product,
+                    comment,
+                    order_num: orderNum
+                })
+            });
 
-                if (response.ok) {
-                    const data: any = await response.json();
-                    const code = data?.code || data?.parcel_code || data?.data?.code || data?.tracking_number;
-                    if (code) generatedTracking = String(code);
-                }
-            } catch (err: any) {
-                console.error(`Batch add parcel Ameex error for order ${ord.id}:`, err);
-                errors.push({ orderId: ord.id, error: err.message });
+            if (response.ok) {
+                const data: any = await response.json();
+                const code = data?.code || data?.parcel_code || data?.data?.code || data?.tracking_number;
+                if (code) generatedTracking = String(code);
+            } else {
+                const errText = await response.text();
+                errors.push({ orderId: ord.id, error: errText || `HTTP ${response.status}` });
+                continue;
             }
+        } catch (err: any) {
+            console.error(`Batch add parcel Ameex error for order ${ord.id}:`, err);
+            errors.push({ orderId: ord.id, error: err.message });
+            continue;
+        }
+
+        if (!generatedTracking) {
+            errors.push({ orderId: ord.id, error: "Numéro de suivi non renvoyé par Ameex" });
+            continue;
         }
 
         const shippedAt = new Date().toISOString();
@@ -5917,26 +6519,32 @@ app.post('/api/couriers/ameex/tracking', authenticateToken, async (req: any, res
     const effId = String(clientId || ameexSaved?.clientId || '').trim();
     const cleanBase = String(apiBaseUrl || ameexSaved?.apiBaseUrl || 'https://api.ameex.app/customer').trim().replace(/\/+$/, '');
 
+    if (!effKey || !effId || isDummyCredential(effKey) || isDummyCredential(effId)) {
+        return res.status(400).json({
+            success: false,
+            configured: false,
+            message: "La société de livraison Ameex Express n'est pas configurée. Récupération des statuts impossible."
+        });
+    }
+
     const matchingOrder = state.orders.find(o => o.trackingNumber === code || o.id === code);
 
     let remoteTracking: any = null;
-    if (effKey && effId && !isDummyCredential(effKey) && !isDummyCredential(effId)) {
-        try {
-            const response = await fetch(`${cleanBase}/Delivery/Parcels/Tracking/ParcelCode/${encodeURIComponent(code)}`, {
-                method: 'GET',
-                headers: {
-                    'C-Api-Id': effId,
-                    'C-Api-Key': effKey,
-                    'Accept': 'application/json',
-                    'User-Agent': 'CallNet-Ameex/1.0'
-                }
-            });
-            if (response.ok) {
-                remoteTracking = await response.json();
+    try {
+        const response = await fetch(`${cleanBase}/Delivery/Parcels/Tracking/ParcelCode/${encodeURIComponent(code)}`, {
+            method: 'GET',
+            headers: {
+                'C-Api-Id': effId,
+                'C-Api-Key': effKey,
+                'Accept': 'application/json',
+                'User-Agent': 'CallNet-Ameex/1.0'
             }
-        } catch (err: any) {
-            console.error('Ameex tracking fetch error:', err);
+        });
+        if (response.ok) {
+            remoteTracking = await response.json();
         }
+    } catch (err: any) {
+        console.error('Ameex tracking fetch error:', err);
     }
 
     return res.json({
@@ -5963,26 +6571,32 @@ app.post('/api/couriers/ameex/mass-tracking', authenticateToken, async (req: any
     const effId = String(clientId || ameexSaved?.clientId || '').trim();
     const cleanBase = String(apiBaseUrl || ameexSaved?.apiBaseUrl || 'https://api.ameex.app/customer').trim().replace(/\/+$/, '');
 
+    if (!effKey || !effId || isDummyCredential(effKey) || isDummyCredential(effId)) {
+        return res.status(400).json({
+            success: false,
+            configured: false,
+            message: "La société de livraison Ameex Express n'est pas configurée. Récupération des statuts impossible."
+        });
+    }
+
     let results: any = null;
-    if (effKey && effId && !isDummyCredential(effKey) && !isDummyCredential(effId)) {
-        try {
-            const response = await fetch(`${cleanBase}/Delivery/Parcels/MassTracking`, {
-                method: 'POST',
-                headers: {
-                    'C-Api-Id': effId,
-                    'C-Api-Key': effKey,
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                    'User-Agent': 'CallNet-Ameex/1.0'
-                },
-                body: JSON.stringify({ codes: formattedCodes })
-            });
-            if (response.ok) {
-                results = await response.json();
-            }
-        } catch (err: any) {
-            console.error('Ameex mass tracking error:', err);
+    try {
+        const response = await fetch(`${cleanBase}/Delivery/Parcels/MassTracking`, {
+            method: 'POST',
+            headers: {
+                'C-Api-Id': effId,
+                'C-Api-Key': effKey,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'User-Agent': 'CallNet-Ameex/1.0'
+            },
+            body: JSON.stringify({ codes: formattedCodes })
+        });
+        if (response.ok) {
+            results = await response.json();
         }
+    } catch (err: any) {
+        console.error('Ameex mass-tracking error:', err);
     }
 
     return res.json({
@@ -6133,6 +6747,691 @@ app.post('/api/webhooks/ameex', async (req: any, res) => {
         });
     } catch (err: any) {
         console.error('Ameex webhook handler error:', err);
+        return res.status(500).json({ success: false, message: err.message });
+    }
+});
+
+// -------------------------------------------------------------
+// Unified Live Parcel Tracking & Search (by Phone [06/07] / Name / Tracking Code)
+// -------------------------------------------------------------
+
+// Helper to normalize phone to Moroccan mobile format starting with 06 or 07
+function formatMoroccanPhone0607(raw: string | undefined | null): string {
+    if (!raw) return '';
+    let digits = String(raw).replace(/\D/g, '');
+    if (digits.startsWith('212')) {
+        digits = digits.slice(3);
+    }
+    digits = digits.replace(/^0+/, '');
+    if (digits.startsWith('6') || digits.startsWith('7')) {
+        return '0' + digits;
+    }
+    if (digits.length >= 9) {
+        const last9 = digits.slice(-9);
+        if (last9.startsWith('6') || last9.startsWith('7')) {
+            return '0' + last9;
+        }
+    }
+    if (digits.startsWith('06') || digits.startsWith('07')) {
+        return digits;
+    }
+    return digits.startsWith('0') ? digits : '0' + digits;
+}
+
+interface CourierSearchResult {
+    found: boolean;
+    trackingNumber?: string;
+    courierStatus?: string;
+    courierName: string;
+    provider: string;
+    history?: any[];
+    remoteData?: any;
+    rawMessage?: string;
+    formattedPhone?: string;
+}
+
+// Single Courier Query Engine
+async function querySingleCourierParcel({
+    courierConfig,
+    trackingCode,
+    searchPhone,
+    customerName,
+    orderId
+}: {
+    courierConfig: any;
+    trackingCode?: string;
+    searchPhone?: string;
+    customerName?: string;
+    orderId?: string;
+}): Promise<CourierSearchResult> {
+    const courierName = courierConfig.name || courierConfig.provider;
+    const provider = courierConfig.provider;
+    const cleanCode = (trackingCode || '').trim();
+    const cleanPhone = (searchPhone || '').trim();
+    const phoneLast9 = cleanPhone ? cleanPhone.replace(/\D/g, '').slice(-9) : '';
+    const cleanName = (customerName || '').toLowerCase().trim();
+
+    try {
+        if (provider === 'ozon_express') {
+            const effKey = courierConfig.apiKey;
+            const effId = courierConfig.clientId;
+            const cleanBase = (courierConfig.apiBaseUrl || 'https://api.ozonexpress.ma').replace(/\/+$/, '');
+
+            if (!effKey || !effId || isDummyCredential(effKey) || isDummyCredential(effId)) {
+                return { found: false, courierName, provider, rawMessage: "Identifiants Ozon Express non configurés" };
+            }
+
+            // Ozon Express API documentation strictly requires tracking-number (e.g. OZE...)
+            // Ozon does not support tracking or searching by phone number or customer name.
+            if (!cleanCode || cleanCode.startsWith('06') || cleanCode.startsWith('07') || cleanCode.length < 4) {
+                return {
+                    found: false,
+                    courierName,
+                    provider,
+                    rawMessage: "L'API Ozon Express requiert obligatoirement le numéro de suivi (tracking-number). Le suivi par numéro de téléphone n'est pas supporté par Ozon Express."
+                };
+            }
+
+            // 1. Query official Ozon tracking endpoint by tracking-number
+            try {
+                const formParams = new URLSearchParams();
+                formParams.append('tracking-number', cleanCode);
+                const ozonRes = await fetch(`${cleanBase}/customers/${encodeURIComponent(effId)}/${encodeURIComponent(effKey)}/tracking`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json' },
+                    body: formParams.toString()
+                });
+                if (ozonRes.ok) {
+                    const data: any = await ozonRes.json();
+                    const parsed = extractOzonTrackingData(data);
+                    const status = parsed.status;
+                    if (status && status !== 'Non trouvé' && status !== 'Introuvable' && status !== 'error') {
+                        const foundCode = parsed.trackingNumber || cleanCode;
+                        return {
+                            found: true,
+                            trackingNumber: foundCode,
+                            courierStatus: String(status),
+                            courierName,
+                            provider,
+                            history: parsed.history,
+                            remoteData: data
+                        };
+                    }
+                }
+            } catch (e) {
+                console.warn("Ozon tracking by tracking-number error:", e);
+            }
+
+            // 2. Query official Ozon parcel-info endpoint by tracking-number as secondary verification
+            try {
+                const formParams = new URLSearchParams();
+                formParams.append('tracking-number', cleanCode);
+                const infoRes = await fetch(`${cleanBase}/customers/${encodeURIComponent(effId)}/${encodeURIComponent(effKey)}/parcel-info`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json' },
+                    body: formParams.toString()
+                });
+                if (infoRes.ok) {
+                    const pInfo: any = await infoRes.json();
+                    const recoveredTrack = pInfo?.['TRACKING-NUMBER'] || pInfo?.['tracking-number'] || pInfo?.trackingNumber;
+                    const recoveredStatus = pInfo?.STATUS || pInfo?.status || pInfo?.statut;
+                    if (recoveredTrack && recoveredTrack !== '0' && recoveredTrack !== '-' && recoveredStatus) {
+                        return {
+                            found: true,
+                            trackingNumber: recoveredTrack,
+                            courierStatus: String(recoveredStatus),
+                            courierName,
+                            provider,
+                            remoteData: pInfo
+                        };
+                    }
+                }
+            } catch (e) {
+                console.warn("Ozon parcel-info error:", e);
+            }
+
+            return {
+                found: false,
+                courierName,
+                provider,
+                rawMessage: `Colis ${cleanCode} non trouvé ou non encore scanné sur le réseau Ozon Express.`
+            };
+        } else if (provider === 'ameex') {
+            const effKey = courierConfig.apiKey;
+            const effId = courierConfig.clientId;
+            const cleanBase = (courierConfig.apiBaseUrl || 'https://api.ameex.app/customer').replace(/\/+$/, '');
+
+            if (!effKey || !effId || isDummyCredential(effKey) || isDummyCredential(effId)) {
+                return { found: false, courierName, provider, rawMessage: "Identifiants Ameex non configurés" };
+            }
+
+            const headers = {
+                'C-Api-Id': effId,
+                'C-Api-Key': effKey,
+                'Accept': 'application/json',
+                'User-Agent': 'CallNet-Ameex/1.0'
+            };
+
+            // 1. Tracking by Parcel Code
+            if (cleanCode && !cleanCode.startsWith('06') && !cleanCode.startsWith('07')) {
+                try {
+                    const response = await fetch(`${cleanBase}/Delivery/Parcels/Tracking/ParcelCode/${encodeURIComponent(cleanCode)}`, {
+                        method: 'GET',
+                        headers
+                    });
+                    if (response.ok) {
+                        const remoteData: any = await response.json();
+                        const statusObj = remoteData?.Status || remoteData?.Statut || remoteData;
+                        const statusText = statusObj?.name || statusObj?.Name || statusObj?.status || statusObj?.Statut || remoteData?.Statut || remoteData?.STATUT_NAME;
+                        if (statusText) {
+                            const rawHist = Array.isArray(remoteData?.History) ? remoteData.History : [];
+                            return {
+                                found: true,
+                                trackingNumber: cleanCode,
+                                courierStatus: String(statusText),
+                                courierName,
+                                provider,
+                                history: rawHist,
+                                remoteData
+                            };
+                        }
+                    }
+                } catch (e) {
+                    console.warn("Ameex tracking by code error:", e);
+                }
+            }
+
+            // 2. Tracking / Search by Phone (06/07)
+            if (cleanPhone) {
+                // A. Search by Phone endpoint
+                try {
+                    const phoneRes = await fetch(`${cleanBase}/Delivery/Parcels/Tracking/Phone/${encodeURIComponent(cleanPhone)}`, {
+                        method: 'GET',
+                        headers
+                    });
+                    if (phoneRes.ok) {
+                        const data: any = await phoneRes.json();
+                        const item = Array.isArray(data?.parcels) ? data.parcels[0] : (Array.isArray(data) ? data[0] : data);
+                        const foundCode = item?.ParcelCode || item?.code || item?.CODE || item?.tracking_number;
+                        const statusObj = item?.Status || item?.Statut || item;
+                        const statusText = statusObj?.name || statusObj?.Name || item?.status;
+                        if (foundCode && statusText) {
+                            return {
+                                found: true,
+                                trackingNumber: foundCode,
+                                courierStatus: String(statusText),
+                                courierName,
+                                provider,
+                                remoteData: item
+                            };
+                        }
+                    }
+                } catch (e) {
+                    console.warn("Ameex search by phone endpoint error:", e);
+                }
+
+                // B. Delivery/Parcels/Search POST endpoint
+                try {
+                    const searchRes = await fetch(`${cleanBase}/Delivery/Parcels/Search`, {
+                        method: 'POST',
+                        headers: { ...headers, 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ phone: cleanPhone, receiver: customerName || '' })
+                    });
+                    if (searchRes.ok) {
+                        const searchData: any = await searchRes.json();
+                        const list = Array.isArray(searchData?.parcels) ? searchData.parcels : (Array.isArray(searchData) ? searchData : []);
+                        const match = list[0];
+                        if (match) {
+                            const foundCode = match.ParcelCode || match.code || match.CODE;
+                            const statusText = match.Status?.name || match.Statut?.name || match.Status || match.status;
+                            if (foundCode) {
+                                return {
+                                    found: true,
+                                    trackingNumber: foundCode,
+                                    courierStatus: String(statusText || 'En cours d\'acheminement'),
+                                    courierName,
+                                    provider,
+                                    remoteData: match
+                                };
+                            }
+                        }
+                    }
+                } catch (e) {
+                    console.warn("Ameex search POST error:", e);
+                }
+            }
+        } else if (provider === 'digylog') {
+            const effKey = courierConfig.apiKey;
+            const cleanBase = (courierConfig.apiBaseUrl || 'https://api.digylog.com/api/v2/seller').replace(/\/+$/, '');
+
+            if (!effKey || isDummyCredential(effKey)) {
+                return { found: false, courierName, provider, rawMessage: "Identifiants Digylog non configurés" };
+            }
+
+            const headers = {
+                'Authorization': `Bearer ${effKey}`,
+                'Referer': 'https://apiseller.digylog.com',
+                'Accept': 'application/json'
+            };
+
+            // 1. By Code
+            if (cleanCode && !cleanCode.startsWith('06') && !cleanCode.startsWith('07')) {
+                try {
+                    const res = await fetch(`${cleanBase}/order/${encodeURIComponent(cleanCode)}/infos`, { method: 'GET', headers });
+                    if (res.ok) {
+                        const data: any = await res.json();
+                        if (data?.status) {
+                            return {
+                                found: true,
+                                trackingNumber: cleanCode,
+                                courierStatus: String(data.status),
+                                courierName,
+                                provider,
+                                remoteData: data
+                            };
+                        }
+                    }
+                } catch (e) {
+                    console.warn("Digylog tracking by code error:", e);
+                }
+            }
+
+            // 2. By Phone
+            if (cleanPhone) {
+                try {
+                    const res = await fetch(`${cleanBase}/orders?phone=${encodeURIComponent(cleanPhone)}`, { method: 'GET', headers });
+                    if (res.ok) {
+                        const data: any = await res.json();
+                        const list = Array.isArray(data?.orders) ? data.orders : (Array.isArray(data?.data) ? data.data : (Array.isArray(data) ? data : []));
+                        const match = list[0];
+                        if (match && (match.tracking_number || match.id || match.code)) {
+                            return {
+                                found: true,
+                                trackingNumber: match.tracking_number || match.code || String(match.id),
+                                courierStatus: String(match.status || 'En cours d\'acheminement'),
+                                courierName,
+                                provider,
+                                remoteData: match
+                            };
+                        }
+                    }
+                } catch (e) {
+                    console.warn("Digylog tracking by phone error:", e);
+                }
+            }
+        } else if (provider === 'kargo_express') {
+            const effKey = courierConfig.apiKey;
+            const cleanBase = (courierConfig.apiBaseUrl || 'https://api.kargoexpress.app').replace(/\/+$/, '');
+
+            if (cleanCode) {
+                try {
+                    const res = await fetch(`${cleanBase}/api/parcels/tracking/${encodeURIComponent(cleanCode)}`, {
+                        headers: { 'Authorization': `Bearer ${effKey}`, 'Accept': 'application/json' }
+                    });
+                    if (res.ok) {
+                        const data: any = await res.json();
+                        if (data?.status) {
+                            return {
+                                found: true,
+                                trackingNumber: cleanCode,
+                                courierStatus: String(data.status),
+                                courierName,
+                                provider,
+                                remoteData: data
+                            };
+                        }
+                    }
+                } catch (e) {}
+            }
+            if (cleanPhone) {
+                try {
+                    const res = await fetch(`${cleanBase}/api/parcels/search`, {
+                        method: 'POST',
+                        headers: { 'Authorization': `Bearer ${effKey}`, 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ phone: cleanPhone })
+                    });
+                    if (res.ok) {
+                        const data: any = await res.json();
+                        const match = Array.isArray(data?.parcels) ? data.parcels[0] : data;
+                        if (match?.tracking_number) {
+                            return {
+                                found: true,
+                                trackingNumber: match.tracking_number,
+                                courierStatus: String(match.status || 'En cours d\'acheminement'),
+                                courierName,
+                                provider,
+                                remoteData: match
+                            };
+                        }
+                    }
+                } catch (e) {}
+            }
+        }
+    } catch (err) {
+        console.warn(`Error querying courier ${courierName}:`, err);
+    }
+
+    return { found: false, courierName, provider };
+}
+
+// Search across all available configured couriers
+async function searchAcrossAllConfiguredCouriers({
+    req,
+    state,
+    trackingCode,
+    searchPhone,
+    customerName,
+    orderId,
+    preferredCourierName
+}: {
+    req: any;
+    state: any;
+    trackingCode?: string;
+    searchPhone?: string;
+    customerName?: string;
+    orderId?: string;
+    preferredCourierName?: string;
+}): Promise<CourierSearchResult> {
+    const formattedPhone = formatMoroccanPhone0607(searchPhone);
+    const configs: any[] = state.courierConfigs || [];
+    const validConfigs = configs.filter(c => isCourierConfiguredServer(c));
+
+    // 1. Sort configs: preferred first, then primary, then others
+    const primary = getActivePrimaryCourierServer(req);
+    const sortedConfigs: any[] = [];
+
+    if (preferredCourierName) {
+        const pref = validConfigs.find(c => (c.name || '').toLowerCase().includes(preferredCourierName.toLowerCase()) || (c.provider || '').toLowerCase().includes(preferredCourierName.toLowerCase()));
+        if (pref) sortedConfigs.push(pref);
+    }
+    if (primary && isCourierConfiguredServer(primary) && !sortedConfigs.some(c => c.provider === primary.provider)) {
+        sortedConfigs.push(primary);
+    }
+    for (const c of validConfigs) {
+        if (!sortedConfigs.some(sc => sc.provider === c.provider)) {
+            sortedConfigs.push(c);
+        }
+    }
+
+    // 2. Query in sequence until found
+    for (const config of sortedConfigs) {
+        const res = await querySingleCourierParcel({
+            courierConfig: config,
+            trackingCode,
+            searchPhone: formattedPhone,
+            customerName,
+            orderId
+        });
+        if (res.found) {
+            return res;
+        }
+    }
+
+    return {
+        found: false,
+        courierName: primary?.name || 'Transporteur Express',
+        provider: primary?.provider || '',
+        formattedPhone
+    };
+}
+
+// Unified Live Parcel Tracking & Search (by Phone / Name / Tracking Code)
+app.post('/api/couriers/live-track', authenticateToken, async (req: any, res) => {
+    try {
+        const { orderId, trackingNumber, phone, customerName, courierName } = req.body || {};
+        const state = getEnvState(req);
+
+        // Normalize inputs
+        const rawPhone = phone || '';
+        const formattedPhone0607 = formatMoroccanPhone0607(rawPhone);
+        const cleanReqName = customerName ? String(customerName).toLowerCase().trim() : '';
+        const cleanReqTracking = trackingNumber ? String(trackingNumber).trim() : '';
+        const cleanReqOrderId = orderId ? String(orderId).trim() : '';
+
+        // Match order from state
+        let matchedOrder = state.orders.find(o => {
+            if (cleanReqOrderId && String(o.id) === cleanReqOrderId) return true;
+            if (cleanReqTracking && (
+                (o.trackingNumber && o.trackingNumber.toLowerCase() === cleanReqTracking.toLowerCase()) ||
+                String(o.id).toLowerCase() === cleanReqTracking.toLowerCase()
+            )) return true;
+            if (formattedPhone0607 && o.phone) {
+                const oPh0607 = formatMoroccanPhone0607(o.phone);
+                if (oPh0607 && oPh0607 === formattedPhone0607) return true;
+                const pDigits = String(o.phone).replace(/\D/g, '').slice(-9);
+                if (pDigits && formattedPhone0607.endsWith(pDigits)) return true;
+            }
+            if (cleanReqName && o.customerName) {
+                const oName = o.customerName.toLowerCase().trim();
+                if (oName === cleanReqName || oName.includes(cleanReqName) || cleanReqName.includes(oName)) return true;
+            }
+            return false;
+        });
+
+        // Determine effective phone, tracking number, and customer name
+        const effectivePhone = formatMoroccanPhone0607(matchedOrder?.phone || rawPhone);
+        const effectiveCustomerName = matchedOrder?.customerName || customerName || '';
+        const effectiveTracking = (matchedOrder?.trackingNumber || cleanReqTracking || '').trim();
+        const effectiveCourierName = matchedOrder?.courierName || courierName || '';
+
+        // Perform live search across couriers
+        const searchResult = await searchAcrossAllConfiguredCouriers({
+            req,
+            state,
+            trackingCode: effectiveTracking,
+            searchPhone: effectivePhone,
+            customerName: effectiveCustomerName,
+            orderId: matchedOrder?.id || orderId,
+            preferredCourierName: effectiveCourierName
+        });
+
+        if (!searchResult.found) {
+            const notFoundMessage = searchResult.rawMessage ||
+                (!effectiveTracking && (searchResult.provider === 'ozon_express' || (effectiveCourierName && effectiveCourierName.toLowerCase().includes('ozon')))
+                    ? "Pour Ozon Express, l'API requiert impérativement le numéro de suivi du colis (ex: OZE...). La recherche par téléphone n'est pas supportée par l'API Ozon Express."
+                    : `Aucun colis trouvé chez ${searchResult.courierName} avec le téléphone ${effectivePhone || 'N/A'}${effectiveTracking ? ` ou le numéro ${effectiveTracking}` : ''}. Le colis n'a peut-être pas encore été scanné ou transmis.`
+                );
+
+            return res.json({
+                success: false,
+                found: false,
+                notTransmitted: !effectiveTracking,
+                searchedPhone: effectivePhone,
+                searchedTracking: effectiveTracking,
+                courierName: searchResult.courierName,
+                message: notFoundMessage
+            });
+        }
+
+        const foundTracking = searchResult.trackingNumber || effectiveTracking;
+        const foundStatus = searchResult.courierStatus || 'En cours d\'acheminement';
+        const foundCourier = searchResult.courierName;
+
+        // Build authentic history steps
+        const rawHistory = Array.isArray(searchResult.history) ? searchResult.history :
+                           Array.isArray(searchResult.remoteData?.History) ? searchResult.remoteData.History :
+                           Array.isArray(searchResult.remoteData?.history) ? searchResult.remoteData.history :
+                           Array.isArray(searchResult.remoteData?.Events) ? searchResult.remoteData.Events : [];
+
+        let historySteps: any[] = [];
+        if (rawHistory.length > 0) {
+            historySteps = rawHistory.map((h: any) => ({
+                status: h.Status || h.Statut || h.status || h.statut || h.name || h.Name || 'Étape de livraison',
+                date: h.Date || h.date || h.created_at || h['created-at'] || '',
+                location: h.Location || h.Ville || h.location || h.city || '',
+                done: true,
+                note: h.Comment || h.Commentaire || h.comment || h.note || `Signalé par ${foundCourier}`
+            }));
+        } else {
+            if (matchedOrder?.shippedAt) {
+                historySteps.push({
+                    status: 'Colis Expédié depuis CallNet',
+                    date: new Date(matchedOrder.shippedAt).toLocaleString('fr-FR'),
+                    location: 'Entrepôt Vendeur',
+                    done: true,
+                    note: `Transmis à ${foundCourier} (N° ${foundTracking})`
+                });
+            }
+            historySteps.push({
+                status: foundStatus,
+                date: new Date().toLocaleString('fr-FR'),
+                location: matchedOrder?.city || 'Réseau Transporteur',
+                done: true,
+                note: `Statut vérifié en direct auprès de l'API ${foundCourier}`
+            });
+        }
+
+        // AUTO-RECOVERY & PERSISTENCE:
+        // When order is found at courier, store the tracking number and delivery status into order data
+        let orderWasUpdated = false;
+        if (matchedOrder) {
+            if (!matchedOrder.trackingNumber || matchedOrder.trackingNumber !== foundTracking) {
+                matchedOrder.trackingNumber = foundTracking;
+                orderWasUpdated = true;
+            }
+            if (matchedOrder.courierStatus !== foundStatus) {
+                matchedOrder.courierStatus = foundStatus;
+                orderWasUpdated = true;
+            }
+            if (!matchedOrder.courierName || matchedOrder.courierName !== foundCourier) {
+                matchedOrder.courierName = foundCourier;
+                orderWasUpdated = true;
+            }
+
+            if (isPgConnected) {
+                try {
+                    const ordersTable = getTable('orders', req);
+                    await safePgQuery(
+                        `UPDATE ${ordersTable} SET tracking_number = $1, courier_status = $2, courier_name = $3 WHERE id = $4`,
+                        [foundTracking, foundStatus, foundCourier, matchedOrder.id]
+                    );
+                } catch (dbErr) {
+                    console.warn('DB live-track update error:', dbErr);
+                }
+            }
+            saveEnvStateToFile();
+        }
+
+        return res.json({
+            success: true,
+            found: true,
+            orderUpdated: orderWasUpdated,
+            orderId: matchedOrder?.id || orderId,
+            trackingNumber: foundTracking,
+            courierName: foundCourier,
+            courierStatus: foundStatus,
+            history: historySteps,
+            remoteData: searchResult.remoteData,
+            order: matchedOrder,
+            lastSync: new Date().toISOString(),
+            message: `Colis identifié chez ${foundCourier} (N° de suivi: ${foundTracking})`
+        });
+    } catch (err: any) {
+        console.error('Unified live-track error:', err);
+        return res.status(500).json({ success: false, message: err.message });
+    }
+});
+
+// Bulk sync tracking for all shipped orders (by Tracking Number & by Phone starting with 06/07)
+app.post('/api/couriers/bulk-track', authenticateToken, async (req: any, res) => {
+    try {
+        const state = getEnvState(req);
+        const activeCourier = getActivePrimaryCourierServer(req);
+
+        if (!activeCourier || !isCourierConfiguredServer(activeCourier)) {
+            return res.status(400).json({
+                success: false,
+                configured: false,
+                message: "Aucune société de livraison n'est configurée avec des identifiants valides. Synchronisation des statuts de livraison impossible."
+            });
+        }
+
+        const { orderIds } = req.body || {};
+        const idSet = Array.isArray(orderIds) && orderIds.length > 0 ? new Set(orderIds.map(String)) : null;
+
+        // TARGET ALL SHIPPED ORDERS:
+        // Even if they do not have a tracking number yet (sent manually by client)
+        const targetOrders = state.orders.filter(o => {
+            if (idSet) return idSet.has(String(o.id));
+            const s = String(o.status || '').toLowerCase();
+            return (s === 'expedie' || s === 'expider' || s === 'expédié') || Boolean(o.trackingNumber && o.trackingNumber.trim() !== '');
+        });
+
+        if (targetOrders.length === 0) {
+            return res.json({
+                success: true,
+                updatedCount: 0,
+                recoveredTrackingCount: 0,
+                message: "Aucun colis expédié à synchroniser."
+            });
+        }
+
+        let updatedCount = 0;
+        let recoveredTrackingCount = 0;
+        const updatedOrdersList: any[] = [];
+
+        // Process orders:
+        for (const ord of targetOrders) {
+            const formattedPhone = formatMoroccanPhone0607(ord.phone);
+            const resResult = await searchAcrossAllConfiguredCouriers({
+                req,
+                state,
+                trackingCode: ord.trackingNumber || '',
+                searchPhone: formattedPhone,
+                customerName: ord.customerName || '',
+                orderId: ord.id,
+                preferredCourierName: ord.courierName || activeCourier.name
+            });
+
+            if (resResult.found && resResult.trackingNumber) {
+                let changed = false;
+                if (!ord.trackingNumber || ord.trackingNumber !== resResult.trackingNumber) {
+                    ord.trackingNumber = resResult.trackingNumber;
+                    recoveredTrackingCount++;
+                    changed = true;
+                }
+                if (resResult.courierStatus && ord.courierStatus !== resResult.courierStatus) {
+                    ord.courierStatus = resResult.courierStatus;
+                    changed = true;
+                }
+                if (resResult.courierName && ord.courierName !== resResult.courierName) {
+                    ord.courierName = resResult.courierName;
+                    changed = true;
+                }
+
+                if (changed) {
+                    updatedCount++;
+                    updatedOrdersList.push(ord);
+                }
+            }
+        }
+
+        // Persist all updates to PostgreSQL DB
+        if (isPgConnected && updatedOrdersList.length > 0) {
+            try {
+                const ordersTable = getTable('orders', req);
+                for (const ord of updatedOrdersList) {
+                    await safePgQuery(
+                        `UPDATE ${ordersTable} SET tracking_number = $1, courier_status = $2, courier_name = $3 WHERE id = $4`,
+                        [ord.trackingNumber || '', ord.courierStatus || 'En cours d\'acheminement', ord.courierName || activeCourier.name, ord.id]
+                    );
+                }
+            } catch (dbErr) {
+                console.warn('DB bulk tracking update error:', dbErr);
+            }
+        }
+        saveEnvStateToFile();
+
+        return res.json({
+            success: true,
+            total: targetOrders.length,
+            updatedCount,
+            recoveredTrackingCount,
+            updatedOrders: updatedOrdersList,
+            message: `${updatedCount} colis synchronisés (${recoveredTrackingCount} nouveaux numéros de suivi récupérés via téléphone 06/07).`
+        });
+    } catch (err: any) {
+        console.error('Unified bulk-track error:', err);
         return res.status(500).json({ success: false, message: err.message });
     }
 });
@@ -6731,7 +8030,7 @@ app.post('/api/gemini/map-statuses', authenticateToken, async (req: any, res) =>
 
     const heuristicStatusMap: Record<string, string> = {};
     for (const raw of inputs) {
-        heuristicStatusMap[raw] = normalizeStatus(raw) || OrderStatus.EnAttend;
+        heuristicStatusMap[raw] = normalizeStatus(raw);
     }
 
     const apiKey = process.env.GEMINI_API_KEY || process.env.API_KEY;
@@ -7168,18 +8467,75 @@ export async function syncGoogleSheetsOrdersInternal(params: SyncGoogleSheetsPar
                     if (mapped[norm] === undefined) mapped[norm] = raw[k];
                 });
 
+                const incomingTracking = String(
+                    mapped.trackingNumber || mapped.tracking || mapped.suivi || mapped.tracking_number ||
+                    mapped.awb || mapped.codeSuivi || mapped['numéro de suivi'] || mapped['numero de suivi'] ||
+                    raw['tracking'] || raw['Tracking'] || raw['SUIVI'] || raw['Suivi'] || raw['tracking_number'] || ''
+                ).trim();
+
+                const incomingCourier = String(
+                    mapped.courierName || mapped.transporteur || mapped.courier ||
+                    raw['transporteur'] || raw['Transporteur'] || raw['Société de livraison'] || ''
+                ).trim();
+
+                const incomingCourierStatus = String(
+                    mapped.courierStatus || mapped.statutLivraison || raw['statut livraison'] || ''
+                ).trim();
+
+                const candPhone = String(mapped.phone || '').replace(/\D/g, '');
+                const candName = String(mapped.customerName || '').trim().toLowerCase();
+                const candProd = String(mapped.product || '').trim().toLowerCase();
                 const effectiveRowIndex = raw._rowIndex || raw._row || raw.rowIndex || (rIdx + 2);
                 const orderDate = normalizeOrderDateServer(mapped.date);
+
+                // Match existing order to keep stable ID and preserve courier tracking
+                let existingMatch: Order | undefined = undefined;
+                if (mapped.id && String(mapped.id).trim().length > 0) {
+                    const cleanId = String(mapped.id).trim();
+                    existingMatch = state.orders.find(o => String(o.id).trim() === cleanId);
+                }
+                if (!existingMatch && candPhone.length >= 8) {
+                    existingMatch = state.orders.find(o => {
+                        if (effectiveClientId && o.clientId && String(o.clientId).trim().toLowerCase() !== effectiveClientId.toLowerCase().trim()) return false;
+                        const oPhone = String(o.phone || '').replace(/\D/g, '');
+                        if (!oPhone || (oPhone !== candPhone && !oPhone.endsWith(candPhone) && !candPhone.endsWith(oPhone))) return false;
+                        const oName = String(o.customerName || '').trim().toLowerCase();
+                        const oProd = String(o.product || '').trim().toLowerCase();
+                        return (candName && oName && (candName === oName || candName.includes(oName) || oName.includes(candName))) ||
+                               (candProd && oProd && (candProd === oProd || candProd.includes(oProd) || oProd.includes(candProd)));
+                    });
+                }
+
                 const orderId = (mapped.id && String(mapped.id).trim().length > 0)
                     ? String(mapped.id).trim()
-                    : generateShortStableOrderIdServer({
-                        customerName: String(mapped.customerName || 'Inconnu'),
-                        phone: String(mapped.phone || ''),
-                        product: String(mapped.product || 'Inconnu'),
-                        price: Number(mapped.price || 0),
-                        city: String(mapped.city || mapped.district || ''),
-                        date: orderDate
-                    }, `${job.sheetTitle}_${job.sheetName}`, effectiveRowIndex);
+                    : (existingMatch && existingMatch.id
+                        ? existingMatch.id
+                        : generateShortStableOrderIdServer({
+                            customerName: String(mapped.customerName || 'Inconnu'),
+                            phone: String(mapped.phone || ''),
+                            product: String(mapped.product || 'Inconnu'),
+                            price: Number(mapped.price || 0),
+                            city: String(mapped.city || mapped.district || ''),
+                            date: orderDate
+                        }, `${job.sheetTitle}_${job.sheetName}`, effectiveRowIndex));
+
+                const trackingNumber = incomingTracking || existingMatch?.trackingNumber || '';
+                const courierName = incomingCourier || existingMatch?.courierName || '';
+                const courierStatus = incomingCourierStatus || existingMatch?.courierStatus || '';
+                const shippedAt = existingMatch?.shippedAt || (trackingNumber ? new Date().toISOString() : undefined);
+                const courierParcelId = existingMatch?.courierParcelId || '';
+                const courierNote = existingMatch?.courierNote || '';
+
+                let finalStatus = normalizeStatus(mapped.status);
+                if (trackingNumber) {
+                    if (finalStatus !== OrderStatus.Livre && finalStatus !== OrderStatus.Retourne) {
+                        finalStatus = OrderStatus.Expedie;
+                    }
+                } else if (existingMatch && existingMatch.status && existingMatch.status !== OrderStatus.EnAttend && existingMatch.status !== OrderStatus.Inconnu) {
+                    if (!finalStatus || finalStatus === OrderStatus.EnAttend || finalStatus === OrderStatus.Inconnu) {
+                        finalStatus = existingMatch.status;
+                    }
+                }
 
                 const orderData: Order = {
                     id: orderId,
@@ -7189,7 +8545,7 @@ export async function syncGoogleSheetsOrdersInternal(params: SyncGoogleSheetsPar
                     variant: String(mapped.variant || ''),
                     price: Number(mapped.price || 0),
                     date: orderDate,
-                    status: normalizeStatus(mapped.status) || OrderStatus.EnAttend,
+                    status: finalStatus,
                     phone: String(mapped.phone || ''),
                     address: String(mapped.address || ''),
                     city: String(mapped.city || ''),
@@ -7199,6 +8555,12 @@ export async function syncGoogleSheetsOrdersInternal(params: SyncGoogleSheetsPar
                     sheetSource: job.sheetTitle || job.sheetName,
                     sheetId: job.id,
                     archived: Boolean(mapped.archived || false),
+                    trackingNumber,
+                    courierName,
+                    courierStatus,
+                    shippedAt,
+                    courierParcelId,
+                    courierNote,
                     _rowIndex: effectiveRowIndex
                 };
 
@@ -7215,27 +8577,55 @@ export async function syncGoogleSheetsOrdersInternal(params: SyncGoogleSheetsPar
 
     const ordersTable = getTable('orders', req);
 
-    // UPSERT ORDERS FIRST INTO POSTGRESQL (Safeguarding operator-qualification status)
+    // UPSERT ORDERS FIRST INTO POSTGRESQL (Safeguarding operator-qualification status & tracking numbers)
     if (isPgConnected && syncedOrders.length > 0) {
         for (const orderData of syncedOrders) {
             try {
                 await safePgQuery(
-                    `INSERT INTO ${ordersTable} (id, customer_name, product, quantity, variant, price, date, status, phone, address, city, district, note, client_id, archived, sheet_source, sheet_id)
-                     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)
+                    `INSERT INTO ${ordersTable} (
+                        id, customer_name, product, quantity, variant, price, date, status, phone, address, city, district, note, client_id, archived, sheet_source, sheet_id,
+                        tracking_number, courier_name, courier_status, shipped_at, courier_parcel_id, courier_note
+                    )
+                     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23)
                      ON CONFLICT (id) DO UPDATE SET
-                        customer_name=EXCLUDED.customer_name, product=EXCLUDED.product, quantity=EXCLUDED.quantity,
-                        variant=EXCLUDED.variant, price=EXCLUDED.price, date=EXCLUDED.date,
+                        customer_name=EXCLUDED.customer_name,
+                        product=EXCLUDED.product,
+                        quantity=EXCLUDED.quantity,
+                        variant=EXCLUDED.variant,
+                        price=EXCLUDED.price,
+                        date=EXCLUDED.date,
                         status=CASE 
-                          WHEN orders.status IS NOT NULL AND orders.status != '' AND orders.status != 'En Attente' THEN orders.status 
-                          ELSE EXCLUDED.status 
+                          WHEN orders.tracking_number IS NOT NULL AND orders.tracking_number != '' THEN orders.status
+                          WHEN EXCLUDED.tracking_number IS NOT NULL AND EXCLUDED.tracking_number != '' THEN EXCLUDED.status
+                          WHEN orders.status IS NOT NULL AND orders.status NOT IN ('en attend', 'En Attente', '', 'inconnu') AND (EXCLUDED.status IS NULL OR EXCLUDED.status IN ('en attend', 'En Attente', '', 'inconnu')) THEN orders.status
+                          WHEN EXCLUDED.status IS NOT NULL AND EXCLUDED.status NOT IN ('en attend', 'En Attente', '', 'inconnu') THEN EXCLUDED.status
+                          ELSE orders.status 
                         END,
-                        phone=EXCLUDED.phone, address=EXCLUDED.address, city=EXCLUDED.city, district=EXCLUDED.district, note=EXCLUDED.note,
-                        client_id=EXCLUDED.client_id, archived=EXCLUDED.archived, sheet_source=EXCLUDED.sheet_source, sheet_id=EXCLUDED.sheet_id`,
+                        phone=EXCLUDED.phone,
+                        address=EXCLUDED.address,
+                        city=EXCLUDED.city,
+                        district=EXCLUDED.district,
+                        note=CASE
+                          WHEN orders.note IS NOT NULL AND orders.note != '' AND (EXCLUDED.note IS NULL OR EXCLUDED.note = '') THEN orders.note
+                          ELSE EXCLUDED.note
+                        END,
+                        client_id=EXCLUDED.client_id,
+                        archived=EXCLUDED.archived,
+                        sheet_source=EXCLUDED.sheet_source,
+                        sheet_id=EXCLUDED.sheet_id,
+                        tracking_number=COALESCE(NULLIF(orders.tracking_number, ''), NULLIF(EXCLUDED.tracking_number, '')),
+                        courier_name=COALESCE(NULLIF(orders.courier_name, ''), NULLIF(EXCLUDED.courier_name, '')),
+                        courier_status=COALESCE(NULLIF(orders.courier_status, ''), NULLIF(EXCLUDED.courier_status, '')),
+                        shipped_at=COALESCE(orders.shipped_at, EXCLUDED.shipped_at),
+                        courier_parcel_id=COALESCE(NULLIF(orders.courier_parcel_id, ''), NULLIF(EXCLUDED.courier_parcel_id, '')),
+                        courier_note=COALESCE(NULLIF(orders.courier_note, ''), NULLIF(EXCLUDED.courier_note, ''))`,
                     [
                         orderData.id, orderData.customerName, orderData.product, orderData.quantity,
                         orderData.variant, orderData.price, orderData.date, orderData.status,
                         orderData.phone, orderData.address, orderData.city, orderData.district,
-                        orderData.note, orderData.clientId, orderData.archived, orderData.sheetSource || null, orderData.sheetId || null
+                        orderData.note, orderData.clientId, orderData.archived, orderData.sheetSource || null, orderData.sheetId || null,
+                        orderData.trackingNumber || null, orderData.courierName || null, orderData.courierStatus || null,
+                        orderData.shippedAt || null, orderData.courierParcelId || null, orderData.courierNote || null
                     ]
                 );
             } catch (pgErr) {
@@ -7244,7 +8634,7 @@ export async function syncGoogleSheetsOrdersInternal(params: SyncGoogleSheetsPar
         }
     }
 
-    // UPDATE IN MEMORY AND REMOVE STALE ROWS
+    // UPDATE IN MEMORY (Safeguard: NEVER delete processed, shipped, or tracked orders during sync)
     const count = syncedOrders.length;
     if (effectiveClientId) {
         const clientLower = effectiveClientId.toLowerCase().trim();
@@ -7252,53 +8642,45 @@ export async function syncGoogleSheetsOrdersInternal(params: SyncGoogleSheetsPar
         const isSingleSheetSync = jobs.length === 1 && sheetId;
         const singleSheetId = isSingleSheetSync ? jobs[0].id : null;
 
-        if (isPgConnected) {
+        // ONLY delete raw unprocessed pending orders if explicitly a manual single sheet sync and validIds has orders
+        // NEVER delete anything during auto_worker background sync, and NEVER delete anything that has a tracking number or non-pending status
+        if (triggeredBy !== 'auto_worker' && isPgConnected && validIds.length > 0) {
             try {
+                const placeholders = validIds.map((_, i) => `$${i + 3}`).join(',');
                 if (singleSheetId) {
-                    if (validIds.length > 0) {
-                        const placeholders = validIds.map((_, i) => `$${i + 3}`).join(',');
-                        await safePgQuery(`DELETE FROM ${ordersTable} WHERE (LOWER(TRIM(client_id)) = $1 OR client_id = $1) AND sheet_id = $2 AND id NOT IN (${placeholders})`, [clientLower, singleSheetId, ...validIds]);
-                    } else {
-                        await safePgQuery(`DELETE FROM ${ordersTable} WHERE (LOWER(TRIM(client_id)) = $1 OR client_id = $1) AND sheet_id = $2`, [clientLower, singleSheetId]);
-                    }
-                } else {
-                    if (validIds.length > 0) {
-                        const placeholders = validIds.map((_, i) => `$${i + 2}`).join(',');
-                        await safePgQuery(`DELETE FROM ${ordersTable} WHERE (LOWER(TRIM(client_id)) = $1 OR client_id = $1) AND id NOT IN (${placeholders})`, [clientLower, ...validIds]);
-                    } else {
-                        await safePgQuery(`DELETE FROM ${ordersTable} WHERE LOWER(TRIM(client_id)) = $1 OR client_id = $1`, [clientLower]);
-                    }
+                    await safePgQuery(
+                        `DELETE FROM ${ordersTable} 
+                         WHERE (LOWER(TRIM(client_id)) = $1 OR client_id = $1) 
+                           AND sheet_id = $2 
+                           AND id NOT IN (${placeholders})
+                           AND (tracking_number IS NULL OR tracking_number = '')
+                           AND (status IS NULL OR status IN ('en attend', 'En Attente', '', 'inconnu'))`,
+                        [clientLower, singleSheetId, ...validIds]
+                    );
                 }
             } catch (pgDelErr) {
-                console.error("[Google Sheets Sync] PG delete stale orders error:", pgDelErr);
+                console.error("[Google Sheets Sync] PG safe delete stale pending orders notice:", pgDelErr);
             }
         }
 
-        // Clean memory
-        for (let i = state.orders.length - 1; i >= 0; i--) {
-            const ord = state.orders[i];
-            if (String(ord.clientId || '').toLowerCase().trim() === clientLower) {
-                if (singleSheetId) {
-                    if (ord.sheetId === singleSheetId && !validIds.includes(ord.id)) {
-                        state.orders.splice(i, 1);
-                    }
-                } else {
-                    if (!validIds.includes(ord.id)) {
-                        state.orders.splice(i, 1);
-                    }
-                }
-            }
-        }
-
-        // Upsert / append fresh orders in memory, preserving manual qualifications
+        // Upsert fresh orders in memory, preserving manual qualifications and tracking details
         syncedOrders.forEach(freshOrd => {
             const existingIdx = state.orders.findIndex(o => o.id === freshOrd.id);
             if (existingIdx !== -1) {
                 const existingOrd = state.orders[existingIdx];
-                if (existingOrd.status && existingOrd.status !== OrderStatus.EnAttend && freshOrd.status === OrderStatus.EnAttend) {
-                    freshOrd.status = existingOrd.status;
-                }
-                state.orders[existingIdx] = freshOrd;
+                state.orders[existingIdx] = {
+                    ...existingOrd,
+                    ...freshOrd,
+                    trackingNumber: freshOrd.trackingNumber || existingOrd.trackingNumber || '',
+                    courierName: freshOrd.courierName || existingOrd.courierName || '',
+                    courierStatus: freshOrd.courierStatus || existingOrd.courierStatus || '',
+                    shippedAt: freshOrd.shippedAt || existingOrd.shippedAt || undefined,
+                    courierParcelId: freshOrd.courierParcelId || existingOrd.courierParcelId || '',
+                    courierNote: freshOrd.courierNote || existingOrd.courierNote || '',
+                    status: (existingOrd.trackingNumber || existingOrd.status === OrderStatus.Expedie || existingOrd.status === OrderStatus.Livre)
+                        ? (freshOrd.status === OrderStatus.EnAttend || !freshOrd.status ? existingOrd.status : freshOrd.status)
+                        : (freshOrd.status || existingOrd.status)
+                };
             } else {
                 state.orders.push(freshOrd);
             }
@@ -8646,6 +10028,17 @@ app.delete('/api/messages/:id', authenticateToken, async (req: any, res) => {
     saveEnvStateToFile();
 
     return res.json({ success: true, message: 'Message supprimé' });
+});
+
+// Register WhatsApp AI QR Code Gateway Routes
+registerWhatsAppRoutes(app, {
+    getEnvState,
+    saveEnvStateToFile,
+    safePgQuery,
+    isPgConnected: () => isPgConnected,
+    getTable,
+    authenticateToken,
+    syncStatusToGoogleSheet
 });
 
 export { app, checkPgConnection, pool, syncStateFromPg };

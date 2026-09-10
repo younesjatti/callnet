@@ -26,7 +26,10 @@ import { ProductManagement } from './components/ProductManagement';
 import { MessagingView } from './components/MessagingView';
 import CustomerMarketingView from './components/CustomerMarketingView';
 import ExpeditionsView from './components/ExpeditionsView';
+import ParcelTrackingView from './components/ParcelTrackingView';
+import OrderEntryView from './components/OrderEntryView';
 import OrderDetailModal from './components/OrderDetailModal';
+import { WhatsAppAiView } from './components/WhatsAppAiView';
 import { PWAInstallButton } from './components/PWAInstallButton';
 import { OfflineIndicator } from './components/OfflineIndicator';
 import { normalizeKey, normalizeStatus, generateShortStableOrderId, isOrderWithData, stableSortOrders } from './utils';
@@ -34,7 +37,7 @@ import { db } from './lib/db';
 import { apiClient } from './lib/apiClient';
 import { mapUnknownStatusesWithAI } from './lib/gemini';
 
-type View = 'dashboard' | 'orders' | 'customers' | 'expeditions' | 'livraison' | 'users' | 'database' | 'settings' | 'stores' | 'store' | 'callcenter' | 'products' | 'messages' | 'manager';
+type View = 'dashboard' | 'orders' | 'order-entry' | 'customers' | 'expeditions' | 'livraison' | 'users' | 'database' | 'settings' | 'stores' | 'store' | 'callcenter' | 'products' | 'messages' | 'manager' | 'tracking' | 'whatsapp';
 type SyncStatus = 'synced' | 'syncing' | 'error';
 
 const AppContent: React.FC = () => {
@@ -84,6 +87,13 @@ const AppContent: React.FC = () => {
     const setOrdersSafely = useCallback((newOrders: Order[]) => {
         setOrders(prevOrders => {
             if (!newOrders || !Array.isArray(newOrders)) return prevOrders;
+
+            // Safeguard against accidental screen clearing: never wipe a non-empty order list if incoming is 0
+            if (newOrders.length === 0 && prevOrders.length > 0) {
+                console.warn("⚠️ [setOrdersSafely] Refus d'effacement intempestif : newOrders est vide alors que prevOrders contient", prevOrders.length, "commandes.");
+                return prevOrders;
+            }
+
             const sorted = stableSortOrders(newOrders, true);
             if (prevOrders.length === sorted.length) {
                 let isIdentical = true;
@@ -93,6 +103,12 @@ const AppContent: React.FC = () => {
                     if (
                         a.id !== b.id ||
                         a.status !== b.status ||
+                        a.courierStatus !== b.courierStatus ||
+                        a.trackingNumber !== b.trackingNumber ||
+                        a.courierName !== b.courierName ||
+                        a.shippedAt !== b.shippedAt ||
+                        a.courierNote !== b.courierNote ||
+                        a.courierParcelId !== b.courierParcelId ||
                         a.customerName !== b.customerName ||
                         a.phone !== b.phone ||
                         a.price !== b.price ||
@@ -123,23 +139,52 @@ const AppContent: React.FC = () => {
             const reconciled = sorted.map(newO => {
                 const oldO = prevMap.get(String(newO.id));
                 if (!oldO) return newO;
+
+                // Safeguard tracking numbers and courier information from being wiped
+                const trackingNumber = newO.trackingNumber || oldO.trackingNumber || '';
+                const courierName = newO.courierName || oldO.courierName || '';
+                const courierStatus = newO.courierStatus || oldO.courierStatus || '';
+                const shippedAt = newO.shippedAt || oldO.shippedAt || undefined;
+                const courierParcelId = newO.courierParcelId || oldO.courierParcelId || '';
+                const courierNote = newO.courierNote || oldO.courierNote || '';
+                const status = (oldO.trackingNumber || oldO.status === OrderStatus.Expedie || oldO.status === OrderStatus.Livre)
+                    ? (newO.status === OrderStatus.EnAttend || !newO.status ? oldO.status : newO.status)
+                    : (newO.status || oldO.status);
+
+                const merged = {
+                    ...newO,
+                    trackingNumber,
+                    courierName,
+                    courierStatus,
+                    shippedAt,
+                    courierParcelId,
+                    courierNote,
+                    status
+                };
+
                 if (
-                    oldO.status === newO.status &&
-                    oldO.customerName === newO.customerName &&
-                    oldO.phone === newO.phone &&
-                    oldO.price === newO.price &&
-                    oldO.date === newO.date &&
-                    oldO.archived === newO.archived &&
-                    oldO.note === newO.note &&
-                    oldO.city === newO.city &&
-                    oldO.district === newO.district &&
-                    oldO.product === newO.product &&
-                    oldO.variant === newO.variant &&
-                    oldO.clientId === newO.clientId
+                    oldO.status === merged.status &&
+                    oldO.courierStatus === merged.courierStatus &&
+                    oldO.trackingNumber === merged.trackingNumber &&
+                    oldO.courierName === merged.courierName &&
+                    oldO.shippedAt === merged.shippedAt &&
+                    oldO.courierNote === merged.courierNote &&
+                    oldO.courierParcelId === merged.courierParcelId &&
+                    oldO.customerName === merged.customerName &&
+                    oldO.phone === merged.phone &&
+                    oldO.price === merged.price &&
+                    oldO.date === merged.date &&
+                    oldO.archived === merged.archived &&
+                    oldO.note === merged.note &&
+                    oldO.city === merged.city &&
+                    oldO.district === merged.district &&
+                    oldO.product === merged.product &&
+                    oldO.variant === merged.variant &&
+                    oldO.clientId === merged.clientId
                 ) {
                     return oldO;
                 }
-                return newO;
+                return merged;
             });
 
             return reconciled;
@@ -261,7 +306,7 @@ const AppContent: React.FC = () => {
                     address: address,
                     city: city,
                     note: note,
-                    status: normalizeStatus(incoming.status) || OrderStatus.EnAttend,
+                    status: normalizeStatus(incoming.status),
                     clientId: forcePrimitiveString(incoming.clientId || currentUser.id),
                     archived: Boolean(incoming.archived ?? false)
                 };
@@ -329,6 +374,8 @@ const AppContent: React.FC = () => {
             showToast('error', 'Action impossible : vous êtes hors ligne. Toutes les modifications doivent être effectuées en ligne.');
             return;
         }
+        // Reactively and immediately update React state so the UI reflects updates without delay or reload
+        setOrders(prev => prev.map(o => String(o.id) === String(orderId) ? { ...o, ...updates } : o));
         setSyncStatus('syncing');
         try {
             const res = await db.orders.update(orderId, {
@@ -707,7 +754,7 @@ const AppContent: React.FC = () => {
                             )}
                             <div className="min-w-0 flex-1">
                                 <h1 className={`${view === 'messages' ? 'text-sm sm:text-base font-bold' : 'text-base sm:text-2xl font-bold sm:font-extrabold'} text-text-primary tracking-tight truncate`}>
-                                    {view === 'dashboard' ? "Tableau de Bord" : t(`${view}Title` as any) || t(`${view}` as any) || view}
+                                    {view === 'dashboard' ? "Tableau de Bord" : view === 'whatsapp' ? "WhatsApp IA - Confirmation Automatique" : t(`${view}Title` as any) || t(`${view}` as any) || view}
                                 </h1>
                                 {view !== 'messages' && (
                                     <div className="flex items-center gap-1.5 sm:gap-3 mt-0.5 sm:mt-1 flex-wrap">
@@ -886,6 +933,17 @@ const AppContent: React.FC = () => {
                             storeName={currentUser.role === Role.Client ? currentUser.name : (adminSelectedStoreId ? (users.find(u => u.id === adminSelectedStoreId)?.name || adminSelectedStoreId) : undefined)} 
                         />
                     )}
+                    {view === 'order-entry' && (
+                        <OrderEntryView 
+                            orders={currentUser.role === Role.Admin && !adminSelectedStoreId ? orders : visibleOrders} 
+                            onUpdateOrder={handleUpdateOrder}
+                            onSelectOrder={handleOrderClickForDetail}
+                            onNavigateToExpeditions={() => setView('expeditions')}
+                            onNavigateToTracking={() => setView('tracking')}
+                            storeName={currentUser.role === Role.Client ? currentUser.name : (adminSelectedStoreId ? (users.find(u => u.id === adminSelectedStoreId)?.name || adminSelectedStoreId) : undefined)}
+                            onSync={fetchOrders}
+                        />
+                    )}
                     {view === 'expeditions' && (
                         <ExpeditionsView 
                             orders={currentUser.role === Role.Admin && !adminSelectedStoreId ? orders : visibleOrders} 
@@ -894,7 +952,32 @@ const AppContent: React.FC = () => {
                             storeName={currentUser.role === Role.Client ? currentUser.name : (adminSelectedStoreId ? (users.find(u => u.id === adminSelectedStoreId)?.name || adminSelectedStoreId) : undefined)}
                         />
                     )}
+                    {view === 'tracking' && (
+                        <ParcelTrackingView 
+                            orders={currentUser.role === Role.Admin && !adminSelectedStoreId ? orders : visibleOrders} 
+                            onUpdateOrder={handleUpdateOrder}
+                            onSelectOrder={handleOrderClickForDetail}
+                            onNavigateToExpeditions={() => setView('expeditions')}
+                            storeName={currentUser.role === Role.Client ? currentUser.name : (adminSelectedStoreId ? (users.find(u => u.id === adminSelectedStoreId)?.name || adminSelectedStoreId) : undefined)}
+                        />
+                    )}
                     {view === 'store' && <Store onSync={fetchOrders} selectedClientId={adminSelectedStoreId || undefined} />}
+                    {view === 'whatsapp' && (
+                        <WhatsAppAiView
+                            orders={currentUser.role === Role.Admin && !adminSelectedStoreId ? orders : visibleOrders}
+                            currentUser={currentUser}
+                            onUpdateOrder={async (order: Order) => {
+                                await handleUpdateOrder(order.id, order);
+                            }}
+                            onBulkUpdateOrders={async (updatedOrders: Order[]) => {
+                                setOrders(prev => prev.map(o => {
+                                    const match = updatedOrders.find(u => u.id === o.id);
+                                    return match || o;
+                                }));
+                            }}
+                            onRefreshOrders={fetchOrders}
+                        />
+                    )}
                     {view === 'products' && (
                         <ProductManagement 
                             products={visibleProducts} 

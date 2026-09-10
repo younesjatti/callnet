@@ -159,6 +159,14 @@ export const getStatusConfig = (status: OrderStatus): StatusConfig => {
                 border: 'border-amber-900/30',
                 dot: 'bg-amber-800'
             };
+        case OrderStatus.Inconnu:
+            return {
+                label: 'Inconnu',
+                bg: 'bg-zinc-500/10 dark:bg-zinc-500/20',
+                text: 'text-zinc-600 dark:text-zinc-400',
+                border: 'border-zinc-500/30',
+                dot: 'bg-zinc-400'
+            };
         default:
             return {
                 label: String(status || 'Inconnu'),

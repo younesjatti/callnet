@@ -1,6 +1,6 @@
 {
   "name": "callnet plateform",
-  "description": "An intuitive platform for call center and e-commerce seller teams to upload, manage, confirm orders, extract marketing customer lists, and dispatch parcels automatically via courier APIs (Ozon Express, Kargo Express, DIGYLOG, Ameex Delivery) with official city synchronization and installable PWA mobile app support.",
+  "description": "An intuitive platform for call center and e-commerce seller teams to upload, manage, confirm orders via QR Code WhatsApp AI automation, extract marketing customer lists, and dispatch parcels automatically via courier APIs (Ozon Express, Kargo Express, DIGYLOG, Ameex Delivery) with official city synchronization and installable PWA mobile app support.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

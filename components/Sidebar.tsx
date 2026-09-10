@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { 
     LayoutDashboard, 
     ShoppingCart, 
@@ -17,7 +17,9 @@ import {
     ChevronRight,
     UserCheck,
     Circle,
-    Plug
+    Plug,
+    Send,
+    Smartphone
 } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { PWAInstallButton } from './PWAInstallButton';
@@ -27,7 +29,7 @@ import { normalizeRole } from '../utils';
 import UserAvatar from './UserAvatar';
 import { LogoIcon } from './icons/LogoIcon';
 
-export type View = 'dashboard' | 'orders' | 'customers' | 'expeditions' | 'livraison' | 'users' | 'database' | 'settings' | 'stores' | 'store' | 'callcenter' | 'products' | 'messages' | 'manager';
+export type View = 'dashboard' | 'orders' | 'order-entry' | 'customers' | 'expeditions' | 'livraison' | 'users' | 'database' | 'settings' | 'stores' | 'store' | 'callcenter' | 'products' | 'messages' | 'manager' | 'tracking' | 'whatsapp';
 
 interface SidebarProps {
     currentView: View;
@@ -83,8 +85,37 @@ const Sidebar: React.FC<SidebarProps> = ({
     const [isOrdersSubmenuOpen, setIsOrdersSubmenuOpen] = useState(true);
     const [isIntegrationsSubmenuOpen, setIsIntegrationsSubmenuOpen] = useState(true);
 
+    const shippedOrdersCount = useMemo(() => {
+        if (!orders || orders.length === 0) return 0;
+        return orders.filter(o => {
+            const s = String(o.status || '').toLowerCase().trim();
+            return (
+                s === OrderStatus.Expider ||
+                s === OrderStatus.Expedie ||
+                s === 'expedie' ||
+                s === 'expédié' ||
+                s === 'expider' ||
+                Boolean(o.trackingNumber && o.trackingNumber.trim() !== '') ||
+                Boolean(o.shippedAt) ||
+                Boolean(o.courierStatus && o.courierStatus.trim() !== '')
+            );
+        }).length;
+    }, [orders]);
+
+    const confirmedOrdersToShipCount = useMemo(() => {
+        if (!orders || orders.length === 0) return 0;
+        return orders.filter(o => {
+            if (o.archived) return false;
+            const s = String(o.status || '').toLowerCase().trim();
+            const isConfirmed = s.includes('confir') || s === OrderStatus.Confirme;
+            const hasTracking = Boolean(o.trackingNumber && o.trackingNumber.trim() !== '');
+            const isShipped = s.includes('expid') || s.includes('exped') || hasTracking;
+            return isConfirmed && !isShipped;
+        }).length;
+    }, [orders]);
+
     useEffect(() => {
-        if (currentView === 'orders' || currentView === 'callcenter') {
+        if (currentView === 'orders' || currentView === 'callcenter' || currentView === 'tracking' || currentView === 'order-entry') {
             setIsOrdersSubmenuOpen(true);
         }
         if (currentView === 'store' || currentView === 'stores' || currentView === 'expeditions' || currentView === 'livraison') {
@@ -132,10 +163,26 @@ const Sidebar: React.FC<SidebarProps> = ({
             id: 'orders', 
             label: t('orders') || 'Commandes', 
             icon: <ShoppingCart className="w-4 h-4" />, 
-            roles: [Role.Client, Role.Manager],
+            roles: [Role.Admin, Role.Manager, Role.Client, Role.Agent],
             badge: pendingOrdersCount,
             category: 'operations',
             hasSubMenu: true
+        },
+        { 
+            id: 'order-entry', 
+            label: t('orderEntry') || 'Saisie des commandes', 
+            icon: <Send className="w-4 h-4" />, 
+            roles: [Role.Admin, Role.Manager, Role.Client, Role.Agent],
+            badge: confirmedOrdersToShipCount,
+            category: 'operations'
+        },
+        { 
+            id: 'tracking', 
+            label: t('tracking') || 'Suivi des Colis', 
+            icon: <Truck className="w-4 h-4" />, 
+            roles: [Role.Admin, Role.Manager, Role.Client, Role.Agent],
+            badge: shippedOrdersCount,
+            category: 'operations'
         },
         { 
             id: 'products', 
@@ -161,8 +208,16 @@ const Sidebar: React.FC<SidebarProps> = ({
             isIntegrationsGroup: true,
             subGroupItems: [
                 { id: 'store', label: 'Boutiques', icon: <StoreIcon className="w-3.5 h-3.5" /> },
+                { id: 'whatsapp', label: 'WhatsApp IA (QR Code)', icon: <Smartphone className="w-3.5 h-3.5 text-emerald-500" /> },
                 { id: 'expeditions', label: 'Sociétés de Livraison', icon: <Truck className="w-3.5 h-3.5" /> }
             ]
+        },
+        { 
+            id: 'whatsapp', 
+            label: 'WhatsApp IA (Auto)', 
+            icon: <Smartphone className="w-4 h-4 text-emerald-500" />, 
+            roles: [Role.Client, Role.Admin, Role.Manager, Role.Agent],
+            category: 'operations'
         },
         { 
             id: 'messages', 
@@ -418,6 +473,63 @@ const Sidebar: React.FC<SidebarProps> = ({
                                             </button>
                                         );
                                     })}
+
+                                    {/* Dedicated Submenu Action Buttons */}
+                                    <div className="pt-1.5 mt-1 border-t border-base-300 space-y-1">
+                                        <button
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                setView('order-entry');
+                                                if (onCloseMobile) onCloseMobile();
+                                            }}
+                                            className={`flex items-center justify-between w-full px-2.5 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                                                currentView === 'order-entry'
+                                                    ? 'bg-accent text-white shadow-xs'
+                                                    : 'text-text-primary hover:bg-base-300/60'
+                                            }`}
+                                        >
+                                            <div className="flex items-center gap-2 min-w-0">
+                                                <Send className={`w-3.5 h-3.5 shrink-0 ${currentView === 'order-entry' ? 'text-white' : 'text-emerald-500'}`} />
+                                                <span className="truncate">{t('orderEntry') || 'Saisie des commandes'}</span>
+                                            </div>
+                                            {confirmedOrdersToShipCount > 0 && (
+                                                <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${
+                                                    currentView === 'order-entry'
+                                                        ? 'bg-white/20 text-white'
+                                                        : 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20'
+                                                }`}>
+                                                    {confirmedOrdersToShipCount}
+                                                </span>
+                                            )}
+                                        </button>
+
+                                        <button
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                setView('tracking');
+                                                if (onCloseMobile) onCloseMobile();
+                                            }}
+                                            className={`flex items-center justify-between w-full px-2.5 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                                                currentView === 'tracking'
+                                                    ? 'bg-accent text-white shadow-xs'
+                                                    : 'text-text-primary hover:bg-base-300/60'
+                                            }`}
+                                        >
+                                            <div className="flex items-center gap-2 min-w-0">
+                                                <Truck className={`w-3.5 h-3.5 shrink-0 ${currentView === 'tracking' ? 'text-white' : 'text-blue-500'}`} />
+                                                <span className="truncate">{t('tracking') || 'Suivi des Colis'}</span>
+                                            </div>
+                                            {shippedOrdersCount > 0 && (
+                                                <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${
+                                                    currentView === 'tracking'
+                                                        ? 'bg-white/20 text-white'
+                                                        : 'bg-blue-500/15 text-blue-600 dark:text-blue-400 border border-blue-500/20'
+                                                }`}>
+                                                    {shippedOrdersCount}
+                                                </span>
+                                            )}
+                                        </button>
+                                    </div>
                                 </div>
                             )}
                         </div>

@@ -129,6 +129,8 @@ export const ExpeditionsView: React.FC<ExpeditionsViewProps> = ({
     // Cathedis Config Form
     const [cathedisApiKey, setCathedisApiKey] = useState('');
     const [cathedisClientId, setCathedisClientId] = useState('');
+    const [isSavingCathedis, setIsSavingCathedis] = useState(false);
+    const [cathedisSaveSuccess, setCathedisSaveSuccess] = useState(false);
 
     // Ameex Delivery Config Form State
     const [ameexApiKey, setAmeexApiKey] = useState('');
@@ -183,6 +185,12 @@ export const ExpeditionsView: React.FC<ExpeditionsViewProps> = ({
             if (Array.isArray(data)) {
                 setCourierConfigs(data);
 
+                // Helper to find best config for a provider (preferring one with apiKey)
+                const findProviderConfig = (prov: string) => {
+                    return data.find(c => (c.provider === prov || (prov === 'ozon_express' && (c.provider as string) === 'ozon') || (prov === 'kargo_express' && (c.provider as string) === 'kargo')) && Boolean(c.apiKey)) ||
+                           data.find(c => c.provider === prov || (prov === 'ozon_express' && (c.provider as string) === 'ozon') || (prov === 'kargo_express' && (c.provider as string) === 'kargo'));
+                };
+
                 // Detect primary courier
                 const primary = data.find(c => Boolean((c as any).is_primary || (c as any).isPrimary));
                 if (primary && (primary.provider === 'ozon_express' || primary.provider === 'kargo_express' || primary.provider === 'digylog' || primary.provider === 'ameex')) {
@@ -191,34 +199,34 @@ export const ExpeditionsView: React.FC<ExpeditionsViewProps> = ({
                 }
 
                 // Ozon config
-                const ozon = data.find(c => c.provider === 'ozon_express');
+                const ozon = findProviderConfig('ozon_express');
                 if (ozon) {
-                    setOzonApiKey(ozon.apiKey || '');
-                    setOzonClientId(ozon.clientId || '');
-                    setOzonBaseUrl(ozon.apiBaseUrl || 'https://api.ozonexpress.ma');
+                    if (ozon.apiKey) setOzonApiKey(ozon.apiKey);
+                    if (ozon.clientId) setOzonClientId(ozon.clientId);
+                    if (ozon.apiBaseUrl) setOzonBaseUrl(ozon.apiBaseUrl);
                     setOzonIsStock(Boolean(ozon.isStock));
                     setOzonAllowOpen(ozon.allowOpenParcel !== false);
                     setOzonIsFragile(Boolean(ozon.isFragile));
                     setOzonIsReplace(Boolean(ozon.isReplace));
-                    setOzonDefaultNature(ozon.defaultNature || 'Colis E-commerce COD');
+                    if (ozon.defaultNature) setOzonDefaultNature(ozon.defaultNature);
                 }
 
                 // Kargo config
-                const kargo = data.find(c => c.provider === 'kargo_express');
+                const kargo = findProviderConfig('kargo_express');
                 if (kargo) {
-                    setKargoApiKey(kargo.apiKey || '');
-                    setKargoClientId(kargo.clientId || '');
-                    setKargoBaseUrl(kargo.apiBaseUrl || 'https://api.kargoexpress.app');
+                    if (kargo.apiKey) setKargoApiKey(kargo.apiKey);
+                    if (kargo.clientId) setKargoClientId(kargo.clientId);
+                    if (kargo.apiBaseUrl) setKargoBaseUrl(kargo.apiBaseUrl);
                     setKargoIsStock(Boolean(kargo.isStock));
                     setKargoAllowOpen(kargo.allowOpenParcel !== false);
-                    setKargoDefaultNature(kargo.defaultNature || 'Colis E-commerce COD');
+                    if (kargo.defaultNature) setKargoDefaultNature(kargo.defaultNature);
                 }
 
                 // DIGYLOG config
-                const digylog = data.find(c => c.provider === 'digylog');
+                const digylog = findProviderConfig('digylog');
                 if (digylog) {
-                    setDigylogApiKey(digylog.apiKey || '');
-                    setDigylogBaseUrl(digylog.apiBaseUrl || 'https://api.digylog.com/api/v2/seller');
+                    if (digylog.apiKey) setDigylogApiKey(digylog.apiKey);
+                    if (digylog.apiBaseUrl) setDigylogBaseUrl(digylog.apiBaseUrl);
                     if (digylog.networkId) setDigylogNetworkId(Number(digylog.networkId));
                     if (digylog.store) setDigylogStoreId(digylog.store);
                     if (digylog.sentType) setDigylogSentType(Number(digylog.sentType));
@@ -229,18 +237,18 @@ export const ExpeditionsView: React.FC<ExpeditionsViewProps> = ({
                 }
 
                 // Cathedis config
-                const cathedis = data.find(c => c.provider === 'cathedis');
+                const cathedis = findProviderConfig('cathedis');
                 if (cathedis) {
-                    setCathedisApiKey(cathedis.apiKey || '');
-                    setCathedisClientId(cathedis.clientId || '');
+                    if (cathedis.apiKey) setCathedisApiKey(cathedis.apiKey);
+                    if (cathedis.clientId) setCathedisClientId(cathedis.clientId);
                 }
 
                 // Ameex config
-                const ameex = data.find(c => c.provider === 'ameex');
+                const ameex = findProviderConfig('ameex');
                 if (ameex) {
-                    setAmeexApiKey(ameex.apiKey || '');
-                    setAmeexClientId(ameex.clientId || '');
-                    setAmeexBaseUrl(ameex.apiBaseUrl || 'https://api.ameex.app/customer');
+                    if (ameex.apiKey) setAmeexApiKey(ameex.apiKey);
+                    if (ameex.clientId) setAmeexClientId(ameex.clientId);
+                    if (ameex.apiBaseUrl) setAmeexBaseUrl(ameex.apiBaseUrl);
                     if (ameex.webhookSecret) setAmeexWebhookSecret(ameex.webhookSecret);
                 }
             }
@@ -420,14 +428,16 @@ export const ExpeditionsView: React.FC<ExpeditionsViewProps> = ({
         setIsSavingOzon(true);
         setOzonSaveSuccess(false);
         try {
+            const savedApiKey = ozonApiKey.trim();
+            const savedClientId = ozonClientId.trim();
             const payload: Partial<CourierApiConfig> = {
-                id: 'ozon-express-config',
+                id: 'ozon_express-config',
                 provider: 'ozon_express',
                 name: 'Ozon Express',
                 isEnabled: true,
-                apiKey: ozonApiKey.trim(),
-                clientId: ozonClientId.trim(),
-                apiBaseUrl: ozonBaseUrl.trim(),
+                apiKey: savedApiKey,
+                clientId: savedClientId,
+                apiBaseUrl: ozonBaseUrl.trim() || 'https://api.ozonexpress.ma',
                 isStock: ozonIsStock,
                 allowOpenParcel: ozonAllowOpen,
                 isFragile: ozonIsFragile,
@@ -437,7 +447,9 @@ export const ExpeditionsView: React.FC<ExpeditionsViewProps> = ({
             await apiClient.apiPost('/couriers/configs', payload);
             setOzonSaveSuccess(true);
             setTimeout(() => setOzonSaveSuccess(false), 3500);
-            loadCourierConfigs();
+            await loadCourierConfigs();
+            setOzonApiKey(savedApiKey);
+            setOzonClientId(savedClientId);
         } catch (err: any) {
             alert(`Erreur lors de l'enregistrement Ozon Express : ${err.message}`);
         } finally {
@@ -476,14 +488,16 @@ export const ExpeditionsView: React.FC<ExpeditionsViewProps> = ({
         setIsSavingKargo(true);
         setKargoSaveSuccess(false);
         try {
+            const savedApiKey = kargoApiKey.trim();
+            const savedClientId = kargoClientId.trim();
             const payload: Partial<CourierApiConfig> = {
-                id: 'kargo-express-config',
+                id: 'kargo_express-config',
                 provider: 'kargo_express',
                 name: 'Kargo Express',
                 isEnabled: true,
-                apiKey: kargoApiKey.trim(),
-                clientId: kargoClientId.trim(),
-                apiBaseUrl: kargoBaseUrl.trim(),
+                apiKey: savedApiKey,
+                clientId: savedClientId,
+                apiBaseUrl: kargoBaseUrl.trim() || 'https://api.kargoexpress.app',
                 isStock: kargoIsStock,
                 allowOpenParcel: kargoAllowOpen,
                 defaultNature: kargoDefaultNature.trim()
@@ -491,7 +505,9 @@ export const ExpeditionsView: React.FC<ExpeditionsViewProps> = ({
             await apiClient.apiPost('/couriers/configs', payload);
             setKargoSaveSuccess(true);
             setTimeout(() => setKargoSaveSuccess(false), 3500);
-            loadCourierConfigs();
+            await loadCourierConfigs();
+            setKargoApiKey(savedApiKey);
+            setKargoClientId(savedClientId);
         } catch (err: any) {
             alert(`Erreur lors de l'enregistrement Kargo Express : ${err.message}`);
         } finally {
@@ -530,13 +546,14 @@ export const ExpeditionsView: React.FC<ExpeditionsViewProps> = ({
         setIsSavingDigylog(true);
         setDigylogSaveSuccess(false);
         try {
+            const savedApiKey = digylogApiKey.trim();
             const payload: Partial<CourierApiConfig> = {
-                id: 'digylog-default',
+                id: 'digylog-config',
                 provider: 'digylog',
                 name: 'DIGYLOG Express',
                 isEnabled: true,
-                apiKey: digylogApiKey.trim(),
-                apiBaseUrl: digylogBaseUrl.trim(),
+                apiKey: savedApiKey,
+                apiBaseUrl: digylogBaseUrl.trim() || 'https://api.digylog.com/api/v2/seller',
                 networkId: Number(digylogNetworkId) || 1,
                 store: digylogStoreId.trim() || 'store1',
                 sentType: Number(digylogSentType) || 1,
@@ -548,7 +565,8 @@ export const ExpeditionsView: React.FC<ExpeditionsViewProps> = ({
             await apiClient.apiPost('/couriers/configs', payload);
             setDigylogSaveSuccess(true);
             setTimeout(() => setDigylogSaveSuccess(false), 3500);
-            loadCourierConfigs();
+            await loadCourierConfigs();
+            setDigylogApiKey(savedApiKey);
         } catch (err: any) {
             alert(`Erreur lors de l'enregistrement DIGYLOG Express : ${err.message}`);
         } finally {
@@ -588,24 +606,56 @@ export const ExpeditionsView: React.FC<ExpeditionsViewProps> = ({
         setIsSavingAmeex(true);
         setAmeexSaveSuccess(false);
         try {
+            const savedApiKey = ameexApiKey.trim();
+            const savedClientId = ameexClientId.trim();
             const payload: Partial<CourierApiConfig> = {
                 id: 'ameex-config',
                 provider: 'ameex',
                 name: 'Ameex Delivery',
                 isEnabled: true,
-                apiKey: ameexApiKey.trim(),
-                clientId: ameexClientId.trim(),
+                apiKey: savedApiKey,
+                clientId: savedClientId,
                 apiBaseUrl: ameexBaseUrl.trim() || 'https://api.ameex.app/customer',
                 webhookSecret: ameexWebhookSecret.trim()
             };
             await apiClient.apiPost('/couriers/configs', payload);
             setAmeexSaveSuccess(true);
             setTimeout(() => setAmeexSaveSuccess(false), 3500);
-            loadCourierConfigs();
+            await loadCourierConfigs();
+            setAmeexApiKey(savedApiKey);
+            setAmeexClientId(savedClientId);
         } catch (err: any) {
             alert(`Erreur lors de l'enregistrement Ameex Delivery : ${err.message}`);
         } finally {
             setIsSavingAmeex(false);
+        }
+    };
+
+    const handleSaveCathedisConfig = async () => {
+        setIsSavingCathedis(true);
+        setCathedisSaveSuccess(false);
+        try {
+            const savedApiKey = cathedisApiKey.trim();
+            const savedClientId = cathedisClientId.trim();
+            const payload: Partial<CourierApiConfig> = {
+                id: 'cathedis-config',
+                provider: 'cathedis',
+                name: 'Cathedis Express',
+                isEnabled: true,
+                apiKey: savedApiKey,
+                clientId: savedClientId,
+                apiBaseUrl: 'https://api.cathedis.net'
+            };
+            await apiClient.apiPost('/couriers/configs', payload);
+            setCathedisSaveSuccess(true);
+            setTimeout(() => setCathedisSaveSuccess(false), 3500);
+            await loadCourierConfigs();
+            setCathedisApiKey(savedApiKey);
+            setCathedisClientId(savedClientId);
+        } catch (err: any) {
+            alert(`Erreur lors de l'enregistrement Cathedis Express : ${err.message}`);
+        } finally {
+            setIsSavingCathedis(false);
         }
     };
 
@@ -740,6 +790,17 @@ export const ExpeditionsView: React.FC<ExpeditionsViewProps> = ({
     };
 
     const handleExecuteDispatch = async () => {
+        const isConfigured = 
+            targetDispatchCourier === 'ozon_express' ? stats.isOzonConfigured :
+            targetDispatchCourier === 'kargo_express' ? stats.isKargoConfigured :
+            targetDispatchCourier === 'digylog' ? stats.isDigylogConfigured :
+            targetDispatchCourier === 'ameex' ? stats.isAmeexConfigured : false;
+
+        if (!isConfigured) {
+            alert(`Impossible d'expédier : la société de livraison sélectionnée n'est pas configurée. Le mode simulation est désactivé.`);
+            return;
+        }
+
         const selectedList = orders.filter(o => selectedOrderIds.has(o.id));
         if (selectedList.length === 0) return;
 
@@ -841,14 +902,27 @@ export const ExpeditionsView: React.FC<ExpeditionsViewProps> = ({
         let payload: any = {};
 
         const upper = targetNumber.toUpperCase();
-        if (upper.startsWith('DL') || targetDispatchCourier === 'digylog') {
+        const cleanTarget = targetNumber.trim().toLowerCase();
+        const matchingOrder = orders.find(o => 
+            (o.trackingNumber && o.trackingNumber.trim().toLowerCase() === cleanTarget) || 
+            String(o.id).trim().toLowerCase() === cleanTarget
+        );
+        const orderCourier = (matchingOrder?.courierName || '').toLowerCase();
+
+        if (upper.startsWith('DL') || targetDispatchCourier === 'digylog' || orderCourier.includes('digylog')) {
             endpoint = '/couriers/digylog/tracking';
             payload = {
                 trackingNumber: targetNumber,
                 apiKey: digylogApiKey.trim(),
                 apiBaseUrl: digylogBaseUrl.trim()
             };
-        } else if (upper.startsWith('OZE') || targetDispatchCourier === 'ozon_express') {
+        } else if (
+            upper.startsWith('OZE') ||
+            upper.endsWith('UU') ||
+            targetDispatchCourier === 'ozon_express' ||
+            orderCourier.includes('ozon') ||
+            (!upper.startsWith('KG') && !upper.startsWith('DL'))
+        ) {
             endpoint = '/couriers/ozon/tracking';
             payload = {
                 trackingNumber: targetNumber,
@@ -867,9 +941,21 @@ export const ExpeditionsView: React.FC<ExpeditionsViewProps> = ({
         }
 
         try {
-            const res = await apiClient.apiPost(endpoint, payload);
+            const res: any = await apiClient.apiPost(endpoint, payload);
             setActiveTrackingData(res);
             setActiveTab('tracking');
+
+            // Synchronize updated real courier status into application orders state
+            const returnedTracking = (res?.trackingNumber || targetNumber).trim().toLowerCase();
+            const foundOrder = matchingOrder || orders.find(o => (o.trackingNumber && o.trackingNumber.trim().toLowerCase() === returnedTracking));
+            const targetOrderId = res?.order?.id || foundOrder?.id;
+            if (targetOrderId && res?.currentStatus && onUpdateOrder) {
+                onUpdateOrder(targetOrderId, {
+                    courierStatus: res.currentStatus,
+                    courierName: res.courier || foundOrder?.courierName || 'Ozon Express',
+                    trackingNumber: res.trackingNumber || foundOrder?.trackingNumber
+                });
+            }
         } catch (e: any) {
             alert(`Erreur de suivi : ${e.message}`);
         } finally {
@@ -1488,8 +1574,21 @@ export const ExpeditionsView: React.FC<ExpeditionsViewProps> = ({
                                                                         )}
                                                                     </button>
                                                                 </div>
-                                                                <div className="text-[10px] text-slate-400">
-                                                                    {order.courierName || 'Ozon Express'}
+                                                                <div className="text-[10px] text-slate-400 flex items-center gap-1.5 flex-wrap">
+                                                                    <span>{order.courierName || 'Ozon Express'}</span>
+                                                                    {order.courierStatus && (
+                                                                        <span className={`px-2 py-0.5 rounded-full font-bold text-[10px] border ${
+                                                                            /livr|delivered|pay|encaiss/i.test(order.courierStatus)
+                                                                                ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 border-emerald-300 dark:border-emerald-800'
+                                                                                : /distrib|cours de livr/i.test(order.courierStatus)
+                                                                                ? 'bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300 border-blue-300 dark:border-blue-800'
+                                                                                : /refus|report|annul|retour/i.test(order.courierStatus)
+                                                                                ? 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300 border-amber-300 dark:border-amber-800'
+                                                                                : 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 border-slate-200 dark:border-slate-700'
+                                                                        }`}>
+                                                                            {order.courierStatus}
+                                                                        </span>
+                                                                    )}
                                                                 </div>
                                                             </div>
                                                         ) : (
@@ -2685,6 +2784,26 @@ Suivi Multiple (JSON Body) :
                                         />
                                     </div>
                                 </div>
+                                <div className="flex items-center justify-between pt-2">
+                                    {cathedisSaveSuccess ? (
+                                        <span className="text-xs text-emerald-600 font-semibold flex items-center gap-1.5">
+                                            <Check className="w-4 h-4" /> Configuration enregistrée avec succès
+                                        </span>
+                                    ) : <span />}
+                                    <button
+                                        type="button"
+                                        onClick={handleSaveCathedisConfig}
+                                        disabled={isSavingCathedis}
+                                        className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-medium flex items-center gap-2 transition-colors disabled:opacity-50"
+                                    >
+                                        {isSavingCathedis ? (
+                                            <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                                        ) : (
+                                            <Check className="w-3.5 h-3.5" />
+                                        )}
+                                        Enregistrer Cathedis
+                                    </button>
+                                </div>
                             </div>
                         )}
 
@@ -3089,7 +3208,15 @@ Réponse retournée :
                                     </div>
                                 </div>
                                 <div className="text-right">
-                                    <span className="px-3 py-1 rounded-full text-xs font-bold bg-purple-100 text-purple-800 dark:bg-purple-950 dark:text-purple-300">
+                                    <span className={`px-3 py-1 rounded-full text-xs font-bold border ${
+                                        /livr|delivered|pay|encaiss/i.test(activeTrackingData.currentStatus || '')
+                                            ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 border-emerald-300 dark:border-emerald-800'
+                                            : /distrib|cours de livr/i.test(activeTrackingData.currentStatus || '')
+                                            ? 'bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300 border-blue-300 dark:border-blue-800'
+                                            : /refus|report|annul|retour/i.test(activeTrackingData.currentStatus || '')
+                                            ? 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300 border-amber-300 dark:border-amber-800'
+                                            : 'bg-purple-100 text-purple-800 dark:bg-purple-950 dark:text-purple-300 border-purple-200 dark:border-purple-800'
+                                    }`}>
                                         {activeTrackingData.currentStatus}
                                     </span>
                                 </div>
@@ -3136,10 +3263,17 @@ Réponse retournée :
                                                     <span className="font-bold text-slate-900 dark:text-white">{step.status}</span>
                                                     <span className="text-[11px] text-slate-400 font-mono">{step.date}</span>
                                                 </div>
-                                                <div className="text-[11px] text-slate-500 mt-0.5 flex items-center gap-1">
-                                                    <MapPin className="w-3 h-3 text-slate-400" />
-                                                    {step.location}
-                                                </div>
+                                                {step.location && (
+                                                    <div className="text-[11px] text-slate-500 mt-0.5 flex items-center gap-1">
+                                                        <MapPin className="w-3 h-3 text-slate-400" />
+                                                        {step.location}
+                                                    </div>
+                                                )}
+                                                {step.note && (
+                                                    <div className="text-[11px] text-slate-700 dark:text-slate-300 mt-1.5 font-medium bg-slate-50 dark:bg-slate-800/80 p-2 rounded-lg border border-slate-100 dark:border-slate-700/50">
+                                                        {step.note}
+                                                    </div>
+                                                )}
                                             </div>
                                         </div>
                                     ))}
@@ -3501,14 +3635,14 @@ Réponse retournée :
                         {((targetDispatchCourier === 'ozon_express' && !stats.isOzonConfigured) ||
                           (targetDispatchCourier === 'kargo_express' && !stats.isKargoConfigured) ||
                           (targetDispatchCourier === 'digylog' && !stats.isDigylogConfigured) ||
-                          (targetDispatchCourier === 'ameex' && !stats.isAmeexConfigured)) && (
-                            <div className="p-3 bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 rounded-xl text-xs text-amber-800 dark:text-amber-300 flex items-start gap-2">
-                                <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" />
+                          (targetDispatchCourier === 'ameex' && !stats.isAmeexConfigured)) ? (
+                            <div className="p-3 bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800 rounded-xl text-xs text-rose-800 dark:text-rose-300 flex items-start gap-2">
+                                <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5 text-rose-600" />
                                 <div>
-                                    <strong>Mode simulation :</strong> Clé API non renseignée. Des numéros de suivi valides ({targetDispatchCourier === 'ozon_express' ? 'OZE...' : (targetDispatchCourier === 'ameex' ? 'AMX...' : 'KG...')}) seront générés automatiquement pour vous permettre de tester tout le cycle.
+                                    <strong>Société de livraison non configurée :</strong> Le mode simulation a été désactivé. Veuillez configurer les identifiants d'API de ce transporteur dans <em>Paramètres &gt; Transporteurs</em> pour pouvoir transmettre ces commandes.
                                 </div>
                             </div>
-                        )}
+                        ) : null}
 
                         <div className="flex items-center justify-end gap-3 pt-2">
                             <button
@@ -3520,8 +3654,14 @@ Réponse retournée :
                             </button>
                             <button
                                 type="button"
+                                disabled={
+                                    (targetDispatchCourier === 'ozon_express' && !stats.isOzonConfigured) ||
+                                    (targetDispatchCourier === 'kargo_express' && !stats.isKargoConfigured) ||
+                                    (targetDispatchCourier === 'digylog' && !stats.isDigylogConfigured) ||
+                                    (targetDispatchCourier === 'ameex' && !stats.isAmeexConfigured)
+                                }
                                 onClick={handleExecuteDispatch}
-                                className={`px-5 py-2 text-xs font-bold text-white rounded-xl shadow-xs flex items-center gap-2 cursor-pointer ${
+                                className={`px-5 py-2 text-xs font-bold text-white rounded-xl shadow-xs flex items-center gap-2 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed ${
                                     targetDispatchCourier === 'ozon_express'
                                         ? 'bg-purple-600 hover:bg-purple-700'
                                         : targetDispatchCourier === 'ameex'

@@ -204,7 +204,10 @@ export const DeliveryCompaniesView: React.FC<DeliveryCompaniesViewProps> = ({
         const map = new Map<string, CourierApiConfig>();
         courierConfigs.forEach(cfg => {
             if (cfg && cfg.provider) {
-                map.set(cfg.provider, cfg);
+                const existing = map.get(cfg.provider);
+                if (!existing || (!existing.apiKey && Boolean(cfg.apiKey))) {
+                    map.set(cfg.provider, cfg);
+                }
             }
         });
         return map;
@@ -234,7 +237,10 @@ export const DeliveryCompaniesView: React.FC<DeliveryCompaniesViewProps> = ({
         setTestResult(null);
         setSaveSuccess(false);
 
-        const existing = configMap.get(company.id);
+        const existing = configMap.get(company.id) ||
+                         courierConfigs.find(c => (c.provider === company.id || c.id === `${company.id}-config`) && Boolean(c.apiKey)) ||
+                         courierConfigs.find(c => c.provider === company.id);
+
         if (existing) {
             setApiKey(existing.apiKey || '');
             setClientId(existing.clientId || '');
@@ -253,7 +259,7 @@ export const DeliveryCompaniesView: React.FC<DeliveryCompaniesViewProps> = ({
             setPickupCityId(existing.pickupCityId != null ? String(existing.pickupCityId) : '');
         } else {
             setApiKey('');
-            setClientId(company.id === 'ozon_express' ? 'YOUR_OZON_ID' : (company.id === 'kargo_express' ? 'KG_CLIENT_01' : ''));
+            setClientId('');
             setApiBaseUrl(`https://${company.apiHost}`);
             setIsStock(false);
             setAllowOpen(true);
@@ -336,13 +342,15 @@ export const DeliveryCompaniesView: React.FC<DeliveryCompaniesViewProps> = ({
         setSaveSuccess(false);
 
         try {
+            const savedApiKey = apiKey.trim();
+            const savedClientId = clientId.trim();
             const payload: Partial<CourierApiConfig> = {
                 id: `${selectedCompanyForConfig.id}-config`,
                 provider: selectedCompanyForConfig.id,
                 name: selectedCompanyForConfig.name,
                 isEnabled: true,
-                apiKey: apiKey.trim(),
-                clientId: clientId.trim(),
+                apiKey: savedApiKey,
+                clientId: savedClientId,
                 apiBaseUrl: apiBaseUrl.trim() || `https://${selectedCompanyForConfig.apiHost}`,
                 allowOpenParcel: allowOpen,
                 isStock: isStock,
@@ -362,6 +370,9 @@ export const DeliveryCompaniesView: React.FC<DeliveryCompaniesViewProps> = ({
             await apiClient.apiPost('/couriers/configs', payload);
             setSaveSuccess(true);
             await onReloadConfigs();
+
+            setApiKey(savedApiKey);
+            setClientId(savedClientId);
 
             setTimeout(() => {
                 setSaveSuccess(false);

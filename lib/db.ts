@@ -225,14 +225,22 @@ export const mergeOrderLists = (...lists: Array<Order[] | undefined | null>): Or
             if (!existing) {
                 orderMap.set(key, {
                     ...ord,
-                    status: normalizeStatus(ord.status) || OrderStatus.EnAttend,
+                    status: normalizeStatus(ord.status),
                     clientId: ord.clientId || ''
                 });
             } else {
                 orderMap.set(key, {
                     ...existing,
                     ...ord,
-                    status: normalizeStatus(ord.status) || existing.status || OrderStatus.EnAttend,
+                    trackingNumber: ord.trackingNumber || existing.trackingNumber || '',
+                    courierName: ord.courierName || existing.courierName || '',
+                    courierStatus: ord.courierStatus || existing.courierStatus || '',
+                    shippedAt: ord.shippedAt || existing.shippedAt || undefined,
+                    courierParcelId: ord.courierParcelId || existing.courierParcelId || '',
+                    courierNote: ord.courierNote || existing.courierNote || '',
+                    status: (ord.status !== undefined && ord.status !== null && String(ord.status).trim() !== '' && ord.status !== OrderStatus.EnAttend && ord.status !== OrderStatus.Inconnu)
+                        ? normalizeStatus(ord.status)
+                        : (existing.status || normalizeStatus(ord.status) || OrderStatus.EnAttend),
                     clientId: ord.clientId || existing.clientId || ''
                 });
             }
@@ -401,8 +409,37 @@ export const db = {
             }
 
             const cleanOrders = apiOrders.filter(isOrderWithData);
-            saveStoredOrders(cleanOrders);
-            return cleanOrders;
+            const cached = getStoredOrders();
+
+            // Safeguard against temporary server emptying or locks: never wipe non-empty cache with empty array
+            if (cleanOrders.length === 0 && cached.length > 0) {
+                console.warn("API /orders returned 0 records while local cache has", cached.length, "orders. Preserving local cache.");
+                return cached;
+            }
+
+            // Reconcile tracking numbers and dispatch details with local cache
+            const cacheMap = new Map<string, Order>();
+            cached.forEach(o => { if (o && o.id) cacheMap.set(String(o.id).trim(), o); });
+
+            const enriched = cleanOrders.map(ord => {
+                const old = cacheMap.get(String(ord.id).trim());
+                if (!old) return ord;
+                return {
+                    ...ord,
+                    trackingNumber: ord.trackingNumber || old.trackingNumber || '',
+                    courierName: ord.courierName || old.courierName || '',
+                    courierStatus: ord.courierStatus || old.courierStatus || '',
+                    shippedAt: ord.shippedAt || old.shippedAt || undefined,
+                    courierParcelId: ord.courierParcelId || old.courierParcelId || '',
+                    courierNote: ord.courierNote || old.courierNote || '',
+                    status: (old.trackingNumber || old.status === OrderStatus.Expedie || old.status === OrderStatus.Livre)
+                        ? (ord.status === OrderStatus.EnAttend || !ord.status ? old.status : ord.status)
+                        : (ord.status || old.status)
+                };
+            });
+
+            saveStoredOrders(enriched);
+            return enriched;
         },
 
         async create(order: Order): Promise<{ success: boolean; syncResult?: any }> {
@@ -444,11 +481,40 @@ export const db = {
             }
             const cleanClientId = String(clientId || '').trim().toLowerCase();
             const allOrders = getStoredOrders();
-            const filteredOrders = cleanClientId
+            const existingClientOrders = cleanClientId
+                ? allOrders.filter(o => String(o.clientId || '').trim().toLowerCase() === cleanClientId)
+                : [];
+            const otherOrders = cleanClientId
                 ? allOrders.filter(o => String(o.clientId || '').trim().toLowerCase() !== cleanClientId)
                 : [];
-            
-            const updated = stableSortOrders([...freshOrders, ...filteredOrders], false);
+
+            // RECONCILE AND PRESERVE EXISTING TRACKING NUMBERS & DISPATCH DETAILS
+            const existingMap = new Map<string, Order>();
+            existingClientOrders.forEach(o => { if (o && o.id) existingMap.set(String(o.id).trim(), o); });
+
+            const reconciledFresh = freshOrders.map(fresh => {
+                const old = existingMap.get(String(fresh.id).trim());
+                if (!old) return fresh;
+                return {
+                    ...fresh,
+                    trackingNumber: fresh.trackingNumber || old.trackingNumber || '',
+                    courierName: fresh.courierName || old.courierName || '',
+                    courierStatus: fresh.courierStatus || old.courierStatus || '',
+                    shippedAt: fresh.shippedAt || old.shippedAt || undefined,
+                    courierParcelId: fresh.courierParcelId || old.courierParcelId || '',
+                    courierNote: fresh.courierNote || old.courierNote || '',
+                    status: (old.trackingNumber || old.status === OrderStatus.Expedie || old.status === OrderStatus.Livre) 
+                        ? old.status 
+                        : (fresh.status || old.status)
+                };
+            });
+
+            // If freshOrders is unexpectedly empty but we had client orders, protect them
+            const finalClientOrders = (reconciledFresh.length === 0 && existingClientOrders.length > 0)
+                ? existingClientOrders
+                : reconciledFresh;
+
+            const updated = stableSortOrders([...finalClientOrders, ...otherOrders], false);
             saveStoredOrders(updated);
             return true;
         },

@@ -3,6 +3,8 @@ export enum OrderStatus {
   Confirme = 'confirme',
   Expedie = 'expedie',
   Expider = 'expider',
+  Livre = 'livre',
+  Retourne = 'retourne',
   PasDeRep1 = 'pas de rep 1',
   PasDeRep2 = 'pas de rep 2',
   PasDeRep3 = 'pas de rep 3',
@@ -24,6 +26,7 @@ export enum OrderStatus {
   Expire = 'expire',
   EnDouble = 'en double',
   HorsZone = 'hors zone',
+  Inconnu = 'inconnu',
 }
 
 export enum Role {
@@ -101,6 +104,53 @@ export interface User {
   avatarUrl?: string;
   phone?: string;
   primaryCourier?: CourierProvider;
+  whatsappConfig?: WhatsAppConfig;
+}
+
+export interface WhatsAppConfig {
+  enabled?: boolean;
+  autoSendOnNewOrder?: boolean;
+  gatewayType?: 'builtin' | 'evolution_api' | 'wppconnect' | 'custom' | 'qr_gateway';
+  gatewayUrl?: string;
+  apiKey?: string;
+  instanceName?: string;
+  connectedNumber?: string;
+  isConnected?: boolean;
+  connectedAt?: string;
+  messageTemplate?: string;
+  confirmReplyText?: string;
+  cancelReplyText?: string;
+  replyOnConfirm?: string;
+  replyOnCancel?: string;
+  replyOnReschedule?: string;
+  replyOnUnclear?: string;
+  autoConfirmWithAi?: boolean;
+  syncToSheetsOnConfirm?: boolean;
+  aiSystemPrompt?: string;
+}
+
+export interface WhatsAppLog {
+  id: string;
+  orderId?: string;
+  customerName?: string;
+  phone?: string;
+  type: 'outbound' | 'inbound' | 'ai_decision' | 'system';
+  message: string;
+  status: 'sent' | 'delivered' | 'read' | 'received' | 'error' | 'connected' | 'disconnected' | 'replied';
+  timestamp: string;
+  clientId?: string;
+  aiInterpretation?: {
+    decision: 'CONFIRMED' | 'CANCELLED' | 'RESCHEDULED' | 'ADDRESS_CHANGE' | 'QUESTION' | 'UNRECOGNIZED';
+    confidence: number;
+    extractedInfo?: {
+      newAddress?: string | null;
+      newCity?: string | null;
+      rescheduleDate?: string | null;
+      notes?: string | null;
+    };
+    replyMessage?: string;
+    explanation?: string;
+  };
 }
 
 export interface Order {
@@ -131,6 +181,10 @@ export interface Order {
   shippedAt?: string;
   courierParcelId?: string;
   courierNote?: string;
+  whatsappStatus?: 'not_sent' | 'sent' | 'delivered' | 'confirmed' | 'cancelled' | 'rescheduled' | 'failed';
+  whatsappSentAt?: string;
+  whatsappResponseAt?: string;
+  whatsappLastMessage?: string;
 }
 
 export type CourierProvider = 

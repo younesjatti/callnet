@@ -93,14 +93,14 @@ export const mapUnknownStatusesWithAI = async (inputs: string[]): Promise<Record
     }
     const fallback: Record<string, string> = {};
     for (const raw of inputs) {
-      fallback[raw] = normalizeStatus(raw) || OrderStatus.EnAttend;
+      fallback[raw] = normalizeStatus(raw);
     }
     return fallback;
   } catch (error) {
     console.warn("Server Gemini Status Mapping failed, using local fallback:", error);
     const fallback: Record<string, string> = {};
     for (const raw of inputs) {
-      fallback[raw] = normalizeStatus(raw) || OrderStatus.EnAttend;
+      fallback[raw] = normalizeStatus(raw);
     }
     return fallback;
   }

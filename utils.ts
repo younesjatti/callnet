@@ -31,6 +31,58 @@ export const normalizeKey = (key: string): string => {
     // Address variations
     if (lower === 'adresse' || lower === 'address' || lower.includes('adresse') || lower.includes('address') || lower === 'lieu') return 'address';
     
+    // Tracking number variations
+    if (
+        lower === 'tracking' ||
+        lower === 'trackingnumber' ||
+        lower === 'tracking_number' ||
+        lower === 'tracking number' ||
+        lower === 'tracking-number' ||
+        lower === 'track_num' ||
+        lower === 'tracknum' ||
+        lower === 'suivi' ||
+        lower === 'code suivi' ||
+        lower === 'codesuivi' ||
+        lower === 'numéro de suivi' ||
+        lower === 'numero de suivi' ||
+        lower === 'numero suivi' ||
+        lower === 'numéro suivi' ||
+        lower === 'n° suivi' ||
+        lower === 'n° de suivi' ||
+        lower === 'bordereau' ||
+        lower === 'code d\'envoi' ||
+        lower === 'code envoi' ||
+        lower === 'numéro d\'envoi' ||
+        lower === 'numero d\'envoi' ||
+        lower === 'awb' ||
+        lower === 'awb_number' ||
+        lower === 'parcel_code' ||
+        lower === 'parcelcode'
+    ) return 'trackingNumber';
+
+    // Courier / transporteur variations
+    if (
+        lower === 'transporteur' ||
+        lower === 'société de livraison' ||
+        lower === 'societe de livraison' ||
+        lower === 'livreur' ||
+        lower === 'courier' ||
+        lower === 'courier_name' ||
+        lower === 'couriername' ||
+        lower === 'agence' ||
+        lower.includes('transporteur')
+    ) return 'courierName';
+
+    // Courier status variations
+    if (
+        lower === 'statut livraison' ||
+        lower === 'statut transporteur' ||
+        lower === 'statut colis' ||
+        lower === 'statut_livraison' ||
+        lower === 'courier_status' ||
+        lower === 'courierstatus'
+    ) return 'courierStatus';
+
     // Additional fields
     if (lower === 'qty' || lower === 'qte' || lower === 'qté' || lower.includes('quantité') || lower.includes('quantity')) return 'quantity';
     if (lower.includes('variant') || lower.includes('variante') || lower === 'type' || lower === 'color' || lower === 'size') return 'variant';
@@ -38,7 +90,16 @@ export const normalizeKey = (key: string): string => {
     
     // Admin specific fields (preserve these)
     if (lower === 'clientid' || lower === 'client_id' || lower === 'client id' || lower === 'owner') return 'clientId';
-    if (lower === 'status' || lower === 'statut') return 'status';
+    if (
+        lower === 'status' || 
+        lower === 'statut' || 
+        lower.includes('statut') || 
+        lower.includes('status') || 
+        lower === 'confirmation' || 
+        lower.includes('confirmation') || 
+        lower === 'etat' || 
+        lower === 'état'
+    ) return 'status';
     
     // If it's just 'client', map to customerName as a last resort
     if (lower === 'client') return 'customerName';
@@ -47,14 +108,24 @@ export const normalizeKey = (key: string): string => {
 };
 
 /**
- * Normalise les chaînes de caractères de statut provenant de l'importation
+ * Normalise les chaînes de caractères de statut provenant de l'importation (Google Sheets, Excel, etc.)
  * pour correspondre aux valeurs de l'énumération OrderStatus.
- * Utilise la normalisation Unicode pour supprimer les accents.
+ *
+ * RÈGLES STRICTES :
+ * 1. SEULES les cellules vides (undefined, null, chaîne vide ou espaces)
+ *    sont mises à "En cours de confirmation" (OrderStatus.EnAttend).
+ * 2. Si la cellule contient un statut reconnu (ex: "Confirmé", "Annulé", "Pas de rep 1", etc.),
+ *    il est mappé vers son statut correspondant.
+ * 3. Si la cellule contient un statut hors de la liste reconnue, il est OBLIGATOIREMENT
+ *    marqué comme "inconnu" (OrderStatus.Inconnu).
  */
-export const normalizeStatus = (status: any): OrderStatus | undefined => {
-    if (status === undefined || status === null || status === '') return undefined;
+export const normalizeStatus = (status: any): OrderStatus => {
+    // 1. Seules les cellules vides sont mises en cours de confirmation
+    if (status === undefined || status === null || String(status).trim() === '') {
+        return OrderStatus.EnAttend;
+    }
     
-    // 1. Normalisation Unicode : Décomposition des caractères accentués et suppression des diacritiques
+    // Normalisation Unicode : Décomposition des caractères accentués et suppression des diacritiques
     let s = String(status)
         .normalize("NFD")
         .replace(/[\u0300-\u036f]/g, "")
@@ -63,6 +134,8 @@ export const normalizeStatus = (status: any): OrderStatus | undefined => {
         .replace(/\s+/g, ' ')
         .trim();
     
+    if (!s) return OrderStatus.EnAttend;
+
     // Handle specific mappings
     const statusMap: Record<string, OrderStatus> = {
         'confirme': OrderStatus.Confirme,
@@ -111,6 +184,7 @@ export const normalizeStatus = (status: any): OrderStatus | undefined => {
         'faux numero': OrderStatus.FauxNumero,
         'faux num': OrderStatus.FauxNumero,
         'num incorect': OrderStatus.FauxNumero,
+        'num incorrect': OrderStatus.FauxNumero,
         'numero incorrect': OrderStatus.FauxNumero,
         'numero faux': OrderStatus.FauxNumero,
         'wrong number': OrderStatus.FauxNumero,
@@ -128,6 +202,9 @@ export const normalizeStatus = (status: any): OrderStatus | undefined => {
         
         'hors zone': OrderStatus.HorsZone,
         'out of zone': OrderStatus.HorsZone,
+
+        'inconnu': OrderStatus.Inconnu,
+        'unknown': OrderStatus.Inconnu,
     };
 
     const pdrRegex = /(pas de rep|pdr|no answer|non rep|sans rep|aucune rep|ne repond pas)\s*([1-5])?/i;
@@ -162,7 +239,10 @@ export const normalizeStatus = (status: any): OrderStatus | undefined => {
         return normalizedEnum === s;
     });
 
-    return found as OrderStatus | undefined;
+    if (found) return found as OrderStatus;
+
+    // Statut hors de la liste : écrit "inconnu"
+    return OrderStatus.Inconnu;
 };
 
 export function normalizeRole(inputRole: string | undefined): Role {
